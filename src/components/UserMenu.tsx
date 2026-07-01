@@ -13,18 +13,23 @@ export default function UserMenu() {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    if (!user) {
-      setAvatar("");
-      return;
-    }
-    getProfileById(user.$id).then((p) => p?.avatarUrl && setAvatar(p.avatarUrl));
+    // Bei Nutzerwechsel immer erst leeren, damit kein Avatar des Vor-Nutzers stehen bleibt.
+    setAvatar("");
+    if (!user) return;
+    let active = true;
+    getProfileById(user.$id).then((p) => {
+      if (active && p?.avatarUrl) setAvatar(p.avatarUrl);
+    });
     // Live-Update, wenn im Profil ein neues Bild hochgeladen wird
     function onAvatar(e: Event) {
       const url = (e as CustomEvent).detail;
       if (typeof url === "string") setAvatar(url);
     }
     window.addEventListener("avatar-updated", onAvatar);
-    return () => window.removeEventListener("avatar-updated", onAvatar);
+    return () => {
+      active = false;
+      window.removeEventListener("avatar-updated", onAvatar);
+    };
   }, [user]);
 
   if (loading) {

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
       "Die Geschichte, Mission und Werte hinter Elementa — framework-übergreifend, barrierefrei, EU-gehostet.",
     type: "website",
     url: "/about",
+    images: [{ url: "/brand/og-default.png", width: 1376, height: 768 }],
   },
 };
 

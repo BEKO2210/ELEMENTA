@@ -99,7 +99,7 @@ export default function Page() {
         Weil hier eine echte <InlineCode>&lt;input type=&quot;checkbox&quot;&gt;</InlineCode> im{" "}
         <InlineCode>&lt;label&gt;</InlineCode> steckt, funktioniert alles automatisch: Klick aufs
         Label schaltet um, die Leertaste toggelt, und Screenreader sagen „Kontrollkästchen,
-        aktiviert/deaktiviert" an. Kein <InlineCode>aria-checked</InlineCode> nötig.
+        aktiviert/deaktiviert“ an. Kein <InlineCode>aria-checked</InlineCode> nötig.
       </Callout>
 
       <H2 id="button-variante">Alternative: role=&quot;switch&quot;</H2>
@@ -121,7 +121,7 @@ export default function Page() {
         <LI>Zustand nur über Farbe (rot/grün) signalisieren — für Farbfehlsichtige nicht erkennbar.</LI>
         <LI>Fokus-Ring per <InlineCode>outline: none</InlineCode> entfernen, ohne Ersatz.</LI>
         <LI>Zu kleine Klickfläche (unter 24&nbsp;px) — verstößt gegen WCAG&nbsp;2.2 (2.5.8).</LI>
-        <LI>Kein Label — der Screenreader liest nur „Kontrollkästchen" ohne Bedeutung vor.</LI>
+        <LI>Kein Label — der Screenreader liest nur „Kontrollkästchen“ ohne Bedeutung vor.</LI>
       </UL>
 
       <H2 id="fazit">Fazit</H2>

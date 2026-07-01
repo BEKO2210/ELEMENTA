@@ -37,6 +37,10 @@ export default function CountUp({
       return;
     }
 
+    // Bei geändertem Zielwert erneut animieren (Effekt läuft mit value als Dep neu).
+    started.current = false;
+    let rafId = 0;
+
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !started.current) {
@@ -47,16 +51,19 @@ export default function CountUp({
             // easeOutCubic
             const eased = 1 - Math.pow(1 - p, 3);
             setDisplay(value * eased);
-            if (p < 1) requestAnimationFrame(tick);
+            if (p < 1) rafId = requestAnimationFrame(tick);
             else setDisplay(value);
           };
-          requestAnimationFrame(tick);
+          rafId = requestAnimationFrame(tick);
         }
       },
       { threshold: 0.3 },
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [value, duration]);
 
   const formatted =

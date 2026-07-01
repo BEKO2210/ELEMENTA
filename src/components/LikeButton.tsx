@@ -27,6 +27,12 @@ export default function LikeButton({
   // Globaler Zähler + eigener Like-Status beim Laden.
   useEffect(() => {
     let active = true;
+    // Bei Komponentenwechsel (Client-Navigation, gleiche Instanz) Status frisch aufsetzen,
+    // sonst zeigt die neue Komponente Like-Status/Zähler der vorherigen.
+    touchedRef.current = false;
+    setLiked(false);
+    setLikeDocId(null);
+    setCount(initialLikes);
 
     // Globaler, für alle Nutzer synchroner Zähler = Anzahl aller Like-Dokumente
     // dieser Komponente (+ Seed-Basiswert für die Optik).

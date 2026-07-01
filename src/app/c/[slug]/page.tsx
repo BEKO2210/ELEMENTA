@@ -22,6 +22,9 @@ const FW_LABEL: Record<string, string> = {
   html: "HTML", css: "CSS", tailwind: "Tailwind", react: "React", vue: "Vue", svelte: "Svelte",
 };
 
+// Immer frisch rendern, damit Bearbeitungen sofort sichtbar sind (konsistent mit / und /explore).
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   const slugs = await fetchSlugs();
   return slugs.map((slug) => ({ slug }));

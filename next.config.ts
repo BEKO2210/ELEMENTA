@@ -8,6 +8,7 @@ const csp = [
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
+  "media-src 'self'",
   "font-src 'self' data:",
   "connect-src 'self' https://appwrite.it-handwerk-stuttgart.de",
   "frame-src 'self'",

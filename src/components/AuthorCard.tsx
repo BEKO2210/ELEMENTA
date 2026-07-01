@@ -24,17 +24,21 @@ export default function AuthorCard({
 
   useEffect(() => {
     let active = true;
+    setStats(null);
     fetchByAuthor(username)
       .then(attachLikeCounts)
       .then((cs) => {
         if (active) setStats({ count: cs.length, likes: cs.reduce((s, c) => s + c.likes, 0) });
-      });
+      })
+      .catch(() => active && setStats({ count: 0, likes: 0 }));
     if (authorId)
-      getProfileById(authorId).then((p) => {
-        if (!active || !p) return;
-        if (p.bio) setBio(p.bio);
-        if (p.avatarUrl) setAvatar(p.avatarUrl);
-      });
+      getProfileById(authorId)
+        .then((p) => {
+          if (!active || !p) return;
+          if (p.bio) setBio(p.bio);
+          if (p.avatarUrl) setAvatar(p.avatarUrl);
+        })
+        .catch(() => {});
     return () => {
       active = false;
     };

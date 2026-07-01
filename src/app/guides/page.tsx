@@ -18,6 +18,7 @@ export const metadata: Metadata = {
       "Praktische Anleitungen rund um UI-Komponenten: CSS-Effekte, Glassmorphism, Barrierefreiheit und mehr.",
     type: "website",
     url: "/guides",
+    images: [{ url: "/brand/og-default.png", width: 1376, height: 768 }],
   },
 };
 

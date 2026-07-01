@@ -7,6 +7,7 @@ import type { Category } from "@/lib/types";
 import ComponentCard from "@/components/ComponentCard";
 import HeroSearch from "@/components/HeroSearch";
 import HeroShowcase, { type ShowcaseItem } from "@/components/HeroShowcase";
+import HeroVideo from "@/components/HeroVideo";
 import TrustBar from "@/components/TrustBar";
 import WhySection from "@/components/WhySection";
 import CommunityCTA from "@/components/CommunityCTA";
@@ -106,19 +107,8 @@ export default async function Home() {
             sizes="100vw"
             className="object-cover object-top opacity-90"
           />
-          {/* Animiertes, textfreies Hintergrundvideo (nahtloser Loop). */}
-          <video
-            className="hero-video absolute inset-0 h-full w-full object-cover object-top opacity-90"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/brand/hero-aurora.png"
-            aria-hidden="true"
-          >
-            <source src="/brand/hero-loop.webm" type="video/webm" />
-            <source src="/brand/hero-loop.mp4" type="video/mp4" />
-          </video>
+          {/* Animiertes, textfreies Hintergrundvideo (nahtloser Loop; reduced-motion-safe). */}
+          <HeroVideo />
           <div className="absolute inset-0 bg-gradient-to-b from-bg/10 via-bg/40 to-bg" />
         </div>
 

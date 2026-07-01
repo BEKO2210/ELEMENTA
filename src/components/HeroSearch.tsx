@@ -50,6 +50,11 @@ export default function HeroSearch({
     return () => clearTimeout(id);
   }, [q]);
 
+  // Blur-Timer beim Unmount aufräumen (kein setState nach Unmount).
+  useEffect(() => () => {
+    if (blurTimer.current) clearTimeout(blurTimer.current);
+  }, []);
+
   function go(term: string) {
     router.push(`/explore${term ? `?q=${encodeURIComponent(term)}` : ""}`);
   }
@@ -123,6 +128,7 @@ export default function HeroSearch({
           aria-autocomplete="list"
           role="combobox"
           aria-controls="hero-suggestions"
+          aria-activedescendant={showDropdown && active >= 0 ? `hero-opt-${active}` : undefined}
           className="flex-1 bg-transparent text-[15px] outline-none placeholder:text-fg-dim"
         />
         <button
@@ -145,7 +151,7 @@ export default function HeroSearch({
             className="glass absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl p-1.5 text-left shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)]"
           >
             {hasAllOption && (
-              <li role="option" aria-selected={active === 0}>
+              <li id="hero-opt-0" role="option" aria-selected={active === 0}>
                 <button
                   onMouseDown={(e) => e.preventDefault()}
                   onMouseEnter={() => setActive(0)}
@@ -165,7 +171,7 @@ export default function HeroSearch({
             {matches.map((it, i) => {
               const idx = i + (hasAllOption ? 1 : 0);
               return (
-                <li key={it.slug} role="option" aria-selected={active === idx}>
+                <li key={it.slug} id={`hero-opt-${idx}`} role="option" aria-selected={active === idx}>
                   <button
                     onMouseDown={(e) => e.preventDefault()}
                     onMouseEnter={() => setActive(idx)}

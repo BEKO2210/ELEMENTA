@@ -85,7 +85,9 @@ function buildSrcDoc(framework: Framework, html: string, css: string, js: string
 
   const scriptSrc = [
     "'unsafe-inline'",
-    isReact ? "'unsafe-eval' https://cdn.jsdelivr.net" : "",
+    // Tailwind Play-CDN UND React/Babel-standalone kompilieren zur Laufzeit → brauchen 'unsafe-eval'.
+    isReact || isTailwind ? "'unsafe-eval'" : "",
+    isReact ? "https://cdn.jsdelivr.net" : "",
     isTailwind ? "https://cdn.tailwindcss.com" : "",
   ]
     .filter(Boolean)

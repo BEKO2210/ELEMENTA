@@ -58,10 +58,13 @@ export async function saveMyProfile(
     return map(await databases().updateDocument(DB_ID, COL_PROFILES, user.$id, data));
   } catch (e) {
     const code = (e as { code?: number })?.code;
-    if (code !== 404) {
-      // z. B. username-Kollision (unique) → mit eindeutigem Suffix erneut versuchen
+    // Nur eine echte Unique-Kollision (409) mit Suffix erneut versuchen.
+    if (code === 409) {
       return retryWithSuffixedUsername(user, data, perms, "update");
     }
+    // 404 → Dokument existiert nicht → unten anlegen. Alles andere (401/500/Netz) ist ein
+    // echter Fehler und darf nicht als Kollision fehlinterpretiert werden.
+    if (code !== 404) throw e;
   }
   try {
     return map(await databases().createDocument(DB_ID, COL_PROFILES, user.$id, data, perms));

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
       "Durchstöbere effektreiche UI-Komponenten — filtern nach Kategorie und Framework, live ansehen und kopieren.",
     type: "website",
     url: "/explore",
+    images: [{ url: "/brand/og-default.png", width: 1376, height: 768 }],
   },
 };
 

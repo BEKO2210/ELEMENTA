@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useId, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 
@@ -22,6 +23,21 @@ export default function ConfirmDialog({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const titleId = useId();
+  const descId = useId();
+
+  // Escape schließt den Dialog; Auto-Fokus auf die (sichere) Abbrechen-Aktion.
+  useEffect(() => {
+    if (!open) return;
+    cancelRef.current?.focus();
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onCancel();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onCancel]);
+
   return (
     <AnimatePresence>
       {open && (
@@ -35,6 +51,8 @@ export default function ConfirmDialog({
           <motion.div
             role="alertdialog"
             aria-modal="true"
+            aria-labelledby={titleId}
+            aria-describedby={descId}
             initial={{ opacity: 0, scale: 0.95, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -48,10 +66,11 @@ export default function ConfirmDialog({
             >
               <AlertTriangle size={22} />
             </span>
-            <h2 className="mt-4 text-lg font-bold">{title}</h2>
-            <p className="mt-2 text-sm text-fg-muted">{message}</p>
+            <h2 id={titleId} className="mt-4 text-lg font-bold">{title}</h2>
+            <p id={descId} className="mt-2 text-sm text-fg-muted">{message}</p>
             <div className="mt-6 flex gap-3">
               <button
+                ref={cancelRef}
                 onClick={onCancel}
                 className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-fg-muted transition hover:text-white"
               >

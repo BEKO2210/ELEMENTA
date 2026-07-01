@@ -167,13 +167,22 @@ export default function ProfilPage() {
     if (!user) return;
     setSavingGeneral(true);
     try {
+      // Schutz vor Datenverlust: ist das Profil noch nicht geladen, bestehende
+      // Bio/Avatar frisch holen, damit „Speichern" sie nicht mit "" überschreibt.
+      let nextBio = bio.trim();
+      let nextAvatar = avatarUrl;
+      if (!profileLoadedRef.current) {
+        const existing = await getProfileById(user.$id);
+        nextBio = (existing?.bio ?? bio).trim();
+        nextAvatar = existing?.avatarUrl || avatarUrl;
+      }
       if (displayName.trim() && displayName.trim() !== user.name) {
         await account().updateName(displayName.trim());
       }
       await saveMyProfile({ ...user, name: displayName.trim() || user.name }, {
-        bio: bio.trim(),
+        bio: nextBio,
         displayName: displayName.trim(),
-        avatarUrl,
+        avatarUrl: nextAvatar,
       });
       await refresh();
       toast("Profil aktualisiert", "success");

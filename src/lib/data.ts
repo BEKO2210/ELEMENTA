@@ -32,7 +32,9 @@ export async function fetchComponents(): Promise<UIComponent[]> {
       Query.limit(100),
     ]);
     return r.documents.length ? r.documents.map(mapDoc) : MOCK;
-  } catch {
+  } catch (e) {
+    // Sichtbar machen: bei DB-Ausfall fallen wir auf Mock-Daten zurück (Betreiber-Signal).
+    console.error("[data] fetchComponents failed, using mock fallback:", e);
     return MOCK;
   }
 }
@@ -95,7 +97,8 @@ export async function attachLikeCounts(components: UIComponent[]): Promise<UICom
       counts[cid] = (counts[cid] || 0) + 1;
     }
     return components.map((c) => ({ ...c, likes: counts[c.id] || 0 }));
-  } catch {
+  } catch (e) {
+    console.error("[data] attachLikeCounts failed:", e);
     return components;
   }
 }

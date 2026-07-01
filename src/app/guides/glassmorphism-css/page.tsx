@@ -23,7 +23,7 @@ export default function Page() {
   return (
     <GuideShell guide={guide}>
       <Lead>
-        Glassmorphism — der „Milchglas"-Effekt — verleiht Karten und Overlays Tiefe, ohne schwer
+        Glassmorphism — der „Milchglas“-Effekt — verleiht Karten und Overlays Tiefe, ohne schwer
         zu wirken. Das Geheimnis ist eine Kombination aus Unschärfe, Transparenz und einem feinen
         Rand. Hier baust du ihn Schritt für Schritt korrekt auf.
       </Lead>

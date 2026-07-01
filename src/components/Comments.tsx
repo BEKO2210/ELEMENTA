@@ -32,6 +32,12 @@ export default function Comments({ componentId }: { componentId: string }) {
 
   useEffect(() => {
     let active = true;
+    // Bei Komponentenwechsel Ladezustand zurücksetzen, sonst bleiben kurz die
+    // Kommentare der vorherigen Komponente sichtbar.
+    setLoading(true);
+    setComments([]);
+    setCounts({});
+    setMyVotes({});
     databases()
       .listDocuments(DB_ID, COL_COMMENTS, [
         Query.equal("componentId", componentId),

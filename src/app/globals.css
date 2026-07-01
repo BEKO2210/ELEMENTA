@@ -322,10 +322,6 @@ label[for] {
   html {
     scroll-behavior: auto;
   }
-  /* Kein bewegtes Hintergrundvideo bei reduzierter Bewegung — statisches Poster bleibt sichtbar. */
-  .hero-video {
-    display: none !important;
-  }
   *,
   *::before,
   *::after {

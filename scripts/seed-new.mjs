@@ -5,7 +5,7 @@
  * likesCount = 0 (Wahrheitsregel; echte Likes kommen aus der likes-Collection).
  * a11y: buttons/inputs/toggles = "pass", sonst "unchecked".
  */
-import { Client, Databases, Permission, Role, ID } from "node-appwrite";
+import { Client, Databases, Permission, Role, ID, Query } from "node-appwrite";
 
 const endpoint = process.env.APPWRITE_ENDPOINT || "https://appwrite.it-handwerk-stuttgart.de/v1";
 const project = process.env.APPWRITE_PROJECT || "6a4453770009b9e7f029";
@@ -85,14 +85,29 @@ const GROUPS = [
   ["backgrounds", BACKGROUNDS, "unchecked"],
 ];
 
-let created = 0, failed = 0;
+let created = 0, failed = 0, skipped = 0;
 const now = Date.now();
 let idx = 0;
+
+async function slugExists(slug) {
+  try {
+    const r = await db.listDocuments(DB, COL, [Query.equal("slug", slug), Query.limit(1)]);
+    return r.total > 0;
+  } catch {
+    return false;
+  }
+}
 
 for (const [category, list, a11y] of GROUPS) {
   console.log(`\n-> ${category}: ${list.length}`);
   for (const c of list) {
     idx++;
+    // Idempotenz: existiert der Slug bereits, überspringen (kein Duplikat bei Re-Run).
+    if (await slugExists(c.slug)) {
+      console.log("  skip (exists)", c.slug);
+      skipped++;
+      continue;
+    }
     const base = {
       title: c.title,
       description: c.description,
@@ -125,4 +140,4 @@ for (const [category, list, a11y] of GROUPS) {
   }
 }
 
-console.log(`\nFertig. Erstellt: ${created}, Fehler: ${failed}`);
+console.log(`\nFertig. Erstellt: ${created}, übersprungen: ${skipped}, Fehler: ${failed}`);

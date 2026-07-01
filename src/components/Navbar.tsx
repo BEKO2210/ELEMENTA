@@ -3,10 +3,11 @@ import UserMenu from "./UserMenu";
 import CommandTrigger from "./CommandTrigger";
 import { Logo } from "./Logo";
 import { GithubIcon } from "./BrandIcons";
+import MobileMenu from "./MobileMenu";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-bg/70 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/60">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <Link href="/" className="group flex items-center">
           <Logo size={32} />
@@ -40,6 +41,7 @@ export default function Navbar() {
           </a>
           <CommandTrigger />
           <UserMenu />
+          <MobileMenu />
         </div>
       </div>
     </header>

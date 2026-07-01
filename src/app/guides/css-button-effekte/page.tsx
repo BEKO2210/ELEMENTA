@@ -49,7 +49,7 @@ export default function Page() {
       <H2 id="gradient-border">2. Animierter Gradient-Rahmen</H2>
       <P>
         Ein rotierender Verlaufs-Rahmen über ein Pseudo-Element und eine{" "}
-        <InlineCode>mask</InlineCode> — der Klassiker im „Uiverse"-Stil.
+        <InlineCode>mask</InlineCode> — der Klassiker im „Uiverse“-Stil.
       </P>
       <CodeBlock
         code={`.btn-gradient {

@@ -54,17 +54,27 @@ export default function CommandPalette() {
   useEffect(() => {
     if (open && !loadedRef.current) {
       loadedRef.current = true;
-      fetchComponents().then(setComps);
+      fetchComponents()
+        .then(setComps)
+        .catch(() => {
+          // Fehler beim Laden → Retry beim nächsten Öffnen erlauben.
+          loadedRef.current = false;
+        });
     }
   }, [open]);
 
-  // Beim Öffnen Eingabe/Fokus zurücksetzen.
+  // Beim Öffnen Eingabe/Fokus zurücksetzen + Hintergrund-Scroll sperren.
   useEffect(() => {
     if (!open) return;
     setQ("");
     setActive(0);
     const t = setTimeout(() => inputRef.current?.focus(), 20);
-    return () => clearTimeout(t);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      clearTimeout(t);
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   function close() {
@@ -141,6 +151,9 @@ export default function CommandPalette() {
         >
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={close} />
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Befehls- und Suchpalette"
             initial={{ opacity: 0, scale: 0.98, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98, y: -8 }}
