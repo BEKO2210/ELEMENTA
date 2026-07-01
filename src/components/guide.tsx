@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, Clock, CalendarDays, ArrowRight, Lightbulb } from "lucide-react";
 import type { GuideMeta } from "@/lib/guides";
 import JsonLd from "./JsonLd";
@@ -28,7 +29,7 @@ export function GuideShell({ guide, children }: { guide: GuideMeta; children: Re
           author: { "@type": "Person", name: "Belkis Aslani", url: `${BASE}/about` },
           publisher: { "@type": "Organization", name: "Elementa", url: BASE },
           mainEntityOfPage: `${BASE}/guides/${guide.slug}`,
-          image: `${BASE}/brand/og-default.png`,
+          image: `${BASE}${guide.cover}`,
         }}
       />
       <JsonLd
@@ -65,6 +66,16 @@ export function GuideShell({ guide, children }: { guide: GuideMeta; children: Re
           </span>
         </div>
       </header>
+
+      <Image
+        src={guide.cover}
+        alt=""
+        width={1600}
+        height={900}
+        priority
+        sizes="(max-width: 768px) 100vw, 768px"
+        className="mt-6 aspect-[16/9] w-full rounded-2xl border border-white/10 object-cover"
+      />
 
       <div className="mt-8">{children}</div>
 

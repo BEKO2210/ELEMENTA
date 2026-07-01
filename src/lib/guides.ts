@@ -9,11 +9,14 @@ export interface GuideMeta {
   date: string;
   readingMinutes: number;
   category: string;
+  /** Titelbild (≥ 1200 px) für Artikel-Header, Karten & OG/Discover. */
+  cover: string;
 }
 
 export const GUIDES: GuideMeta[] = [
   {
     slug: "css-button-effekte",
+    cover: "/guides/css-button-effekte.jpg",
     title: "10 CSS-Button-Effekte zum Kopieren (2026)",
     description:
       "Zehn moderne Button-Effekte in reinem CSS — Glow, Gradient-Border, Shine-Sweep, Magnetic & mehr. Barrierefrei, ohne Abhängigkeiten, sofort einsetzbar.",
@@ -25,6 +28,7 @@ export const GUIDES: GuideMeta[] = [
   },
   {
     slug: "glassmorphism-css",
+    cover: "/guides/glassmorphism-css.jpg",
     title: "Glassmorphism in reinem CSS — Schritt für Schritt",
     description:
       "So baust du den Milchglas-Effekt (Glassmorphism) korrekt mit backdrop-filter — inklusive Fallbacks, Kontrast und Performance-Tipps.",
@@ -36,6 +40,7 @@ export const GUIDES: GuideMeta[] = [
   },
   {
     slug: "barrierefreie-toggles-wcag",
+    cover: "/guides/barrierefreie-toggles-wcag.jpg",
     title: "Barrierefreie Toggles: Was WCAG 2.2 wirklich verlangt",
     description:
       "Ein Toggle ist mehr als ein hübscher Switch: Tastaturbedienung, Fokus, ARIA-Rollen und reduzierte Bewegung — der komplette WCAG-2.2-Leitfaden.",

@@ -9,7 +9,14 @@ export const metadata: Metadata = {
   title: guide.title,
   description: guide.description,
   alternates: { canonical: `/guides/${guide.slug}` },
-  openGraph: { title: `${guide.title} · Elementa`, description: guide.description, type: "article", url: `/guides/${guide.slug}` },
+  openGraph: {
+    title: `${guide.title} · Elementa`,
+    description: guide.description,
+    type: "article",
+    url: `/guides/${guide.slug}`,
+    images: [{ url: guide.cover, width: 1600, height: 900 }],
+  },
+  twitter: { card: "summary_large_image", title: guide.title, description: guide.description, images: [guide.cover] },
 };
 
 export default function Page() {

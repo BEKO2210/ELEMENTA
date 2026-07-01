@@ -275,8 +275,8 @@ export default function ProfilPage() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="mt-6 flex gap-1 border-b border-white/10">
+      {/* Tabs — auf Mobile horizontal scrollbar statt Seiten-Overflow */}
+      <div className="mt-6 flex gap-1 overflow-x-auto border-b border-white/10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <TabBtn active={tab === "comps"} onClick={() => setTab("comps")} icon={<User size={15} />}>
           Meine Komponenten
         </TabBtn>
@@ -491,7 +491,7 @@ function TabBtn({
   return (
     <button
       onClick={onClick}
-      className={`-mb-px inline-flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-medium transition ${
+      className={`-mb-px inline-flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-medium transition ${
         active ? "border-accent text-white" : "border-transparent text-fg-muted hover:text-white"
       }`}
     >

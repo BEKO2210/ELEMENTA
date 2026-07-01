@@ -79,7 +79,7 @@ export default function RootLayout({
           <ToastProvider>
             <CommandPalette />
             <Navbar />
-            <main id="main" className="flex-1">{children}</main>
+            <main id="main" className="flex-1 overflow-x-clip">{children}</main>
             <Footer />
             <CookieConsent />
             <Suspense fallback={null}>

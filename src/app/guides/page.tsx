@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Clock, ArrowUpRight } from "lucide-react";
 import { GUIDES } from "@/lib/guides";
 import JsonLd from "@/components/JsonLd";
@@ -45,21 +46,32 @@ export default function GuidesIndex() {
           <Link
             key={g.slug}
             href={`/guides/${g.slug}`}
-            className="card group relative flex flex-col p-6"
+            className="card group relative flex flex-col overflow-hidden"
           >
-            <div className="flex items-center justify-between">
-              <span className="inline-flex rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+            <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-white/5">
+              <Image
+                src={g.cover}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, 400px"
+                className="card-preview object-cover"
+              />
+              <span className="absolute left-3 top-3 inline-flex rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur">
                 {g.category}
               </span>
-              <ArrowUpRight size={18} className="text-fg-dim transition group-hover:text-white" />
             </div>
-            <h2 className="mt-4 text-lg font-semibold text-fg transition group-hover:text-white">
-              {g.title}
-            </h2>
-            <p className="mt-2 flex-1 text-sm text-fg-muted">{g.excerpt}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-xs text-fg-muted">
-              <Clock size={13} className="text-fg-dim" /> {g.readingMinutes} Min. Lesezeit
-            </span>
+            <div className="flex flex-1 flex-col p-6">
+              <div className="flex items-start justify-between gap-2">
+                <h2 className="text-lg font-semibold text-fg transition group-hover:text-white">
+                  {g.title}
+                </h2>
+                <ArrowUpRight size={18} className="mt-1 shrink-0 text-fg-dim transition group-hover:text-white" />
+              </div>
+              <p className="mt-2 flex-1 text-sm text-fg-muted">{g.excerpt}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-xs text-fg-muted">
+                <Clock size={13} className="text-fg-dim" /> {g.readingMinutes} Min. Lesezeit
+              </span>
+            </div>
           </Link>
         ))}
       </div>
