@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Heart, Boxes, ShieldCheck } from "lucide-react";
 import { fetchByAuthor, attachLikeCounts } from "@/lib/data";
+import { getProfileById } from "@/lib/profile";
 import ComponentCard from "@/components/ComponentCard";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +29,14 @@ export default async function ProfilePage({
   const comps = await attachLikeCounts(await fetchByAuthor(username));
   const totalLikes = comps.reduce((s, c) => s + c.likes, 0);
   const verified = comps.filter((c) => c.a11y === "pass").length;
-  const initial = username.charAt(0).toUpperCase();
+
+  // Avatar/Bio aus dem Profil laden (Profil-Doc-ID = authorId; public read).
+  const authorId = comps.find((c) => c.authorId)?.authorId;
+  const profile = authorId ? await getProfileById(authorId) : null;
+  const displayName = profile?.displayName?.trim() || username;
+  const avatarUrl = profile?.avatarUrl?.trim();
+  const bio = profile?.bio?.trim();
+  const initial = displayName.charAt(0).toUpperCase();
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-10">
@@ -36,11 +44,22 @@ export default async function ProfilePage({
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-panel p-8">
         <div className="aurora-blob left-0 top-0 h-40 w-72" style={{ background: "#8b5cf6" }} />
         <div className="relative flex flex-wrap items-center gap-5">
-          <span className="grid h-20 w-20 shrink-0 place-items-center rounded-[1.4rem] btn-grad text-3xl font-extrabold">
-            {initial}
-          </span>
+          {avatarUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={avatarUrl}
+              alt={`Profilbild von @${username}`}
+              className="h-20 w-20 shrink-0 rounded-[1.4rem] object-cover"
+            />
+          ) : (
+            <span className="grid h-20 w-20 shrink-0 place-items-center rounded-[1.4rem] btn-grad text-3xl font-extrabold">
+              {initial}
+            </span>
+          )}
           <div>
-            <h1 className="text-3xl font-bold">@{username}</h1>
+            <h1 className="text-3xl font-bold">{displayName}</h1>
+            <p className="text-sm text-fg-dim">@{username}</p>
+            {bio && <p className="mt-2 max-w-md text-sm text-fg-muted">{bio}</p>}
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-fg-muted">
               <span className="inline-flex items-center gap-1.5">
                 <Boxes size={15} className="text-accent" /> {comps.length} Komponenten

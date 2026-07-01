@@ -42,7 +42,7 @@ export default function ComponentCard({ c, popular }: { c: UIComponent; popular?
       <Link href={`/c/${c.slug}`} className="absolute inset-0 z-10" aria-label={`${c.title} öffnen`} />
 
       <div className="card-preview pointer-events-none relative border-b border-white/5">
-        <SandboxPreview framework={c.framework} html={c.html} css={c.css} js={c.js} height={220} />
+        <SandboxPreview framework={c.framework} html={c.html} css={c.css} js={c.js} height={220} fit />
       </div>
 
       {/* Status-Badges (oben links) */}

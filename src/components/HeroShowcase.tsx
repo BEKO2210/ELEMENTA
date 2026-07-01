@@ -55,6 +55,7 @@ export default function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
           css={cur.css}
           js={cur.js}
           height={260}
+          fit
         />
       </div>
 

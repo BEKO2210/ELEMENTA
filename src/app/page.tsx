@@ -97,6 +97,7 @@ export default async function Home() {
       {/* ---------- Hero (Split) ---------- */}
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
+          {/* Statisches Bild als Basis/Poster (und Fallback bei reduced-motion). */}
           <Image
             src="/brand/hero-aurora.png"
             alt=""
@@ -105,6 +106,19 @@ export default async function Home() {
             sizes="100vw"
             className="object-cover object-top opacity-90"
           />
+          {/* Animiertes, textfreies Hintergrundvideo (nahtloser Loop). */}
+          <video
+            className="hero-video absolute inset-0 h-full w-full object-cover object-top opacity-90"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/brand/hero-aurora.png"
+            aria-hidden="true"
+          >
+            <source src="/brand/hero-loop.webm" type="video/webm" />
+            <source src="/brand/hero-loop.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-bg/10 via-bg/40 to-bg" />
         </div>
 

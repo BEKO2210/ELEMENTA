@@ -12,6 +12,8 @@ interface Props {
   className?: string;
   /** Hintergrund im iframe-Body. "transparent" lässt den Wrapper durchscheinen (Preview-Toggle). */
   bg?: string;
+  /** Skaliert zu große Inhalte herunter, damit nichts abgeschnitten wird (Karten-Thumbnails). */
+  fit?: boolean;
 }
 
 /**
@@ -31,10 +33,11 @@ export default function SandboxPreview({
   height = 260,
   className,
   bg = "#0b0b12",
+  fit = false,
 }: Props) {
   const srcDoc = useMemo(
-    () => buildSrcDoc(framework, html, css, js, bg),
-    [framework, html, css, js, bg],
+    () => buildSrcDoc(framework, html, css, js, bg, fit),
+    [framework, html, css, js, bg, fit],
   );
 
   return (
@@ -50,7 +53,23 @@ export default function SandboxPreview({
   );
 }
 
-function buildSrcDoc(framework: Framework, html: string, css: string, js: string, bg: string): string {
+// Skaliert den Inhalt so herunter, dass er komplett in den iframe passt (kein Clipping).
+// Läuft IM iframe (kennt daher window.innerHeight) — misst die natürliche Größe und
+// wendet eine transform:scale an. Mehrfach getriggert für async gerenderte Inhalte.
+const FIT_SCRIPT = `<script>(function(){
+  var el=document.getElementById('__fit'); if(!el) return;
+  function f(){
+    el.style.transform='none';
+    var r=el.getBoundingClientRect(), pad=8;
+    var s=Math.min(1,(window.innerWidth-pad)/r.width,(window.innerHeight-pad)/r.height);
+    if(s>0 && s<1) el.style.transform='scale('+s+')';
+  }
+  requestAnimationFrame(f); setTimeout(f,120); setTimeout(f,450);
+  window.addEventListener('load',f);
+  if(window.ResizeObserver){ try{ new ResizeObserver(f).observe(el); }catch(e){} }
+})();<\/script>`;
+
+function buildSrcDoc(framework: Framework, html: string, css: string, js: string, bg: string, fit = false): string {
   // Vue/Svelte brauchen einen Compile-Schritt — bis dahin ein sauberer Platzhalter
   // statt roher, kaputt gerenderter Quelltext.
   if (framework === "vue" || framework === "svelte") {
@@ -98,25 +117,28 @@ ${
 }
 <style>
   html,body{margin:0;height:100%}
-  body{display:grid;place-items:center;padding:24px;box-sizing:border-box;
-       background:${bg};color:#fff;font-family:system-ui,sans-serif}
+  body{display:grid;place-items:center;padding:${fit ? 8 : 24}px;box-sizing:border-box;
+       ${fit ? "overflow:hidden;" : ""}background:${bg};color:#fff;font-family:system-ui,sans-serif}
+  #__fit{transform-origin:center center}
   ${css}
 </style>`;
 
   if (isReact) {
     const name = detectComponentName(html);
     return `<!doctype html><html><head>${head}</head><body>
-<div id="root"></div>
+${fit ? '<div id="__fit"><div id="root"></div></div>' : '<div id="root"></div>'}
 <script type="text/babel" data-presets="react">
 ${html}
 try{ReactDOM.createRoot(document.getElementById('root')).render(<${name} />);}catch(e){document.getElementById('root').textContent=String(e);}
 </script>
+${fit ? FIT_SCRIPT : ""}
 </body></html>`;
   }
 
   return `<!doctype html><html><head>${head}</head><body>
-${html}
+${fit ? `<div id="__fit">${html}</div>` : html}
 ${js ? `<script>${js}<\/script>` : ""}
+${fit ? FIT_SCRIPT : ""}
 </body></html>`;
 }
 
