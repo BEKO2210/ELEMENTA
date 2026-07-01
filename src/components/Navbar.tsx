@@ -40,7 +40,10 @@ export default function Navbar() {
             <GithubIcon size={16} />
           </a>
           <CommandTrigger />
-          <UserMenu />
+          {/* Auf Desktop volle Aktionen; auf Mobile ins Hamburger-Menü verlagert (kein Overflow). */}
+          <span className="hidden items-center gap-2 md:flex">
+            <UserMenu />
+          </span>
           <MobileMenu />
         </div>
       </div>

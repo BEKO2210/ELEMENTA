@@ -59,8 +59,11 @@ export default async function ComponentPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const c = await fetchComponent(slug);
-  if (!c) notFound();
+  const raw = await fetchComponent(slug);
+  if (!raw) notFound();
+  // Echte Like-Anzahl anhängen (gleiche Quelle wie Karten/Profile), damit die
+  // Anzeige überall übereinstimmt — nicht das rohe likesCount-Feld verwenden.
+  const [c] = await attachLikeCounts([raw]);
 
   const catLabel = CATEGORIES.find((x) => x.slug === c.category)?.label ?? c.category;
   const initial = c.author.charAt(0).toUpperCase();

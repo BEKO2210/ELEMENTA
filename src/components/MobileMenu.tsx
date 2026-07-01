@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut, LogIn } from "lucide-react";
 import { GithubIcon } from "./BrandIcons";
+import { useAuth } from "./AuthProvider";
 
 const LINKS = [
   { href: "/explore", label: "Entdecken" },
@@ -19,6 +20,8 @@ export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
   // Bei Routenwechsel schließen.
   useEffect(() => {
@@ -69,7 +72,7 @@ export default function MobileMenu() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.18 }}
-              className="glass fixed inset-x-3 top-[4.25rem] z-50 overflow-hidden rounded-2xl p-2 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+              className="fixed inset-x-3 top-[4.25rem] z-50 overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12]/98 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl"
             >
               <nav aria-label="Mobile Navigation" className="flex flex-col">
                 {LINKS.map((l) => (
@@ -89,6 +92,36 @@ export default function MobileMenu() {
                 >
                   <GithubIcon size={15} /> GitHub
                 </a>
+
+                <div className="my-1 h-px bg-white/10" />
+
+                {user ? (
+                  <>
+                    <Link
+                      href="/profil"
+                      className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-fg-muted transition hover:bg-white/5 hover:text-white"
+                    >
+                      <User size={15} /> Mein Profil
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        setOpen(false);
+                        await logout();
+                        router.push("/");
+                      }}
+                      className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-left text-sm text-fg-muted transition hover:bg-white/5 hover:text-white"
+                    >
+                      <LogOut size={15} /> Abmelden
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-fg-muted transition hover:bg-white/5 hover:text-white"
+                  >
+                    <LogIn size={15} /> Anmelden / Registrieren
+                  </Link>
+                )}
               </nav>
             </motion.div>
           </>

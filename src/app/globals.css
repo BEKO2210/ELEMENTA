@@ -61,6 +61,15 @@ body {
   color: var(--fg);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* Definitiver Schutz gegen horizontales Scrollen der Seite (clip bricht sticky NICHT). */
+  overflow-x: clip;
+}
+
+/* Fallback für Engines ohne overflow:clip-Support (dort hidden, ebenfalls kein h-scroll). */
+@supports not (overflow: clip) {
+  body {
+    overflow-x: hidden;
+  }
 }
 
 h1, h2, h3 {

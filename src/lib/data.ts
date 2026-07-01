@@ -24,14 +24,31 @@ function mapDoc(d: any): UIComponent {
   };
 }
 
-/** Alle Komponenten (nach Likes sortiert). Fällt bei Fehler/leerer DB auf Mock zurück. */
+/**
+ * Lädt ALLE passenden Komponenten-Dokumente per Cursor-Pagination — kein hartes
+ * 60/100-Limit mehr, damit alle Ansichten (Home/Explore/Profil/öffentlich) dieselbe
+ * vollständige Menge sehen und Like-Summen übereinstimmen.
+ */
+async function listAllComponents(filters: string[]): Promise<any[]> {
+  const out: any[] = [];
+  let cursor: string | null = null;
+  // Sicherheitslimit gegen Endlosschleifen (bis 2000 Komponenten).
+  for (let page = 0; page < 20; page++) {
+    const queries = [...filters, Query.limit(100)];
+    if (cursor) queries.push(Query.cursorAfter(cursor));
+    const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, queries);
+    out.push(...r.documents);
+    if (r.documents.length < 100) break;
+    cursor = r.documents[r.documents.length - 1].$id;
+  }
+  return out;
+}
+
+/** Alle Komponenten (neueste zuerst). Fällt bei Fehler/leerer DB auf Mock zurück. */
 export async function fetchComponents(): Promise<UIComponent[]> {
   try {
-    const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, [
-      Query.orderDesc("createdAt"),
-      Query.limit(100),
-    ]);
-    return r.documents.length ? r.documents.map(mapDoc) : MOCK;
+    const docs = await listAllComponents([Query.orderDesc("createdAt")]);
+    return docs.length ? docs.map(mapDoc) : MOCK;
   } catch (e) {
     // Sichtbar machen: bei DB-Ausfall fallen wir auf Mock-Daten zurück (Betreiber-Signal).
     console.error("[data] fetchComponents failed, using mock fallback:", e);
@@ -55,26 +72,20 @@ export async function fetchComponent(slug: string): Promise<UIComponent | undefi
 /** Komponenten eines Nutzers per stabiler authorId (für Dashboard/Verwaltung). Kein Mock-Fallback. */
 export async function fetchByAuthorId(authorId: string): Promise<UIComponent[]> {
   try {
-    const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, [
-      Query.equal("authorId", authorId),
-      Query.orderDesc("createdAt"),
-      Query.limit(100),
-    ]);
-    return r.documents.map(mapDoc);
-  } catch {
+    const docs = await listAllComponents([Query.equal("authorId", authorId), Query.orderDesc("createdAt")]);
+    return docs.map(mapDoc);
+  } catch (e) {
+    console.error("[data] fetchByAuthorId failed:", e);
     return [];
   }
 }
 
 export async function fetchByAuthor(username: string): Promise<UIComponent[]> {
   try {
-    const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, [
-      Query.equal("authorUsername", username),
-      Query.orderDesc("createdAt"),
-      Query.limit(60),
-    ]);
-    return r.documents.map(mapDoc);
-  } catch {
+    const docs = await listAllComponents([Query.equal("authorUsername", username), Query.orderDesc("createdAt")]);
+    return docs.map(mapDoc);
+  } catch (e) {
+    console.error("[data] fetchByAuthor failed:", e);
     return MOCK.filter((c) => c.author === username);
   }
 }
@@ -86,15 +97,25 @@ export async function fetchByAuthor(username: string): Promise<UIComponent[]> {
 export async function attachLikeCounts(components: UIComponent[]): Promise<UIComponent[]> {
   if (!components.length) return components;
   try {
-    const ids = components.map((c) => c.id);
-    const r = await databases().listDocuments(DB_ID, COL_LIKES, [
-      Query.equal("componentId", ids),
-      Query.limit(2000),
-    ]);
     const counts: Record<string, number> = {};
-    for (const d of r.documents) {
-      const cid = (d as unknown as { componentId: string }).componentId;
-      counts[cid] = (counts[cid] || 0) + 1;
+    const ids = components.map((c) => c.id);
+    // Appwrite begrenzt IN-Listen auf 100 Werte und listDocuments auf 100 Treffer/Seite.
+    // Daher IDs in 100er-Batches abfragen und jede Seite per Cursor durchpaginieren —
+    // korrekt für beliebig viele Komponenten und Likes.
+    for (let i = 0; i < ids.length; i += 100) {
+      const batch = ids.slice(i, i + 100);
+      let cursor: string | null = null;
+      for (;;) {
+        const queries = [Query.equal("componentId", batch), Query.limit(100)];
+        if (cursor) queries.push(Query.cursorAfter(cursor));
+        const r = await databases().listDocuments(DB_ID, COL_LIKES, queries);
+        for (const d of r.documents) {
+          const cid = (d as unknown as { componentId: string }).componentId;
+          counts[cid] = (counts[cid] || 0) + 1;
+        }
+        if (r.documents.length < 100) break;
+        cursor = r.documents[r.documents.length - 1].$id;
+      }
     }
     return components.map((c) => ({ ...c, likes: counts[c.id] || 0 }));
   } catch (e) {
@@ -136,8 +157,8 @@ export function computeStats(components: UIComponent[]): SiteStats {
 
 export async function fetchSlugs(): Promise<string[]> {
   try {
-    const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, [Query.limit(200)]);
-    if (r.documents.length) return r.documents.map((d: any) => d.slug);
+    const docs = await listAllComponents([]);
+    if (docs.length) return docs.map((d) => d.slug);
   } catch {
     /* fall through */
   }
