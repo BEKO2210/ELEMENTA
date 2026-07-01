@@ -42,6 +42,7 @@ export default function Footer() {
               <p className="font-medium text-fg">Plattform</p>
               <Link href="/explore" className="block text-fg-muted hover:text-white">Entdecken</Link>
               <Link href="/submit" className="block text-fg-muted hover:text-white">Hochladen</Link>
+              <Link href="/about" className="block text-fg-muted hover:text-white">Über uns</Link>
               <Link href="/login" className="block text-fg-muted hover:text-white">Anmelden</Link>
             </div>
             <div className="space-y-2">
@@ -65,6 +66,7 @@ export default function Footer() {
               >
                 <GithubIcon size={14} /> GitHub
               </a>
+              <Link href="/guides" className="block text-fg-muted hover:text-white">Guides</Link>
               <Link href="/docs/contribute" className="block text-fg-muted hover:text-white">Mitmachen</Link>
               <Link href="/docs/guidelines" className="block text-fg-muted hover:text-white">Guidelines</Link>
             </div>

@@ -19,8 +19,11 @@ export default function Navbar() {
           <Link href="/submit" className="nav-link transition hover:text-white">
             Hochladen
           </Link>
-          <Link href="/#warum" className="nav-link transition hover:text-white">
-            Warum Elementa
+          <Link href="/guides" className="nav-link transition hover:text-white">
+            Guides
+          </Link>
+          <Link href="/about" className="nav-link transition hover:text-white">
+            Über uns
           </Link>
         </nav>
 

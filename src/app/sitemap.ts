@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { fetchComponents } from "@/lib/data";
+import { GUIDES } from "@/lib/guides";
 
 const BASE = "https://ui.it-handwerk-stuttgart.de";
 
@@ -13,6 +14,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1 },
     { url: `${BASE}/explore`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE}/submit`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE}/guides`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    ...GUIDES.map((g) => ({
+      url: `${BASE}/guides/${g.slug}`,
+      lastModified: new Date(g.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     { url: `${BASE}/docs/contribute`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/docs/guidelines`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/lizenz`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
