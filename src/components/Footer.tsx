@@ -1,0 +1,80 @@
+import Link from "next/link";
+import { ShieldCheck, Star } from "lucide-react";
+import { GithubIcon } from "./BrandIcons";
+import NewsletterSignup from "./NewsletterSignup";
+
+const GITHUB = "https://github.com/BEKO2210/ELEMENTA";
+
+export default function Footer() {
+  return (
+    <footer className="mt-24 border-t border-white/5">
+      <div className="mx-auto max-w-6xl px-5 py-12">
+        <div className="flex flex-col justify-between gap-10 md:flex-row">
+          <div className="max-w-sm">
+            <span className="text-lg font-bold">Elementa</span>
+            <p className="mt-2 text-sm text-fg-muted">
+              Der offene Baukasten für effektreiche UI-Komponenten. Gebaut von Entwicklern,
+              für Entwickler. In der EU gehostet. Immer kostenlos.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-400/5 px-3 py-1 text-xs text-emerald-300">
+                <ShieldCheck size={13} /> DSGVO · Made &amp; hosted in EU
+              </span>
+              <a
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-fg-muted transition hover:border-white/20 hover:text-white"
+              >
+                <Star size={13} /> Star on GitHub
+              </a>
+            </div>
+            <div className="mt-6">
+              <NewsletterSignup />
+            </div>
+          </div>
+
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-x-10 gap-y-8 text-sm sm:grid-cols-4"
+          >
+            <div className="space-y-2">
+              <p className="font-medium text-fg">Plattform</p>
+              <Link href="/explore" className="block text-fg-muted hover:text-white">Entdecken</Link>
+              <Link href="/submit" className="block text-fg-muted hover:text-white">Hochladen</Link>
+              <Link href="/login" className="block text-fg-muted hover:text-white">Anmelden</Link>
+            </div>
+            <div className="space-y-2">
+              <p className="font-medium text-fg">Frameworks</p>
+              <Link href="/explore" className="block text-fg-muted hover:text-white">React · Vue · Svelte</Link>
+              <Link href="/explore" className="block text-fg-muted hover:text-white">Tailwind · HTML/CSS</Link>
+            </div>
+            <div className="space-y-2">
+              <p className="font-medium text-fg">Rechtliches</p>
+              <Link href="/impressum" className="block text-fg-muted hover:text-white">Impressum</Link>
+              <Link href="/datenschutz" className="block text-fg-muted hover:text-white">Datenschutz</Link>
+              <Link href="/lizenz" className="block text-fg-muted hover:text-white">Lizenz (MIT)</Link>
+            </div>
+            <div className="space-y-2">
+              <p className="font-medium text-fg">Community</p>
+              <a
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-fg-muted hover:text-white"
+              >
+                <GithubIcon size={14} /> GitHub
+              </a>
+              <Link href="/docs/contribute" className="block text-fg-muted hover:text-white">Mitmachen</Link>
+              <Link href="/docs/guidelines" className="block text-fg-muted hover:text-white">Guidelines</Link>
+            </div>
+          </nav>
+        </div>
+
+        <p className="mt-10 text-xs text-fg-muted">
+          © {new Date().getFullYear()} Elementa · Ein Projekt von Belkis Aslani
+        </p>
+      </div>
+    </footer>
+  );
+}

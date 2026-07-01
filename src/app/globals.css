@@ -1,0 +1,350 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* Layered dark surfaces — deep OLED base → elevated cards → hover surface */
+  --bg: #050509;
+  --bg-soft: #0a0a12;
+  --panel: #101019;
+  --surface: #16161f;
+  --border: #23232e;
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --fg: #f4f3f8;
+  --fg-muted: #a8a6b8; /* ~8.5:1 auf --bg (WCAG AA) */
+  --fg-dim: #8785a0;   /* ~5.4:1 auf --bg (WCAG AA für normalen Text) */
+
+  /* Signature palette — Violett → Fuchsia → Cyan.
+     Kühl, „premium-tech", eigenständiger Verlauf als Marken-Signatur. */
+  --accent: #8b5cf6;        /* violet — primary brand */
+  --accent-2: #d946ef;      /* fuchsia — mid gradient */
+  --accent-3: #06b6d4;      /* cyan — secondary accent / contrast */
+  --accent-success: #10b981;/* WCAG / success */
+  --accent-warning: #eab308;
+  --accent-error: #ef4444;
+
+  /* Decorative gradient (Text, Borders, Glows) — voller Verlauf */
+  --grad: linear-gradient(120deg, var(--accent), var(--accent-2) 50%, var(--accent-3));
+  /* Button-Gradient — dunkler gehalten für weißen Text (Kontrast AA) */
+  --grad-btn: linear-gradient(135deg, #7c3aed, #a855f7 45%, #c026d3);
+
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.18);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-panel: var(--panel);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+button:not(:disabled),
+[role="button"],
+summary,
+select,
+label[for] {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 75%, transparent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Utilities ---------- */
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+/* ---------- Cards — Gradient-Border on hover (Uiverse-Feeling) ---------- */
+.card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+/* animierter Gradient-Rahmen via Pseudo-Element + Mask */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), transparent 45%, var(--accent-3));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: transparent;
+  box-shadow:
+    var(--shadow-lg),
+    0 0 30px rgba(139, 92, 246, 0.12);
+}
+.card:hover::before {
+  opacity: 1;
+}
+/* Live-Preview leicht heranzoomen beim Hover */
+.card-preview {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover .card-preview {
+  transform: scale(1.04);
+}
+
+/* Faint dotted grid background for hero / sections */
+.grid-bg {
+  background-image: radial-gradient(circle at center, #ffffff0d 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* Preview canvas — dezenter Punkteraster hinter Live-Vorschauen */
+.checker {
+  background-color: #0a0a12;
+  background-image: radial-gradient(circle at center, #ffffff0e 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Transparenz-Schachbrett (Preview-Toggle „Transparent") */
+.alpha-grid {
+  background-color: #1a1a22;
+  background-image:
+    linear-gradient(45deg, #ffffff0a 25%, transparent 25%, transparent 75%, #ffffff0a 75%),
+    linear-gradient(45deg, #ffffff0a 25%, transparent 25%, transparent 75%, #ffffff0a 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* ---------- Animated aurora background (Hero / CTA) ---------- */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 0.4;
+  pointer-events: none;
+  will-change: transform;
+  animation: auroraFloat 20s ease-in-out infinite;
+}
+@keyframes auroraFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(6%, -5%) scale(1.12); }
+  66%      { transform: translate(-5%, 5%) scale(0.94); }
+}
+
+.btn-grad {
+  position: relative;
+  overflow: hidden;
+  background: var(--grad-btn);
+  color: #fff;
+  font-weight: 600;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+.btn-grad:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 34px -8px color-mix(in oklab, var(--accent) 65%, transparent);
+}
+/* Shine-Sweep on hover */
+.btn-grad::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-130%) skewX(-18deg);
+  transition: transform 0.7s ease;
+}
+.btn-grad:hover::after {
+  transform: translateX(130%) skewX(-18deg);
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--panel) 60%, transparent);
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s,
+    transform 0.2s;
+}
+.chip:hover,
+.chip[data-active="true"] {
+  color: var(--fg);
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+}
+.chip:hover {
+  transform: translateY(-1px);
+}
+
+/* Nav-Links mit gleitendem Gradient-Underline */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ---- Logo / Brand animations ---- */
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(-1.5deg); }
+}
+@keyframes logoBar {
+  0%, 100% { transform: scaleX(1); transform-origin: left; }
+  50% { transform: scaleX(0.72); transform-origin: left; }
+}
+.logo-anim { animation: logoFloat 5s ease-in-out infinite; transform-origin: center; }
+.logo-bar-1 { animation: logoBar 4.5s ease-in-out infinite; }
+.logo-bar-2 { animation: logoBar 4.5s ease-in-out 0.4s infinite; }
+.logo-bar-3 { animation: logoBar 4.5s ease-in-out 0.8s infinite; }
+.logo-tile { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.group:hover .logo-tile { transform: rotate(6deg) scale(1.06); }
+
+/* animated gradient wordmark */
+@keyframes hueShift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+.wordmark-grad {
+  background: linear-gradient(100deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hueShift 6s linear infinite;
+}
+
+/* langsam wanderndes Shimmer für Gradient-Headlines */
+@keyframes textShimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.gradient-text.shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 8s ease infinite;
+}
+
+/* ---------- Skeleton / Shimmer (Loading States) ---------- */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  animation: shimmerMove 1.5s infinite;
+}
+@keyframes shimmerMove {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+/* Thin custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #34344a;
+}
