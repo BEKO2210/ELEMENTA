@@ -22,6 +22,18 @@ export const metadata: Metadata = {
   description:
     "Effektreiche, framework-übergreifende UI-Komponenten zum Kopieren. Kostenlos, barrierefrei geprüft, DSGVO-konform in der EU gehostet.",
   keywords: ["UI Komponenten", "Tailwind", "React", "Vue", "CSS", "Baukasten", "DSGVO"],
+  // Für Google Discover & Rich Results: große Bildvorschau + volle Snippets erlauben.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     siteName: "Elementa",
     title: "Elementa — Der offene Baukasten für UI-Komponenten",
