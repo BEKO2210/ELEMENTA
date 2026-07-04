@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Send, Check } from "lucide-react";
 
 /**
- * Schlanker Newsletter-Signup mit DSGVO-Einwilligung.
- * Ohne angebundenen Dienst wird die Anmeldung lokal bestätigt — die E-Mail wird
- * NICHT an Dritte übermittelt. Ein echter Versanddienst kann später ergänzt werden.
+ * Newsletter-Signup mit DSGVO-Einwilligung und DOUBLE-OPT-IN (T5): nach dem
+ * Absenden geht eine Bestätigungs-Mail raus; erst der Link darin aktiviert das
+ * Abo. Die E-Mail wird NICHT an Dritte übermittelt (EU-gehostetes Appwrite).
  */
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
@@ -45,8 +45,8 @@ export default function NewsletterSignup() {
 
   if (done) {
     return (
-      <p className="inline-flex items-center gap-2 rounded-xl border border-emerald-400/25 bg-emerald-400/5 px-3 py-2 text-sm text-emerald-300">
-        <Check size={15} /> Danke! Wir melden uns bei Neuigkeiten.
+      <p className="inline-flex items-start gap-2 rounded-xl border border-emerald-400/25 bg-emerald-400/5 px-3 py-2 text-sm text-emerald-300">
+        <Check size={15} className="mt-0.5 shrink-0" /> Fast geschafft! Wir haben dir eine Bestätigungs-Mail geschickt — bitte klick den Link darin.
       </p>
     );
   }

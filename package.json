@@ -17,6 +17,7 @@
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.22.0",
     "next": "16.2.9",
+    "nodemailer": "^9.0.3",
     "prism-react-renderer": "^2.4.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -27,6 +28,7 @@
     "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "axe-core": "^4.12.1",
@@ -35,6 +37,7 @@
     "local-ssl-proxy": "^2.0.5",
     "node-appwrite": "^26.2.0",
     "puppeteer-core": "^25.2.1",
+    "smtp-server": "^3.19.1",
     "svelte": "^4.2.19",
     "tailwindcss": "^4",
     "typescript": "^5"

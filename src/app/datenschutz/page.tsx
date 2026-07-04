@@ -122,7 +122,10 @@ export default function DatenschutzPage() {
         <p>
           <strong>Newsletter:</strong> Meldest du dich für Updates an, speichern wir deine
           E-Mail-Adresse und den Zeitpunkt deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
-          auf unserem EU-Server. Kein Versand über Dritt-Dienste, keine Weitergabe. Du kannst
+          auf unserem EU-Server. Wir nutzen ein <strong>Double-Opt-in-Verfahren</strong>: Du
+          erhältst zunächst eine Bestätigungs-Mail; erst nach Klick auf den darin enthaltenen
+          Link ist die Anmeldung aktiv. Bestätigst du nicht, wird die Adresse nach 30 Tagen
+          automatisch gelöscht. Kein Versand über Dritt-Dienste, keine Weitergabe. Du kannst
           dich jederzeit per E-Mail an uns wieder abmelden; die Adresse wird dann gelöscht.
         </p>
       </Section>
