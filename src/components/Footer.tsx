@@ -45,6 +45,7 @@ export default function Footer() {
               <Link href="/explore" className="block text-fg-muted hover:text-white">Entdecken</Link>
               <Link href="/submit" className="block text-fg-muted hover:text-white">Hochladen</Link>
               <Link href="/about" className="block text-fg-muted hover:text-white">Über uns</Link>
+              <Link href="/stats" className="block text-fg-muted hover:text-white">Statistiken</Link>
               <Link href="/login" className="block text-fg-muted hover:text-white">Anmelden</Link>
             </div>
             <div className="space-y-2">
