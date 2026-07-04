@@ -178,10 +178,10 @@ Bereits vorher vorhanden & geprüft: Skip-Link, `prefers-reduced-motion` global 
 Umsetzung: `scripts/integrity-guard.mjs` läuft per Cron **alle 10 Minuten** und erzwingt: (1) `a11y` darf nur den Wert des letzten echten axe-Audits tragen — und nur solange der Code (framework+html+css+js) exakt dem auditierten Stand entspricht (SHA-256-Hash im `a11y-report.json`, geschrieben von `a11y-audit.mjs`); alles andere → `"unchecked"`. (2) `likesCount` = echte Zählung aus der likes-Collection. (3) `views` = 0. Nightly-Cron (4:00) zertifiziert neue/geänderte Komponenten per echtem axe-Audit.
 Nachweis: `scripts/test-integrity.mjs` (E2E mit Wegwerf-Account, räumt vollständig auf) — Fake-Komponente mit `a11y:"pass"`/`likesCount:424242`/`views:999999` wird zurückgesetzt (Badge zeigt „A11y prüfen"); nachträgliche Code-Manipulation einer zertifizierten Komponente lässt das Badge fallen. Alle Prüfungen ✅.
 
-**T2 — Betriebs-Härtung (P1)** 🔶 **TEILWEISE ERLEDIGT (2026-07-04)**
+**T2 — Betriebs-Härtung (P1)** ✅ **ERLEDIGT (2026-07-04)**
 `_APP_OPTIONS_ABUSE`/Rate-Limits in Appwrite-`.env` verifizieren (`docker exec appwrite printenv | grep ABUSE`), API-Key rotieren (Console) und in `elementa/.env.local` + Server-Neustart nachziehen. Akzeptanz: Login-Bruteforce (11 Fehlversuche) → 429; alter Key → 401.
 Umsetzung Rate-Limits ✅: `_APP_OPTIONS_ABUSE` war `disabled` → auf `enabled` gesetzt, Appwrite-Stack neu erstellt (`docker compose up -d`, Container `appwrite` + `appwrite-realtime` recreated). Nachweis: 11 Fehl-Logins → 10× 401, 11. → **429** — sowohl direkt (`localhost:8030`) als auch über die öffentliche Domain (Cloudflare). Website (Port 3000) und Integrity-Guard (96 Komponenten) laufen unbeeinträchtigt weiter (API-Key-Requests sind vom Abuse-Limiter ausgenommen).
-Ausstehend ⏳: API-Key-Rotation durch Belkis (neuen Key in der Console anlegen, per `sed` in `.env.local` eintragen, Next-Server-Neustart, alter Key → 401 verifizieren, alten Key löschen).
+Umsetzung Key-Rotation ✅: Neuer Key in der Console erstellt (Belkis), in `.env.local` eingetragen, alter Key in der Console gelöscht. Next-Server neu gestartet — läuft jetzt als User `belkis` statt root (Altlast behoben), Logs unter `logs/server.log`. Nachweis: alter Key → **401**, neuer Key → **200**; Website lokal + öffentlich 200; Integrity-Guard mit neuem Key fehlerfrei (96 geprüft, 0 korrigiert).
 
 **T3 — CI-Testsuite (P1)**
 GitHub Actions: `npm run build` + `audit-links` + `audit-axe-pages` + Playwright-Kernflows (Liste §10) + Lighthouse-CI gegen Preview-Build. Akzeptanz: PR ohne grüne Pipeline nicht mergebar.
@@ -223,7 +223,7 @@ Im Upload-Formular unter der Checkbox 1-Zeilen-Hinweis auf Moderation/Meldung (n
 - [x] XSS-Vektoren geschlossen (JSON-LD, React-Escaping, Sandbox-CSP)
 - [x] **T1:** WCAG-Badge serverseitig fälschungssicher (Hash-gebundener Integritäts-Guard, Cron alle 10 Min, E2E-nachgewiesen)
 - [x] **T2a:** Rate-Limits aktiviert & verifiziert (2026-07-04: 11 Fehl-Logins → 429, lokal + öffentlich)
-- [ ] **T2b:** API-Key rotiert (wartet auf Belkis: neuen Key in Console anlegen + in `.env.local` eintragen)
+- [x] **T2b:** API-Key rotiert (2026-07-04: alter Key → 401, neuer Key → 200, alter Key in Console gelöscht)
 - [ ] **T3:** CI-Pipeline verhindert Regressionen automatisch
 - [ ] **T4:** Melde-/Moderations-Pfad für Community-Inhalte
 
