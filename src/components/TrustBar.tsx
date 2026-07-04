@@ -14,12 +14,12 @@ export default function TrustBar({ stats }: { stats: SiteStats }) {
   return (
     <dl className="glass grid grid-cols-2 gap-px overflow-hidden rounded-2xl sm:grid-cols-4">
       {items.map((it) => (
-        <div key={it.label} className="flex flex-col items-center gap-1 bg-white/[0.015] px-4 py-6 text-center">
+        <div key={it.label} className="flex flex-col items-center gap-1.5 bg-white/[0.015] px-4 py-7 text-center">
           <it.icon size={18} className="text-accent" aria-hidden="true" />
-          <dd className="text-2xl font-bold text-fg">
+          <dd className="font-display text-3xl font-bold tracking-tight text-fg">
             <CountUp value={it.value} suffix={it.suffix} />
           </dd>
-          <dt className="text-xs text-fg-muted">{it.label}</dt>
+          <dt className="text-xs tracking-wide text-fg-muted">{it.label}</dt>
         </div>
       ))}
     </dl>

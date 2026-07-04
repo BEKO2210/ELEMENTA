@@ -4,6 +4,7 @@ import CommandTrigger from "./CommandTrigger";
 import { Logo } from "./Logo";
 import { GithubIcon } from "./BrandIcons";
 import MobileMenu from "./MobileMenu";
+import NavLinks from "./NavLinks";
 
 export default function Navbar() {
   return (
@@ -13,20 +14,7 @@ export default function Navbar() {
           <Logo size={32} />
         </Link>
 
-        <nav aria-label="Hauptnavigation" className="hidden items-center gap-7 text-sm text-fg-muted md:flex">
-          <Link href="/explore" className="nav-link transition hover:text-white">
-            Entdecken
-          </Link>
-          <Link href="/submit" className="nav-link transition hover:text-white">
-            Hochladen
-          </Link>
-          <Link href="/guides" className="nav-link transition hover:text-white">
-            Guides
-          </Link>
-          <Link href="/about" className="nav-link transition hover:text-white">
-            Über uns
-          </Link>
-        </nav>
+        <NavLinks />
 
         <div className="flex items-center gap-2">
           <a

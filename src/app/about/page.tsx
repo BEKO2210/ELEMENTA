@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Boxes, ShieldCheck, Euro, Sparkles, ArrowRight, Mail } from "lucide-react";
 import { GithubIcon } from "@/components/BrandIcons";
@@ -65,12 +66,40 @@ export default function AboutPage() {
         }}
       />
 
-      <header>
-        <h1 className="text-4xl font-bold tracking-tight">Über Elementa</h1>
-        <p className="mt-4 text-lg text-fg-muted">
-          Elementa ist der offene Baukasten für effektreiche UI-Komponenten — framework-übergreifend,
-          barrierefrei geprüft und DSGVO-konform in der EU gehostet.
-        </p>
+      <header className="flex flex-col-reverse items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="eyebrow">Das Element für bessere Interfaces</p>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight">Über Elementa</h1>
+          <p className="mt-4 text-lg text-fg-muted">
+            Elementa ist der offene Baukasten für effektreiche UI-Komponenten — framework-übergreifend,
+            barrierefrei geprüft und DSGVO-konform in der EU gehostet.
+          </p>
+        </div>
+        {/* 3D-Loop des Markenzeichens: der Baustein, aus dem Interfaces entstehen.
+            Bei prefers-reduced-motion zeigt CSS stattdessen das statische Render. */}
+        <span className="mx-auto shrink-0 overflow-hidden rounded-3xl border border-white/[0.06] shadow-[0_20px_60px_-20px_rgba(139,92,246,0.5)] sm:mx-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/brand/logo-3d.png"
+            width={190}
+            height={190}
+            aria-hidden="true"
+            className="block h-[190px] w-[190px] object-cover motion-reduce:hidden"
+          >
+            <source src="/brand/logo-loop.webm" type="video/webm" />
+            <source src="/brand/logo-loop.mp4" type="video/mp4" />
+          </video>
+          <Image
+            src="/brand/logo-3d.png"
+            alt=""
+            width={190}
+            height={190}
+            className="hidden motion-reduce:block"
+          />
+        </span>
       </header>
 
       <section className="mt-12 space-y-4 leading-relaxed text-fg-muted">

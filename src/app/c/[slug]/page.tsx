@@ -111,8 +111,8 @@ export default async function ComponentPage({
       {/* Header */}
       <div className="mt-5 flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <h1 className="text-3xl font-bold">{c.title}</h1>
-          <p className="mt-2 max-w-2xl text-fg-muted">{c.description}</p>
+          <h1 className="text-3xl font-bold sm:text-4xl">{c.title}</h1>
+          <p className="mt-2 max-w-2xl text-lg text-fg-muted">{c.description}</p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
             <Link

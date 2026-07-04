@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,11 +7,14 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { ToastProvider } from "@/components/Toast";
 import CommandPalette from "@/components/CommandPalette";
 import CookieConsent from "@/components/CookieConsent";
+import SpotlightEffect from "@/components/SpotlightEffect";
 import Analytics from "@/components/Analytics";
 import { Suspense } from "react";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"] });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"] });
+// Display-Font für Headlines & Wortmarke — markanter Tech-Charakter.
+const display = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ui.it-handwerk-stuttgart.de"),
@@ -66,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${sans.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${display.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a
@@ -78,6 +81,7 @@ export default function RootLayout({
         <AuthProvider>
           <ToastProvider>
             <CommandPalette />
+            <SpotlightEffect />
             <Navbar />
             <main id="main" className="flex-1 overflow-x-clip">{children}</main>
             <Footer />

@@ -37,7 +37,7 @@ export default function ComponentCard({ c, popular }: { c: UIComponent; popular?
   const badge = FRAMEWORK_COLOR[c.framework] ?? "border-white/10 bg-white/5 text-fg-muted";
 
   return (
-    <article className="card group relative overflow-hidden">
+    <article className="card spotlight group relative overflow-hidden">
       {/* Ganzflächiger Navigations-Link (liegt unter den interaktiven Elementen). */}
       <Link href={`/c/${c.slug}`} className="absolute inset-0 z-10" aria-label={`${c.title} öffnen`} />
 

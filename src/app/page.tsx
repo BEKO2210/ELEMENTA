@@ -8,6 +8,7 @@ import ComponentCard from "@/components/ComponentCard";
 import HeroSearch from "@/components/HeroSearch";
 import HeroShowcase, { type ShowcaseItem } from "@/components/HeroShowcase";
 import HeroVideo from "@/components/HeroVideo";
+import TechMarquee from "@/components/TechMarquee";
 import TrustBar from "@/components/TrustBar";
 import WhySection from "@/components/WhySection";
 import CommunityCTA from "@/components/CommunityCTA";
@@ -115,18 +116,26 @@ export default async function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-20 lg:grid-cols-2 lg:gap-8 lg:pt-24">
           {/* Links: Text + Suche */}
           <div className="text-center lg:text-left">
-            <h1 className="rise text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
-              Baue bessere Interfaces.
-              <br />
-              <span className="gradient-text shimmer">Kopiere weniger Code.</span>
+            <p className="eyebrow rise justify-center lg:justify-start">
+              Open-Source UI-Bibliothek · Made in EU
+            </p>
+
+            <h1 className="mt-4 text-balance text-[2.75rem] font-bold leading-[1.02] tracking-tight sm:text-6xl">
+              <span className="line-reveal"><span>Baue bessere</span></span>
+              <span className="line-reveal"><span style={{ animationDelay: "120ms" }}>Interfaces.</span></span>
+              <span className="line-reveal">
+                <span className="gradient-text shimmer" style={{ animationDelay: "240ms" }}>
+                  Kopiere weniger.
+                </span>
+              </span>
             </h1>
 
             <p
-              className="rise mx-auto mt-5 max-w-xl text-balance text-lg text-fg-muted lg:mx-0"
+              className="rise mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-fg-muted lg:mx-0"
               style={{ animationDelay: "90ms" }}
             >
-              40+ geprüfte UI-Komponenten — live editierbar, framework-übergreifend,
-              MIT-lizenziert. Kein NPM. Kein Build-Step. Einfach kopieren und einfügen.
+              {stats.components}+ geprüfte UI-Komponenten — live editierbar, framework-übergreifend,
+              MIT-lizenziert. Kein npm. Kein Build-Step. Einfach kopieren und einfügen.
             </p>
 
             <ul
@@ -168,8 +177,13 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ---------- Tech-Marquee ---------- */}
+      <section className="mx-auto max-w-6xl px-5 pt-2">
+        <TechMarquee />
+      </section>
+
       {/* ---------- Trust Bar ---------- */}
-      <section className="mx-auto max-w-6xl px-5">
+      <section className="mx-auto max-w-6xl px-5 pt-8">
         <Reveal>
           <TrustBar stats={stats} />
         </Reveal>
@@ -199,11 +213,12 @@ export default async function Home() {
       </section>
 
       {/* ---------- Featured ---------- */}
-      <section className="mx-auto max-w-6xl px-5 pt-14">
-        <div className="mb-6 flex items-end justify-between">
+      <section className="mx-auto max-w-6xl px-5 pt-20">
+        <div className="mb-8 flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold">Beliebte Komponenten</h2>
-            <p className="mt-1 text-sm text-fg-muted">Live-Vorschau — kein Screenshot.</p>
+            <p className="eyebrow">Bibliothek</p>
+            <h2 className="mt-2 text-3xl font-bold">Beliebte Komponenten</h2>
+            <p className="mt-1.5 text-sm text-fg-muted">Jede Karte ist eine echte Live-Vorschau — kein Screenshot.</p>
           </div>
           <Link
             href="/explore"
@@ -222,22 +237,24 @@ export default async function Home() {
       </section>
 
       {/* ---------- So funktioniert's ---------- */}
-      <section id="so" className="mx-auto max-w-6xl px-5 pt-24">
+      <section id="so" className="mx-auto max-w-6xl px-5 pt-28">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold">So funktioniert&apos;s</h2>
+          <p className="eyebrow justify-center">Workflow</p>
+          <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Unter 60 Sekunden bis zum Einbau</h2>
           <p className="mt-3 text-fg-muted">Von der Idee zur eingebauten Komponente — in drei Schritten.</p>
         </div>
-        <Stagger className="mt-10 grid gap-5 sm:grid-cols-3">
+        <Stagger className="mt-12 grid gap-5 sm:grid-cols-3">
           {STEPS.map((s, i) => (
-            <StaggerItem key={s.title} className="glass rounded-2xl p-6">
-              <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/5 text-accent">
-                  <s.icon size={18} aria-hidden="true" />
+            <StaggerItem key={s.title} className="spotlight glass relative rounded-2xl p-7">
+              {i < STEPS.length - 1 && <span className="step-line hidden sm:block" aria-hidden="true" />}
+              <div className="flex items-center gap-4">
+                <span className="conic-ring grid h-[52px] w-[52px] place-items-center rounded-2xl">
+                  <s.icon size={20} className="text-accent" aria-hidden="true" />
                 </span>
-                <span className="text-sm font-semibold text-fg-dim">Schritt {i + 1}</span>
+                <span className="font-mono text-xs tracking-[0.18em] text-fg-dim">0{i + 1}</span>
               </div>
-              <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm text-fg-muted">{s.text}</p>
+              <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.text}</p>
             </StaggerItem>
           ))}
         </Stagger>

@@ -7,9 +7,11 @@ import { Reveal } from "./Motion";
 export default function CommunityCTA({ stats }: { stats: SiteStats }) {
   return (
     <section className="mx-auto mt-24 max-w-6xl px-5">
-      <Reveal className="glass relative overflow-hidden rounded-3xl px-8 py-14 text-center">
+      <Reveal className="glass noise relative overflow-hidden rounded-3xl px-8 py-16 text-center">
         <div className="aurora-blob left-1/2 top-0 h-52 w-96 -translate-x-1/2" style={{ background: "#8b5cf6" }} />
-        <h2 className="relative text-3xl font-bold sm:text-4xl">
+        <div className="aurora-blob -right-20 bottom-0 h-44 w-72" style={{ background: "#06b6d4", animationDelay: "-8s", opacity: 0.25 }} />
+        <p className="eyebrow relative justify-center">Community</p>
+        <h2 className="relative mt-3 text-3xl font-bold sm:text-4xl">
           Teile deine <span className="gradient-text">UI-Komponenten</span> mit der Community
         </h2>
         <p className="relative mx-auto mt-4 max-w-lg text-fg-muted">

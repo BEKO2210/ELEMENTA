@@ -61,14 +61,18 @@ export default function ExploreClient({ components }: { components: UIComponent[
   return (
     <div className="mx-auto max-w-6xl px-5 py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Komponenten entdecken</h1>
-        <p className="mt-1 text-fg-muted">
+        <p className="eyebrow">Bibliothek</p>
+        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Komponenten entdecken</h1>
+        <p className="mt-2 text-fg-muted">
           {components.length} Komponenten · Live-Vorschau · zum Kopieren
         </p>
       </div>
 
+      {/* Suche + Filter: sticky unter der Navbar, Glas-Fläche für Kontext beim Scrollen */}
+      {/* Auf Mobile nicht sticky — das Panel wäre dort zu hoch und verdeckt die Karten. */}
+      <div className="glass z-30 -mx-5 mb-8 space-y-3 border-x-0 px-5 py-4 sm:sticky sm:top-16 sm:mx-0 sm:rounded-2xl sm:border-x">
       {/* Search */}
-      <div className="relative mb-5">
+      <div className="relative">
         <Search
           size={18}
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-fg-dim"
@@ -82,7 +86,7 @@ export default function ExploreClient({ components }: { components: UIComponent[
       </div>
 
       {/* Filters */}
-      <div className="mb-8 space-y-3">
+      <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
           <Chip active={cat === "all"} onClick={() => setCat("all")}>
             Alle
@@ -119,6 +123,7 @@ export default function ExploreClient({ components }: { components: UIComponent[
             </select>
           </div>
         </div>
+      </div>
       </div>
 
       <p className="mb-4 text-sm text-fg-muted" aria-live="polite">

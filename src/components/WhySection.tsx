@@ -33,23 +33,36 @@ export default function WhySection({ stats }: { stats: SiteStats }) {
   ];
 
   return (
-    <section id="warum" className="mx-auto max-w-6xl px-5 pt-24">
+    <section id="warum" className="mx-auto max-w-6xl px-5 pt-28">
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold">Warum Entwickler Elementa wählen</h2>
+        <p className="eyebrow justify-center">Fakten statt Marketing</p>
+        <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Warum Entwickler Elementa wählen</h2>
         <p className="mt-3 text-fg-muted">
           Kein Marketing-Versprechen, sondern nachprüfbare Fakten aus der Bibliothek.
         </p>
       </div>
 
-      <Stagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.map((c) => (
-          <StaggerItem key={c.title} className="glass rounded-2xl p-6">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-accent">
+      {/* Bento-Grid: zwei große, zwei kompakte Kacheln — mehr Rhythmus als 4 gleiche */}
+      <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+        {cards.map((c, i) => (
+          <StaggerItem
+            key={c.title}
+            className={`spotlight glass relative overflow-hidden rounded-2xl p-7 ${
+              // Asymmetrisches Bento-Raster: breit/schmal im Zickzack
+              i === 0 || i === 3 ? "lg:col-span-4" : "lg:col-span-2"
+            }`}
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-[0.14] blur-2xl"
+              style={{ background: "var(--grad)" }}
+            />
+            <span className="grid h-11 w-11 place-items-center rounded-xl border border-white/[0.06] bg-white/5 text-accent">
               <c.icon size={20} aria-hidden="true" />
             </span>
-            <p className="mt-4 text-2xl font-bold text-fg">{c.value}</p>
+            <p className="font-display mt-5 text-3xl font-bold tracking-tight text-fg">{c.value}</p>
             <h3 className="mt-1 text-sm font-semibold text-fg">{c.title}</h3>
-            <p className="mt-2 text-sm text-fg-muted">{c.text}</p>
+            <p className="mt-2 text-sm leading-relaxed text-fg-muted">{c.text}</p>
           </StaggerItem>
         ))}
       </Stagger>
