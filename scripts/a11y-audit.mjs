@@ -8,6 +8,7 @@
  */
 import puppeteer from "puppeteer-core";
 import { readFileSync } from "fs";
+import { createHash } from "crypto";
 import { Client, Databases, Query } from "node-appwrite";
 
 const DRY = process.argv.includes("--dry");
@@ -22,8 +23,26 @@ const axeSource = readFileSync("node_modules/axe-core/axe.min.js", "utf8");
 const client = new Client().setEndpoint(endpoint).setProject(project);
 if (apiKey) client.setKey(apiKey);
 const db = new Databases(client);
-const { documents } = await db.listDocuments("marketplace", "components", [Query.limit(100)]);
+
+// Alle Komponenten paginiert laden (nicht auf 100 begrenzen)
+const documents = [];
+let cursor = null;
+for (;;) {
+  const q = [Query.limit(100)];
+  if (cursor) q.push(Query.cursorAfter(cursor));
+  const page = await db.listDocuments("marketplace", "components", q);
+  documents.push(...page.documents);
+  if (page.documents.length < 100) break;
+  cursor = page.documents[page.documents.length - 1].$id;
+}
 console.log(`Audit über ${documents.length} Komponenten…\n`);
+
+// Hash über den geprüften Code — der Integritäts-Guard akzeptiert ein Badge
+// nur, solange der Code in der DB exakt dem auditierten Stand entspricht.
+const codeHash = (doc) =>
+  createHash("sha256")
+    .update([doc.framework, doc.html || "", doc.css || "", doc.js || ""].join("\u0000"))
+    .digest("hex");
 
 const browser = await puppeteer.launch({
   executablePath: "/usr/bin/chromium-browser",
@@ -73,7 +92,7 @@ for (const doc of documents) {
       nodes: v.nodes.length,
     }));
     const status = violations.length === 0 ? "pass" : "warn";
-    report.push({ slug: doc.slug, framework: doc.framework, prev: doc.a11y, status, violations });
+    report.push({ slug: doc.slug, framework: doc.framework, prev: doc.a11y, status, violations, hash: codeHash(doc) });
 
     const badge = status === "pass" ? "✓ pass" : `✗ warn (${violations.map((v) => v.id).join(", ")})`;
     console.log(`${badge}  ${doc.slug}`);

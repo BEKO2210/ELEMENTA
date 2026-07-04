@@ -24,7 +24,7 @@
 | ID | Bereich | Problem | Auswirkung | Prio | Routen | Ursache | Fix | Akzeptanzkriterium | Test |
 |----|---------|---------|-----------|------|--------|---------|-----|--------------------|------|
 | C1 | Security/XSS | `JsonLd` injizierte `JSON.stringify(data)` ohne `<`-Escaping; Komponenten-Titel fließen in JSON-LD → `</script>`-Ausbruch möglich | Stored XSS über Komponenten-Titel | **P0** | `/`, `/c/[slug]`, `/guides/*` | `dangerouslySetInnerHTML` ohne Escaping | `.replace(/</g, "\\u003c")` | Titel mit `</script><script>` rendert als Text | ✅ **FIXED** — Code-Review `JsonLd.tsx`; Payload-Test |
-| C2 | Integrität | Eingeloggter Nutzer kann per REST-API Komponente mit `a11y:"pass"` + `likesCount:424242` anlegen | Gefälschtes WCAG-Badge zerstört das zentrale Vertrauensversprechen | **P1** | Appwrite `components` | Appwrite kann Attribute nicht pro Feld schützen; Client setzt Felder, API-Nutzer umgehen das | Siehe **T1** (Integritäts-Job/Function) | API-erstellte Komponente zeigt nie ungeprüftes WCAG-Badge | E2E-Test vorhanden (`Fake-Komponente: 201, a11y=pass` nachgewiesen); nach Fix: Badge erscheint nicht |
+| C2 | Integrität | Eingeloggter Nutzer kann per REST-API Komponente mit `a11y:"pass"` + `likesCount:424242` anlegen | Gefälschtes WCAG-Badge zerstört das zentrale Vertrauensversprechen | **P1** | Appwrite `components` | Appwrite kann Attribute nicht pro Feld schützen; Client setzt Felder, API-Nutzer umgehen das | **T1 umgesetzt:** `integrity-guard.mjs` (Cron alle 10 Min) bindet Badges per SHA-256-Code-Hash an den letzten echten axe-Audit; erzwingt `likesCount` = echte Zählung, `views` = 0 | API-erstellte Komponente zeigt nie ungeprüftes WCAG-Badge | ✅ **FIXED** — `scripts/test-integrity.mjs` (E2E): Fake-Felder werden zurückgesetzt; Code-Manipulation zertifizierter Komponenten lässt Badge fallen |
 | C3 | Vertrauen | Newsletter bestätigte Anmeldung, **speicherte aber nichts** | Nutzer glauben sich angemeldet; Widerspruch zur „Wahrheitsregel" der Marke | **P1** | Footer (alle Seiten) | Platzhalter-Implementierung | `/api/newsletter` + private Collection `newsletter` (unique email, idempotent, Validierung) | POST speichert; Doppelanmeldung ok; ungültige Mail → 400 | ✅ **FIXED** — curl-Tests: `{"ok":true}`, idempotent, 400 bei Müll |
 | C4 | DSGVO | Datenschutz behauptete „keine Datenübermittlung in Drittländer" — **aller Traffic läuft durch Cloudflare (US)** | Faktisch falsche Datenschutzerklärung = Abmahnrisiko | **P1** | `/datenschutz` | Cloudflare-Tunnel nicht dokumentiert | Abschnitt 2 neu: Cloudflare als AV, DPF/SCC, Art. 6 I f; Newsletter-Absatz ergänzt | Erklärung nennt Cloudflare & Rechtsgrundlage | ✅ **FIXED** — Text live |
 | C5 | UX | Hero-Such-Dropdown öffnete **unterhalb der Chips** statt am Feld und war durchscheinend | Suche wirkt kaputt (vom Betreiber selbst gemeldet) | **P1** | `/` | Dropdown ankerte am äußeren Container (`top:100%` = unter dem Gesamtblock) | Eigener `relative`-Anker nur um Feld+Dropdown; solider BG `#12121c` | Dropdown öffnet ≤ 8 px unter dem Feld, opak | ✅ **FIXED** — Screenshot-Verifikation |
@@ -117,7 +117,7 @@ Bereits vorher vorhanden & geprüft: Skip-Link, `prefers-reduced-motion` global 
 **Angriffstests (Wegwerf-Account, danach vollständig gelöscht):**
 - Doppel-Like → **409** (Unique-Index) ✅
 - Update fremder Komponente → **401** ✅
-- Komponente mit `a11y:"pass"`/`likesCount:424242` → **201 ⚠️ = C2/T1** (einziger offener Security-Befund)
+- Komponente mit `a11y:"pass"`/`likesCount:424242` → 201, aber Integritäts-Guard setzt die Felder binnen ≤ 10 Min zurück → **✅ FIXED via T1** (`test-integrity.mjs`)
 - XSS-Kommentar (`<img onerror>`): Speicherung roh, Rendering React-escaped ✅; JSON-LD-Vektor gefixt (C1)
 
 **Weitere Punkte:** `likesCount` im UI bereits ignoriert (echte Zählung via likes-Collection) — Feld deprecaten (T7). Rate-Limits: Appwrite-Default (`_APP_OPTIONS_ABUSE`) nicht ausgelesen — verifizieren (T2). API-Key-Hygiene: Key wurde in Chats geteilt → **rotieren** und in `.env.local` aktualisieren (T2).
@@ -174,11 +174,9 @@ Bereits vorher vorhanden & geprüft: Skip-Link, `prefers-reduced-motion` global 
 
 ## 11. Claude Code Implementation Tasks
 
-**T1 — WCAG-Badge-Integrität serverseitig absichern (P1, Security)**
-Ziel: API-forcierte `a11y:"pass"`-Werte können nie ein Badge erzeugen.
-Dateien: neues `scripts/integrity-guard.mjs` (Cron auf Server) ODER Appwrite Function (`databases.*.collections.components.documents.*.create/update`-Trigger).
-Umsetzung: Bei create/update von Nicht-Admin: `a11y → "unchecked"`, `likesCount → 0`, `views → 0` erzwingen; nightly zusätzlich `a11y-audit.mjs` laufen lassen.
-Akzeptanz: E2E-Test aus §7 erzeugt Komponente → Badge zeigt „A11y prüfen", nach Nightly-Audit echten Wert. Test: bestehendes E2E-Skript erweitern.
+**T1 — WCAG-Badge-Integrität serverseitig absichern (P1, Security)** ✅ **ERLEDIGT (2026-07-04)**
+Umsetzung: `scripts/integrity-guard.mjs` läuft per Cron **alle 10 Minuten** und erzwingt: (1) `a11y` darf nur den Wert des letzten echten axe-Audits tragen — und nur solange der Code (framework+html+css+js) exakt dem auditierten Stand entspricht (SHA-256-Hash im `a11y-report.json`, geschrieben von `a11y-audit.mjs`); alles andere → `"unchecked"`. (2) `likesCount` = echte Zählung aus der likes-Collection. (3) `views` = 0. Nightly-Cron (4:00) zertifiziert neue/geänderte Komponenten per echtem axe-Audit.
+Nachweis: `scripts/test-integrity.mjs` (E2E mit Wegwerf-Account, räumt vollständig auf) — Fake-Komponente mit `a11y:"pass"`/`likesCount:424242`/`views:999999` wird zurückgesetzt (Badge zeigt „A11y prüfen"); nachträgliche Code-Manipulation einer zertifizierten Komponente lässt das Badge fallen. Alle Prüfungen ✅.
 
 **T2 — Betriebs-Härtung (P1)**
 `_APP_OPTIONS_ABUSE`/Rate-Limits in Appwrite-`.env` verifizieren (`docker exec appwrite printenv | grep ABUSE`), API-Key rotieren (Console) und in `elementa/.env.local` + Server-Neustart nachziehen. Akzeptanz: Login-Bruteforce (11 Fehlversuche) → 429; alter Key → 401.
@@ -221,7 +219,7 @@ Im Upload-Formular unter der Checkbox 1-Zeilen-Hinweis auf Moderation/Meldung (n
 - [x] Datenschutz beschreibt die tatsächliche Architektur (inkl. Cloudflare)
 - [x] Anonyme Schreibzugriffe unmöglich; Doppel-Likes unmöglich; private Collections nicht lesbar
 - [x] XSS-Vektoren geschlossen (JSON-LD, React-Escaping, Sandbox-CSP)
-- [ ] **T1:** WCAG-Badge serverseitig fälschungssicher
+- [x] **T1:** WCAG-Badge serverseitig fälschungssicher (Hash-gebundener Integritäts-Guard, Cron alle 10 Min, E2E-nachgewiesen)
 - [ ] **T2:** Rate-Limits verifiziert, API-Key rotiert
 - [ ] **T3:** CI-Pipeline verhindert Regressionen automatisch
 - [ ] **T4:** Melde-/Moderations-Pfad für Community-Inhalte

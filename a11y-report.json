@@ -4,615 +4,772 @@
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "88a78d478ec36d3b0409554c76cb2eec5c31c1e5a712b7f7b712ad672136aa3a"
   },
   {
     "slug": "glow-card",
     "framework": "tailwind",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "f3218952a94cd45cd2610f6ea1558e8a876b43fa639549d212c50b45ee57c912"
   },
   {
     "slug": "orbit-loader",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "c6416733743bc457b27cc7a5d7e40174507860435523ef109bc4480b9428104a"
   },
   {
     "slug": "magnetic-button",
     "framework": "react",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "1d7b01188b820a62ebc5742f311e552d6ce1c6891682085d283d2da8dddb7b5c"
   },
   {
     "slug": "gradient-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "612c45021f1b3b6898be470c7731b196398591a069f8d719e9652e74a7d92076"
   },
   {
     "slug": "aurora-background",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "089140c81b0d6eecb23a4e8ef8fce252c9f40e1863e7a61a746c3070d3e24868"
   },
   {
     "slug": "neon-orbit-loader",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "c912ec929e03159a17dea2e8d1b626868cf8f1c91791d3121a363129f3dea865"
   },
   {
     "slug": "aurora-pulse-button",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "fd7b623f613852cdf9eb209a8f43bf3cf7598a5e78b57d621c7f349d37579dfc"
   },
   {
     "slug": "quantum-glass-button",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "a226edd98d6b4cb749caf53c65720a6b1d22f52dbcbefac2e8b60a3e4d22813a"
   },
   {
     "slug": "aurora-glow-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "3a11d5d5702df37cbbaed58d8ce56de561992c63859c8edde31e0433df62708f"
   },
   {
     "slug": "glossy-shine-sweep-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "45eaa76e0133ec16317867759275a18a81e2166fe63f78e8cce8a8b9edf7eef7"
   },
   {
     "slug": "neon-pulse-outline-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "0ef0a97268017ddbe4773684bf386bd9291c65d5246310352d38511fb2baf925"
   },
   {
     "slug": "three-d-press-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d7233cc422cd9ecac6ee28e63f466e4f31703eb6df3557572f583df1f1bc545a"
   },
   {
     "slug": "liquid-flow-ripple-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "4b672e379f848a8168be00ed8835c507960ca33cb7938fe2197db5e91aec801e"
   },
   {
     "slug": "spotlight-glass-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "f16bd4b3c93fd2665b146d53f2a1816731a362850789cfcd077f98980182091a"
   },
   {
     "slug": "animated-gradient-border-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "0621cf5771fc6499d20d54be5786409a73b2da5fcb160df60be643916ad1ab76"
   },
   {
     "slug": "3d-tilt-product-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "585987b75980b0a89a0a8aded4f0d8133ed88c89ee47ad7cf997238ac0a33294"
   },
   {
     "slug": "glow-pricing-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d55c372ac31fac2929487b9f37a9e8b77587fa13697d09937944917102cd77cf"
   },
   {
     "slug": "bento-feature-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d741e653cd715fd5afda5ba6c12c31e194fefa97e761c5d73b4e054e416add43"
   },
   {
     "slug": "conic-aurora-spinner",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "3f3c15f3424381970c25af3801231083f39f32074f62d0dc97468801a04767a0"
   },
   {
     "slug": "triple-orbit-loader",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8e15848fbd09d3fab1245485a2822a5d68de1ca8a7fdfdfaeea99daf0393ac73"
   },
   {
     "slug": "morphing-gradient-blob",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "35026ac315dcb3d7e49701b5bf4d5da6d5298c16c0ed6f648a784a884ac89a5b"
   },
   {
     "slug": "neon-bar-equalizer",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "9cf34ea9ca1ec9a54ba967324382ab9c3e826494a492576a3a23ce8e00fdf88d"
   },
   {
     "slug": "glow-ring-progress",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d027ee288ed7068eb529aabe524117e44c3b0cf738831939ca70c74802d786a1"
   },
   {
     "slug": "floating-label-glow-input",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "6c95c678828e3dac5cdaa01f70e815101bbe9b7530eff49b8f2be0f475cf5342"
   },
   {
     "slug": "gradient-ring-focus-input",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "9dc8cc65ad38e845a13fe874723463ef3f6948db66987407cbd9c0d8698fd625"
   },
   {
     "slug": "animated-search-bar",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "83458258bb9e7e539cadebfb4d077923a6aef349e620bd5b4e678a51bdc25a16"
   },
   {
     "slug": "underline-draw-input",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "091a217203d5d21bb77e78135476835606cd87c30b6ba55d7e0fd69387c317db"
   },
   {
     "slug": "otp-pin-input",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "71387a4bcae2e2248140c98b3a7e4a13622d49d5d41bd93201f93d5821941039"
   },
   {
     "slug": "password-show-hide-input",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "1bd613b071f4fb58cc2fa87c9f36e7d52345224a82e2a3aa03b59404540a2bb8"
   },
   {
     "slug": "ios-aurora-switch",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8de220c9fa57cc42ca61741043fb8e8db19c8b78a6b08042f6dad52e5a490ba7"
   },
   {
     "slug": "day-night-morph-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8f014c4f7254ad3df37a3174bb449c67fd7876cd7503fd753a2cd5160aed9b84"
   },
   {
     "slug": "draw-check-checkbox",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "e765cf7810501c5def5c1e70aaaae57a435bfa1a6fa7aa3648a56a24a668a16f"
   },
   {
     "slug": "segmented-slider-control",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "432eef9c1bd53526a7ac42ff062f5ae416bf890b68db0d0d9da82d4c815908ff"
   },
   {
     "slug": "heart-like-pop-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8373947596d7ca0ae9f2a3cbc28d4e69eb5249112c150e13bbc9fc8efd40ffe3"
   },
   {
     "slug": "aurora-mesh-bg",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "54271f49e582277e83da83f69072c877606994c3b41f593e5f4ad26b8a6b801e"
   },
   {
     "slug": "liquid-gradient-flow-bg",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "b65881e39f276f6cc0b71682870edf62c386ffce940439e63444dbbbe9b4719f"
   },
   {
     "slug": "grid-radial-glow-bg",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "7160af2c4b0a66aaa9499784d706d0787eec0644322f3ec905ee68fd07fe9e2f"
   },
   {
     "slug": "floating-particles-bg",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d77dcf376328f73340184a723c5dc67f6833b81d2a3140eab33ae27686937a8b"
   },
   {
     "slug": "spotlight-follow-bg",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "baf9119ff55e5a13b9c5ed9c8163b73729d1cc02d8a34974444cea9ebd8761de"
   },
   {
     "slug": "gradient-frame-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "eddb6d20a25b48265bbba5bd9932865687f48ee905ccefe82b9617fa0dd4e634"
   },
   {
     "slug": "glow-pulse-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "3774f0df61b60fe6e940f9abac89d49477c9a63f3441f273ea7dc1ed12a100e2"
   },
   {
     "slug": "shine-sweep-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "026a617da5d39ff48b6757b134eb25ef2d328ecb419c701d1682bfc8cc2771c3"
   },
   {
     "slug": "ripple-wave-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8f62074407c7b19d293f6ade6b7aede1f0425aa435dcd5f9a6f5c9625057b021"
   },
   {
     "slug": "arrow-slide-button",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "ee4e1b3c18f3dbd30bd0443f6a174aba32303209d4212b528788d743a3a65e8b"
   },
   {
     "slug": "glass-frost-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "1e1d9e45e27611b8fc46b39aa0929d5fc6b01a3e85a616566ed158cfc9a7fdb5"
   },
   {
     "slug": "spotlight-hover-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "c3717effe54962cf9b16f429303e763be35a520201501399881ca25911122a99"
   },
   {
     "slug": "animated-gradient-border-card-2",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "f8ab0985727e9f8d09ec04045871459abed47732a1ffd6ac35f0ad49bbe474dd"
   },
   {
     "slug": "tilt-3d-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "14e6fd8cbec63767fa2139f33b8258d36354e5fa767e6870a9539cc7e7e7a4c9"
   },
   {
     "slug": "glow-stat-card",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "94a0b4beab5e4111bdb3390bb3a56e435ba4d14e4a79aa66df267786eaa78c97"
   },
   {
     "slug": "orbit-spinner-elementa",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "1ae26e1e5c3b5e48a6ac66e0b760bdb5281a9e694bec96dc3efdc8a7f52ab293"
   },
   {
     "slug": "bouncing-dots-elementa",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "018e1d8c41599b2b558709998c6e6d66243c29935b1809e3f82085d4372aee30"
   },
   {
     "slug": "gradient-ring-elementa",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "bbaa2e2681b3a718d707d8503c7b7b1c7e562d30dae20685f044f318604c4a08"
   },
   {
     "slug": "bar-equalizer-elementa",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "b4e9502f84dd4211d3566fd807a7d179d0a30a44ece4958e572f986878161ad8"
   },
   {
     "slug": "pulse-comet-elementa",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "7e44637a3de4281e4ac871f264b861290fcb5862b5567944eacf7bac5b467f82"
   },
   {
     "slug": "input-floating-label-violet",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8ec4b9e0ac76bf1801b4364d7db3aab07153ab1b2bc8ecd00dfa614f13666d19"
   },
   {
     "slug": "input-glow-focus-fuchsia",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "ec618712c9189b70fd9445a89f7e0a59c452e770077a3be355507a78d5437067"
   },
   {
     "slug": "input-gradient-underline",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "6cf0f4ec02cd55a7752d8eadf679c12677e9f7555458f2f7b5dc98f72aad9dee"
   },
   {
     "slug": "input-search-cyan-icon",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "ee3fd91eba4b49c507fbe81e4ca6102159bce4542a09cb84af5248a56007ad87"
   },
   {
     "slug": "input-password-reveal-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8f9b73c01bf28cb135bc286839e89c4266ab40a3e263bfc94dcd18282749ad5c"
   },
   {
     "slug": "gradient-brand-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "d0ec12915d21e5f3b4d8789f5c51b17a63254002191d5e9240aa93dbdcb7ff98"
   },
   {
     "slug": "ios-style-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "c873d3aafaf0183efd1df8217426aa892f9f7987b9c0083a0133b9b89cd39415"
   },
   {
     "slug": "day-night-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "efc45a004746e7d853faefa6ea88981a30b88794884f11905eae830719398d21"
   },
   {
     "slug": "neon-glow-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "f91b4b93994f035dbe186a4437a304856c89464b72e39cca5b1c879f37cfaa49"
   },
   {
     "slug": "pill-text-toggle",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "1af9ba26179e135e0c6d6d446cdfb39d057bbab5acab7994526faee853bc1fb3"
   },
   {
     "slug": "aurora-flow-background",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "26f50a89af666444b99d8448b7645020af1b696039cbccaaa512d06b3167d0d1"
   },
   {
     "slug": "mesh-gradient-morph",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "13bc4e6dfaaeceabdbcb4b4993d76d663f67bbe1b0fb20d5c3627585b716ff07"
   },
   {
     "slug": "neon-grid-pulse",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "74d57b17c59408135481b4996bce3ed6ac669ae7d0b3eab415a8fbed54e9cb48"
   },
   {
     "slug": "starfield-drift",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "e4129607ffb5ab7c25260e25df3a2d292cde0b98273fa16f623c4ee65fbbd6fb"
   },
   {
     "slug": "floating-blobs-glow",
     "framework": "css",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "cee95fc97daffcb78347b1583e7f3692366401017d4ee7a2e4823174480bba53"
   },
   {
     "slug": "minimal-glow-button",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "3dee34f766b27df9388a710bb58c36ba61ace02b9929b7f8ce356d789e9485ef"
   },
   {
     "slug": "obsidian-ember-button",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "6f4de59ae8d56f77b15ce50bf2827cc27e79c86c95e546ef55417eb4f42228ff"
   },
   {
     "slug": "aurora-liquid-cta",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "96a283905ff8c82af65bdd2a65373c3d6f75c843e844c2a5c1b25e37ffab4d08"
   },
   {
     "slug": "kinetic-3d-push",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "6e6a3286d67938ebcc331fc95e58bb9c07cd20dc8d3911a805b52367fa58d0bd"
   },
   {
     "slug": "3d-liquid-glass",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "a64c266aaf033fa74e860261f339ece90113738d27fe6437251dd5d1cfba16a2"
   },
   {
     "slug": "liquid-aurora-spatial",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "735777aae9783192cd001ece47c3777e74a040893a794d8334c455bb75a22ea2"
   },
   {
     "slug": "animated-cyber-glow-button",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "a86961c8c29f59c6e5b10abb550f3ecb019c85012ea6a9d9690dfd31fb842ff1"
   },
   {
     "slug": "modern-accessible-toggle-switch",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "27b2e84b96fb9a5771f36b7b8ef5be1acd034a9b4ed299ee590522ed283ad468"
   },
   {
     "slug": "text-label-on-off-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "24c1a4a7885a3d42121cb9d34bd303839d5d82f31f3dd6477e5c0c66abd3993d"
   },
   {
     "slug": "neon-cyberpunk-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "2ea28a911087a74839b977e8acfe46c6ea4f6157e20ef5b613c125e5bcd098be"
   },
   {
     "slug": "premium-elastic-tactile-toggle-3d-dark-mode",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "8d3464e67681b9c6b4e930e32b2443147c9f609b7934335e8b352c0a86e50655"
   },
   {
     "slug": "parallax-scenery-day-night-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "24bb9632c936900799d3c01eafb4773ef39e50dd0e15a796c57c0bf421deb3e6"
   },
   {
     "slug": "morphing-scenery-toggle",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "3315f345ff9239963d6aa1678de1b601f12062cfddbf59f1f75e996cdc579443"
   },
   {
     "slug": "interactive-3d-holographic-tilt-card",
     "framework": "html",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "985dcdeee085fec25d417944e57263e222eeb334f1f300203ea0e178a1fa6673"
   },
   {
     "slug": "svelte-spring-magnetic-button",
     "framework": "svelte",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "54ac4f574b36cb2b402894afd24075013d850d32ec3f83343ba7abcfd9fe4a91"
   },
   {
     "slug": "svelte-tweened-progress-ring",
     "framework": "svelte",
     "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "cb3870a1a04a8480a042e4fec71cfbd4e80f3f29384787a7678f5db0a4cb7122"
   },
   {
     "slug": "vue-ripple-button",
     "framework": "vue",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "e9777a8938a5f626b407cc388f7dae6d1e38c229cb6cac57d8b2a818b68b3769"
   },
   {
     "slug": "vue-heart-like-button",
     "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "b27307b13c1f32bbd6e9445cadc804edace10ab046a2579dea82b8650218350e"
+  },
+  {
+    "slug": "nebula-core-3d-loader",
+    "framework": "svelte",
     "prev": "unchecked",
     "status": "pass",
-    "violations": []
+    "violations": [],
+    "hash": "7aae4c547905dfc6a94edf38e8deda40e64759758c547ae784d56f21eeb45d9f"
+  },
+  {
+    "slug": "chrono-rift-3d-loader",
+    "framework": "svelte",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": [],
+    "hash": "48d9d89207f6fe1b24e49ec79af4a4e4311a95aadbfd3cfb3f6702438c7fb19f"
+  },
+  {
+    "slug": "signal-tunnel-loader",
+    "framework": "svelte",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": [],
+    "hash": "923a9aab64ee6671e773ea5dd98174f094068cd7b699ccb57bec48c9e241ab46"
+  },
+  {
+    "slug": "eon-infinity-loader",
+    "framework": "svelte",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": [],
+    "hash": "00a45afd2140493b46662bf899ff1fd79270b90e857375574c256ff718adf629"
+  },
+  {
+    "slug": "aurora-command-card",
+    "framework": "svelte",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": [],
+    "hash": "d58478f5354e38eabd04393e56863caf08ff66a3f12f81dd3568bf9af207e631"
+  },
+  {
+    "slug": "aurora-focus-input",
+    "framework": "vue",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": [],
+    "hash": "4586b9956d4a1400589fd03af44b3dcdbb7b82efa3df705d961d00fb7a3c5a37"
+  },
+  {
+    "slug": "nebula-command-input",
+    "framework": "vue",
+    "prev": "unchecked",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "aria-valid-attr-value",
+        "impact": "critical",
+        "help": "ARIA attributes must conform to valid values",
+        "nodes": 1
+      },
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 1
+      }
+    ],
+    "hash": "665051e18cf64e8db0622ae15dd2d666d60d62c832d867b36057d00be46113f9"
   }
 ]
