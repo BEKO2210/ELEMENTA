@@ -4,14 +4,30 @@
 <meta charset="utf-8">
 <!-- Defense-in-depth: Die maßgebliche CSP kommt als Header aus next.config.ts.
      Diese Meta-CSP spiegelt sie, falls Header unterwegs verloren gehen. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data:; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bare-Specifier der kompilierten Svelte-Komponenten auf die selbst
+     gehostete Runtime auflösen (eine Instanz — wichtig für Lifecycle-State). -->
+<script type="importmap">
+{"imports":{
+  "svelte":"/vendor/svelte/src/runtime/index.js",
+  "svelte/internal":"/vendor/svelte/src/runtime/internal/index.js",
+  "svelte/internal/disclose-version":"/vendor/svelte/src/runtime/internal/disclose-version/index.js",
+  "svelte/store":"/vendor/svelte/src/runtime/store/index.js",
+  "svelte/transition":"/vendor/svelte/src/runtime/transition/index.js",
+  "svelte/easing":"/vendor/svelte/src/runtime/easing/index.js",
+  "svelte/motion":"/vendor/svelte/src/runtime/motion/index.js",
+  "svelte/animate":"/vendor/svelte/src/runtime/animate/index.js"
+}}
+</script>
 <style>
   html,body{margin:0;height:100%}
   body{display:grid;place-items:center;box-sizing:border-box;color:#fff;font-family:system-ui,sans-serif;padding:24px}
   #__stage{display:contents}
   body.fit{overflow:hidden;padding:8px}
-  body.fit #__stage{display:grid;place-items:center;transform-origin:center center}
+  /* Stage füllt im Fit-Modus den Viewport: width:100%-Komponenten (Backgrounds)
+     bekommen echte Breite, kleine Komponenten bleiben per Grid exakt mittig. */
+  body.fit #__stage{display:grid;place-items:center;width:100%;height:100%;transform-origin:center center}
   .__err{max-width:90%;font:12px/1.5 ui-monospace,monospace;color:#ff8a7a;white-space:pre-wrap;word-break:break-word}
   .__ph{text-align:center;font-family:system-ui,sans-serif}
   .__ph b{display:block;font-size:15px;font-weight:600;color:#a78bfa;margin-bottom:8px}
@@ -29,6 +45,7 @@
   var userCss = document.getElementById("__user-css");
   var reactRoot = null;   // aktive React-Root zum sauberen Unmounten
   var vueApp = null;      // aktive Vue-App
+  var svelteApp = null;   // aktive Svelte-Instanz
   var fitObserver = null;
   var seq = 0;            // schützt gegen Races bei schnellen Re-Renders
 
@@ -87,12 +104,40 @@
   }
 
   // Skaliert zu große Inhalte herunter (Karten-Thumbnails), damit nichts abgeschnitten wird.
+  // Gemessen wird die VEREINIGUNG der Kind-Rechtecke (nicht die Stage): so zählen auch
+  // absolut positionierte Überstände (Glows/Schatten) mit und alles bleibt sichtbar.
   function applyFit() {
+    function contentRect() {
+      var u = null;
+      for (var i = 0; i < stage.children.length; i++) {
+        var b = stage.children[i].getBoundingClientRect();
+        if (b.width < 2 && b.height < 2) continue;
+        if (!u) u = { left: b.left, top: b.top, right: b.right, bottom: b.bottom };
+        else {
+          u.left = Math.min(u.left, b.left);
+          u.top = Math.min(u.top, b.top);
+          u.right = Math.max(u.right, b.right);
+          u.bottom = Math.max(u.bottom, b.bottom);
+        }
+      }
+      var r = u || stage.getBoundingClientRect();
+      return { left: r.left, top: r.top, width: r.right - r.left, height: r.bottom - r.top };
+    }
     function f() {
       stage.style.transform = "none";
-      var r = stage.getBoundingClientRect(), pad = 8;
+      var r = contentRect(), pad = 8;
+      if (!(r.width > 0 && r.height > 0)) return;
       var s = Math.min(1, (window.innerWidth - pad) / r.width, (window.innerHeight - pad) / r.height);
-      if (s > 0 && s < 1) stage.style.transform = "scale(" + s + ")";
+      // Sichtbaren Inhalt exakt zentrieren: eigene Transforms der Komponente
+      // (Tilt/Perspective) verschieben die visuelle Box gegenüber der Layout-Box.
+      var st = stage.getBoundingClientRect();
+      var cx = st.left + st.width / 2, cy = st.top + st.height / 2;      // Transform-Ursprung
+      var vx = r.left + r.width / 2, vy = r.top + r.height / 2;          // visuelles Zentrum
+      var tx = window.innerWidth / 2 - cx - s * (vx - cx);
+      var ty = window.innerHeight / 2 - cy - s * (vy - cy);
+      if (s < 1 || Math.abs(tx) > 1 || Math.abs(ty) > 1) {
+        stage.style.transform = "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px) scale(" + s + ")";
+      }
     }
     requestAnimationFrame(f);
     setTimeout(f, 120);
@@ -122,6 +167,7 @@
   function resetStage() {
     if (reactRoot) { try { reactRoot.unmount(); } catch (e) {} reactRoot = null; }
     if (vueApp) { try { vueApp.unmount(); } catch (e) {} vueApp = null; }
+    if (svelteApp) { try { svelteApp.$destroy(); } catch (e) {} svelteApp = null; }
     if (fitObserver) { try { fitObserver.disconnect(); } catch (e) {} fitObserver = null; }
     stage.style.transform = "none";
     stage.innerHTML = "";
@@ -190,14 +236,37 @@
 
       var options = {};
       if (optionsSrc && optionsSrc.trim()) {
-        var src = stripModuleSyntax(optionsSrc).trim();
-        // "export default {…}" wurde zu "{…}" — als Objekt evaluieren
+        // "export default {…};" → "{…}" — als Objekt evaluieren (ohne End-Semikolon)
+        var src = stripModuleSyntax(optionsSrc).trim().replace(/;+\s*$/, "");
         options = new Function("Vue", "return (" + src + ")")(window.Vue) || {};
       }
       options.template = template;
       vueApp = window.Vue.createApp(options);
       vueApp.config.errorHandler = function (e) { showError(e); };
       vueApp.mount(mount);
+    });
+  }
+
+  function renderSvelte(data) {
+    // Compiler (UMD → window.svelte) nur bei Bedarf laden, dann die .svelte-Datei
+    // im Browser kompilieren und als Blob-ES-Modul mounten (Import-Map löst
+    // svelte/internal & Co. auf die selbst gehostete Runtime auf).
+    return ensure("/vendor/svelte/compiler.js").then(function () {
+      userCss.textContent = data.css || "";
+      var mount = document.createElement("div");
+      stage.appendChild(mount);
+
+      var out = window.svelte.compile(data.html || "", {
+        generate: "dom",
+        css: "injected",
+        name: "Preview",
+      });
+      // data:-URL statt blob: — blob:null-Module sind in sandboxed iframes
+      // (opaque origin) nicht importierbar. Import-Map gilt auch hier.
+      var url = "data:text/javascript;charset=utf-8," + encodeURIComponent(out.js.code);
+      return import(url).then(function (mod) {
+        svelteApp = new mod.default({ target: mount });
+      });
     });
   }
 
@@ -215,10 +284,8 @@
     if (data.framework === "react") p = renderReact(data);
     else if (data.framework === "tailwind") p = renderTailwind(data);
     else if (data.framework === "vue") p = renderVue(data);
-    else if (data.framework === "svelte") {
-      showPlaceholder("Svelte", "Live-Vorschau für Svelte folgt in Kürze.<br>Der Code unten ist voll nutzbar &amp; kopierbar.");
-      p = Promise.resolve();
-    } else p = Promise.resolve(renderPlain(data));
+    else if (data.framework === "svelte") p = renderSvelte(data);
+    else p = Promise.resolve(renderPlain(data));
 
     Promise.resolve(p)
       .then(function () {

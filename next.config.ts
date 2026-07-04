@@ -25,7 +25,8 @@ const csp = [
 // ausschließlich von 'self' (/vendor/*). connect-src 'none' verhindert Exfiltration.
 const sandboxCsp = [
   "default-src 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  // blob: für Svelte — die im Browser kompilierten Komponenten laden als Blob-ES-Module
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data:",
   "style-src 'unsafe-inline'",
   "img-src data:",
   "font-src data:",
@@ -67,11 +68,14 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
         ],
       },
-      // Vendor-Bundles (React/Babel/Tailwind/Vue) sind versionsfest → lange cachen.
+      // Vendor-Bundles (React/Babel/Tailwind/Vue/Svelte) sind versionsfest → lange cachen.
+      // ACAO *: ES-Module-Fetches aus der Sandbox (opaque origin) brauchen CORS —
+      // klassische <script src>-Tags nicht, die Svelte-Runtime-Module schon.
       {
         source: "/vendor/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
         ],
       },
     ];

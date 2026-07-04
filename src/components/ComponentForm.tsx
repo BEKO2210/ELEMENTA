@@ -45,13 +45,67 @@ export default function ComponentForm({
   const [js, setJs] = useState(initial?.js ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Open-Source-Zustimmung (MIT) — Pflicht bei Neu-Veröffentlichung
+  const [licenseOk, setLicenseOk] = useState(mode === "edit");
 
-  const isReact = framework === "react";
-  const codeLabel = isReact
-    ? "React-Komponente (function-Komponente, JSX)"
-    : framework === "tailwind"
-      ? "HTML mit Tailwind-Klassen"
-      : "HTML / Markup";
+  // Das Formular passt sich dem gewählten Framework an: Ein-Datei-Frameworks
+  // (Vue-SFC, Svelte) brauchen nur EIN Code-Feld, React braucht kein JS-Feld usw.
+  const CODE_SPEC: Record<string, {
+    label: string;
+    placeholder: string;
+    rows: number;
+    hint?: string;
+    showCss: boolean;
+    showJs: boolean;
+  }> = {
+    html: {
+      label: "HTML / Markup",
+      placeholder: '<button class="btn">Klick</button>',
+      rows: 7,
+      showCss: true,
+      showJs: true,
+    },
+    css: {
+      label: "HTML / Markup",
+      placeholder: '<button class="btn">Klick</button>',
+      rows: 7,
+      showCss: true,
+      showJs: true,
+    },
+    tailwind: {
+      label: "HTML mit Tailwind-Klassen",
+      placeholder: '<button class="rounded-xl bg-violet-600 px-6 py-3 text-white hover:bg-violet-500">Klick</button>',
+      rows: 7,
+      hint: "Tailwind-Klassen werden in der Vorschau live kompiliert. Eigenes Zusatz-CSS ist optional.",
+      showCss: true,
+      showJs: true,
+    },
+    react: {
+      label: "React-Komponente (Function Component, JSX)",
+      placeholder: "function MeinButton() {\n  const [n, setN] = React.useState(0);\n  return <button onClick={() => setN(n + 1)}>Klicks: {n}</button>;\n}",
+      rows: 10,
+      hint: "Hooks über React.useState & Co. — Imports sind nicht nötig, React ist global verfügbar.",
+      showCss: true,
+      showJs: false,
+    },
+    vue: {
+      label: "Vue Single-File-Component (<template> + <script> + <style>)",
+      placeholder: "<template>\n  <button @click=\"n++\">Klicks: {{ n }}</button>\n</template>\n\n<script>\nexport default {\n  data: () => ({ n: 0 }),\n};\n</script>\n\n<style>\nbutton { padding: 12px 24px; }\n</style>",
+      rows: 14,
+      hint: "Alles in einer Datei (Options-API). <style> wird automatisch übernommen.",
+      showCss: false,
+      showJs: false,
+    },
+    svelte: {
+      label: ".svelte-Datei (Markup + <script> + <style>)",
+      placeholder: "<script>\n  let n = 0;\n</script>\n\n<button on:click={() => n++}>Klicks: {n}</button>\n\n<style>\n  button { padding: 12px 24px; }\n</style>",
+      rows: 14,
+      hint: "Kompletter Svelte-Code in einer Datei — svelte/motion, svelte/transition & Co. können importiert werden.",
+      showCss: false,
+      showJs: false,
+    },
+  };
+  const spec = CODE_SPEC[framework] ?? CODE_SPEC.html;
 
   const previewKey = useMemo(
     () => `${framework}:${html}:${css}:${js}`,
@@ -65,6 +119,10 @@ export default function ComponentForm({
       setError("Titel und Code sind erforderlich.");
       return;
     }
+    if (mode === "create" && !licenseOk) {
+      setError("Bitte bestätige die Veröffentlichung unter MIT-Lizenz.");
+      return;
+    }
     setBusy(true);
     const tagList = Array.from(
       new Set(tags.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean)),
@@ -74,8 +132,9 @@ export default function ComponentForm({
       title: title.trim(),
       description: description.trim(),
       html,
-      css,
-      js: isReact ? "" : js,
+      // ausgeblendete Felder nicht mitspeichern (z. B. Alt-CSS nach Framework-Wechsel)
+      css: spec.showCss ? css : "",
+      js: spec.showJs ? js : "",
       framework,
       category,
       tags: tagList,
@@ -173,14 +232,23 @@ export default function ComponentForm({
         </div>
 
         <div>
-          <label className="mb-1 block text-sm text-fg-muted">{codeLabel} *</label>
-          <textarea value={html} onChange={(e) => setHtml(e.target.value)} rows={7} className={mono} placeholder={isReact ? "function MeinButton(){ return <button>Klick</button> }" : "<button class=\"btn\">Klick</button>"} />
+          <label className="mb-1 block text-sm text-fg-muted">{spec.label} *</label>
+          <textarea
+            value={html}
+            onChange={(e) => setHtml(e.target.value)}
+            rows={spec.rows}
+            className={mono}
+            placeholder={spec.placeholder}
+          />
+          {spec.hint && <p className="mt-1.5 text-xs text-fg-dim">{spec.hint}</p>}
         </div>
-        <div>
-          <label className="mb-1 block text-sm text-fg-muted">CSS {isReact ? "(optional)" : ""}</label>
-          <textarea value={css} onChange={(e) => setCss(e.target.value)} rows={6} className={mono} placeholder=".btn{ ... }" />
-        </div>
-        {!isReact && (
+        {spec.showCss && (
+          <div>
+            <label className="mb-1 block text-sm text-fg-muted">CSS {framework === "react" || framework === "tailwind" ? "(optional)" : ""}</label>
+            <textarea value={css} onChange={(e) => setCss(e.target.value)} rows={6} className={mono} placeholder=".btn{ ... }" />
+          </div>
+        )}
+        {spec.showJs && (
           <div>
             <label className="mb-1 block text-sm text-fg-muted">JavaScript (optional)</label>
             <textarea value={js} onChange={(e) => setJs(e.target.value)} rows={4} className={mono} placeholder="// optionales JS" />
@@ -191,9 +259,38 @@ export default function ComponentForm({
           <p className="rounded-lg border border-red-400/20 bg-red-400/5 px-3 py-2 text-sm text-red-300">{error}</p>
         )}
 
-        <button type="submit" disabled={busy} className="btn-grad flex items-center justify-center gap-2 rounded-xl px-6 py-3 disabled:opacity-60">
+        {/* Open-Source-Zustimmung: Pflicht beim Veröffentlichen (beim Bearbeiten bereits erteilt) */}
+        {mode === "create" && (
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-relaxed text-fg-muted transition hover:border-white/20">
+            <input
+              type="checkbox"
+              checked={licenseOk}
+              onChange={(e) => setLicenseOk(e.target.checked)}
+              required
+              className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--accent)]"
+            />
+            <span>
+              Ich veröffentliche diese Komponente unter der{" "}
+              <a href="/lizenz" target="_blank" rel="noopener" className="text-fg underline decoration-white/30 underline-offset-2 hover:decoration-accent">
+                MIT-Lizenz
+              </a>{" "}
+              (Open Source, freie private &amp; kommerzielle Nutzung) und bestätige, dass ich die
+              Rechte am eingereichten Code besitze und die{" "}
+              <a href="/docs/guidelines" target="_blank" rel="noopener" className="text-fg underline decoration-white/30 underline-offset-2 hover:decoration-accent">
+                Community-Guidelines
+              </a>{" "}
+              einhalte.
+            </span>
+          </label>
+        )}
+
+        <button
+          type="submit"
+          disabled={busy || (mode === "create" && !licenseOk)}
+          className="btn-grad flex items-center justify-center gap-2 rounded-xl px-6 py-3 disabled:opacity-60"
+        >
           {busy ? <Loader2 size={18} className="animate-spin" /> : mode === "edit" ? <Save size={18} /> : <Upload size={18} />}
-          {mode === "edit" ? "Änderungen speichern" : "Veröffentlichen"}
+          {mode === "edit" ? "Änderungen speichern" : "Unter MIT-Lizenz veröffentlichen"}
         </button>
       </form>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { CATEGORIES, FRAMEWORKS } from "@/lib/mock-data";
@@ -13,9 +13,22 @@ type Sort = "beliebt" | "neu" | "name";
 export default function ExploreClient({ components }: { components: UIComponent[] }) {
   const params = useSearchParams();
   const [cat, setCat] = useState<string>(params.get("cat") ?? "all");
-  const [fw, setFw] = useState<string>("all");
+  const [fw, setFw] = useState<string>(params.get("fw") ?? "all");
   const [q, setQ] = useState(params.get("q") ?? "");
-  const [sort, setSort] = useState<Sort>("beliebt");
+  const [sort, setSort] = useState<Sort>((params.get("sort") as Sort) || "beliebt");
+
+  // Filterzustand in die URL spiegeln (replaceState = keine Navigation):
+  // Wer von einer Detailseite zurückkommt, landet exakt bei denselben
+  // Filtern — und der Browser stellt die Scroll-Position korrekt wieder her.
+  useEffect(() => {
+    const p = new URLSearchParams();
+    if (cat !== "all") p.set("cat", cat);
+    if (fw !== "all") p.set("fw", fw);
+    if (q.trim()) p.set("q", q.trim());
+    if (sort !== "beliebt") p.set("sort", sort);
+    const qs = p.toString();
+    window.history.replaceState(window.history.state, "", qs ? `/explore?${qs}` : "/explore");
+  }, [cat, fw, q, sort]);
 
   // Schwelle für „Beliebt"-Badge: oberste ~10 % nach Likes (mind. 1 Like).
   const popularThreshold = useMemo(() => {
