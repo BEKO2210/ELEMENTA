@@ -8,6 +8,7 @@ import { MessageSquare, ThumbsUp, Trash2, Loader2, Send } from "lucide-react";
 import { databases, DB_ID, COL_COMMENTS, COL_COMMENT_HELPFUL } from "@/lib/appwrite";
 import { useAuth } from "./AuthProvider";
 import { useToast } from "./Toast";
+import ReportButton from "./ReportButton";
 
 interface Comment {
   id: string;
@@ -228,10 +229,12 @@ export default function Comments({ componentId }: { componentId: string }) {
                       <ThumbsUp size={13} className={voted ? "fill-current" : ""} />
                       Hilfreich {counts[c.id] ? `(${counts[c.id]})` : ""}
                     </button>
-                    {user && c.userId === user.$id && (
+                    {user && c.userId === user.$id ? (
                       <button onClick={() => del(c.id)} className="inline-flex items-center gap-1 text-xs text-fg-dim transition hover:text-red-300">
                         <Trash2 size={13} /> Löschen
                       </button>
+                    ) : (
+                      <ReportButton targetType="comment" targetId={c.id} />
                     )}
                   </div>
                 </div>

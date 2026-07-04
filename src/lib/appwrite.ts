@@ -22,6 +22,7 @@ export const COL_LIKES = "likes";
 export const COL_COMMENTS = "comments";
 export const COL_COMMENT_HELPFUL = "comment_helpful";
 export const COL_FAVORITES = "favorites";
+export const COL_REPORTS = "reports";
 export const BUCKET_AVATARS = "avatars";
 
 export function createClient(): Client {

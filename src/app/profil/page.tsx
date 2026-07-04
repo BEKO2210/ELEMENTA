@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Boxes, Heart, ShieldCheck, Pencil, Trash2, Plus, LogOut, Loader2,
-  User, Settings, ExternalLink, LogIn, Star, ImagePlus,
+  User, Settings, ExternalLink, LogIn, Star, ImagePlus, ShieldAlert,
 } from "lucide-react";
 import { Query, ID, Permission, Role } from "appwrite";
 import {
@@ -20,6 +20,7 @@ import { useToast } from "@/components/Toast";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import ComponentCard from "@/components/ComponentCard";
 import PasswordInput from "@/components/PasswordInput";
+import AdminReports from "@/components/AdminReports";
 import { CATEGORIES } from "@/lib/mock-data";
 
 const FW_LABEL: Record<string, string> = {
@@ -31,7 +32,7 @@ export default function ProfilPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const [tab, setTab] = useState<"comps" | "favs" | "settings">("comps");
+  const [tab, setTab] = useState<"comps" | "favs" | "settings" | "reports">("comps");
   const [comps, setComps] = useState<UIComponent[] | null>(null);
   const [favs, setFavs] = useState<UIComponent[] | null>(null);
   const [toDelete, setToDelete] = useState<UIComponent | null>(null);
@@ -295,7 +296,15 @@ export default function ProfilPage() {
         <TabBtn active={tab === "settings"} onClick={() => setTab("settings")} icon={<Settings size={15} />}>
           Einstellungen
         </TabBtn>
+        {user.isAdmin && (
+          <TabBtn active={tab === "reports"} onClick={() => setTab("reports")} icon={<ShieldAlert size={15} />}>
+            Meldungen
+          </TabBtn>
+        )}
       </div>
+
+      {/* Moderation (nur Admin) */}
+      {tab === "reports" && user.isAdmin && <AdminReports />}
 
       {/* Meine Komponenten */}
       {tab === "comps" && (

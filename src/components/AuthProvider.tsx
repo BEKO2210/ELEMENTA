@@ -8,6 +8,8 @@ export interface AuthUser {
   $id: string;
   name: string;
   email: string;
+  labels: string[];
+  isAdmin: boolean;
 }
 
 interface AuthState {
@@ -34,7 +36,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setTimeout(() => reject(new Error("auth-timeout")), 6000),
         ),
       ]);
-      setUser({ $id: u.$id, name: u.name, email: u.email });
+      const labels = (u as { labels?: string[] }).labels || [];
+      setUser({ $id: u.$id, name: u.name, email: u.email, labels, isAdmin: labels.includes("admin") });
     } catch {
       setUser(null);
     } finally {

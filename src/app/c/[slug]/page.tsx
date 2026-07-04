@@ -12,6 +12,7 @@ import LikeButton from "@/components/LikeButton";
 import FavoriteButton from "@/components/FavoriteButton";
 import Comments from "@/components/Comments";
 import AuthorCard from "@/components/AuthorCard";
+import ReportButton from "@/components/ReportButton";
 import JsonLd from "@/components/JsonLd";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import type { Category } from "@/lib/types";
@@ -181,6 +182,11 @@ export default async function ComponentPage({
 
       {/* Kommentare */}
       <Comments componentId={c.id} />
+
+      {/* Melden */}
+      <div className="mt-8 flex justify-end border-t border-white/5 pt-4">
+        <ReportButton targetType="component" targetId={c.id} />
+      </div>
     </div>
   );
 }

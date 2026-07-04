@@ -14,6 +14,8 @@ export const test = base.extend({
         path: "/",
       },
     ]);
+    // `use` ist Playwrights Fixture-Callback, kein React-Hook.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
   },
 });
