@@ -58,6 +58,10 @@ jobs:
       - name: Playwright-Kernflows
         # Auth-Flows laufen über den Produktions-Hostnamen (Appwrite-Platform-Check
         # + Secure-Cookies) — TLS-Proxy auf :3443 startet Playwright selbst.
+        # APPWRITE_API_KEY (Repo-Secret) provisioniert Test-Nutzer serverseitig
+        # und umgeht so das Rate-Limit; ohne Secret Fallback auf Registrierung.
+        env:
+          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
         run: |
           echo "127.0.0.1 ui.it-handwerk-stuttgart.de" | sudo tee -a /etc/hosts
           npx playwright test
