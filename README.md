@@ -32,9 +32,31 @@ Anders als React-only-Bibliotheken ist Elementa **framework­übergreifend** und
 
 ---
 
+## Galerie
+
+<div align="center">
+
+<img src="./docs/preview/hero.png" alt="Elementa Komponenten — Aurora-Button, Glass-Card, Gradient-Background, Conic-Rays" width="820" />
+
+</div>
+
+Jede Kategorie kommt in **HTML/CSS, Tailwind, React, Vue und Svelte** — echte Framework-Komponenten, nicht nur optisch nachgebaut.
+
+| Buttons | Cards |
+|:---:|:---:|
+| <img src="./docs/preview/buttons.png" width="400" alt="Button-Komponenten" /> | <img src="./docs/preview/cards.png" width="400" alt="Card-Komponenten" /> |
+| **Loader** | **Inputs** |
+| <img src="./docs/preview/loaders.png" width="400" alt="Loader-Komponenten" /> | <img src="./docs/preview/inputs.png" width="400" alt="Input-Komponenten" /> |
+| **Toggles** | **Backgrounds** |
+| <img src="./docs/preview/toggles.png" width="400" alt="Toggle-Komponenten" /> | <img src="./docs/preview/backgrounds.png" width="400" alt="Background-Komponenten" /> |
+
+<div align="center"><a href="https://ui.it-handwerk-stuttgart.de/explore"><b>→ Alle Komponenten live ansehen</b></a></div>
+
+---
+
 ## Features
 
-- **70+ Komponenten** in Buttons, Cards, Loader, Inputs, Toggles &amp; Backgrounds
+- **140+ Komponenten** in Buttons, Cards, Loader, Inputs, Toggles &amp; Backgrounds
 - **Live-Vorschau** — jeder Hover-Zustand, jede Animation in einer gehärteten Sandbox, bevor du kopierst
 - **Framework­übergreifend** — HTML/CSS, Tailwind, React, Vue oder Svelte
 - **Null Abhängigkeiten** — jede Komponente ist eigenständig und leichtgewichtig

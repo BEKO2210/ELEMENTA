@@ -1,0 +1,105 @@
+# Release-Workflow — MANUELL auslösen (Actions → Release → „Run workflow").
+# Baut zur Sicherheit, erstellt Tag v<version> und ein GitHub-Release mit
+# bebilderter Release-Note (Hero + Galerie aus docs/preview/) + Auto-Changelog.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version ohne v-Präfix (z. B. 1.0.0)"
+        required: true
+        default: "1.0.0"
+      prerelease:
+        description: "Als Pre-Release markieren?"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  NEXT_PUBLIC_APPWRITE_ENDPOINT: https://appwrite.it-handwerk-stuttgart.de/v1
+  NEXT_PUBLIC_APPWRITE_PROJECT: 6a4453770009b9e7f029
+  NEXT_PUBLIC_SITE_URL: https://ui.it-handwerk-stuttgart.de
+  RAW: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/docs/preview
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Dependencies
+        run: npm ci
+
+      - name: Lint & Build (Sanity)
+        run: |
+          npm run lint
+          npm run build
+
+      - name: Release-Note schreiben (mit Bildern)
+        run: |
+          V="${{ inputs.version }}"
+          cat > RELEASE_BODY.md <<EOF
+          <div align="center">
+
+          <img src="${RAW}/hero.png" alt="Elementa Komponenten-Galerie" width="760" />
+
+          # Elementa v${V}
+
+          **Der offene Baukasten für UI-Komponenten** — framework­übergreifend, barrierefrei, DSGVO-konform in der EU gehostet.
+
+          [**Live-Seite**](https://ui.it-handwerk-stuttgart.de) · [**Komponenten entdecken**](https://ui.it-handwerk-stuttgart.de/explore) · [**Guides**](https://ui.it-handwerk-stuttgart.de/guides)
+
+          </div>
+
+          ---
+
+          ## ✨ Highlights
+
+          - **140+ Komponenten** in 6 Kategorien — jede mit **live-interaktiver Vorschau**
+          - **Echte Framework-Komponenten**: HTML/CSS, Tailwind, React, Vue und Svelte (nicht nur optisch nachgebaut)
+          - **Null Abhängigkeiten** pro Komponente — kopieren, einfügen, fertig
+          - **WCAG-2.2-Anspruch**, sichtbarer Fokus, \`prefers-reduced-motion\`
+          - **DSGVO-konform**: EU-Hosting, First-Party-Analytik mit Einwilligung, Double-Opt-in-Newsletter
+          - **Community**: Konten, Likes, Favoriten, Kommentare und Melde-/Moderationsfunktion
+          - **Automatisierte Integrität**: WCAG-Badges sind serverseitig fälschungssicher, echte Like-Zahlen
+
+          ## 🧩 Kategorien
+
+          | Buttons | Cards | Loader |
+          |:---:|:---:|:---:|
+          | <img src="${RAW}/buttons.png" width="260" /> | <img src="${RAW}/cards.png" width="260" /> | <img src="${RAW}/loaders.png" width="260" /> |
+          | **Inputs** | **Toggles** | **Backgrounds** |
+          | <img src="${RAW}/inputs.png" width="260" /> | <img src="${RAW}/toggles.png" width="260" /> | <img src="${RAW}/backgrounds.png" width="260" /> |
+
+          ## 🛠️ Tech-Stack
+
+          Next.js 16 · React 19 · TypeScript 5 · Tailwind v4 · self-hosted Appwrite (EU) · MIT-Lizenz
+
+          ---
+          EOF
+          echo "RELEASE_BODY.md geschrieben:"; wc -l RELEASE_BODY.md
+
+      - name: Tag & GitHub-Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: Elementa v${{ inputs.version }}
+          body_path: RELEASE_BODY.md
+          prerelease: ${{ inputs.prerelease }}
+          generate_release_notes: true
+          make_latest: "true"
