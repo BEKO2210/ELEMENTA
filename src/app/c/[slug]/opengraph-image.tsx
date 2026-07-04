@@ -47,26 +47,23 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           }}
         />
 
-        {/* Kopf: Logo + Wortmarke */}
+        {/* Kopf: Baustein-Logo + Wortmarke */}
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: 7,
-              width: 66,
-              height: 66,
-              borderRadius: 19,
-              paddingLeft: 16,
-              background: "linear-gradient(135deg, #8b5cf6, #d946ef 50%, #06b6d4)",
-            }}
-          >
-            <div style={{ width: 34, height: 7.5, borderRadius: 4, background: "#0b0b0e" }} />
-            <div style={{ width: 21, height: 7.5, borderRadius: 4, background: "#0b0b0e" }} />
-            <div style={{ width: 28, height: 7.5, borderRadius: 4, background: "#0b0b0e" }} />
-          </div>
-          <div style={{ fontSize: 38, fontWeight: 800, color: "#f3f1ea", letterSpacing: -1 }}>
+          <svg width="66" height="66" viewBox="0 0 48 48" fill="none">
+            <path
+              d="M10.5 17.5 L23 24.4 V39.5 L10.5 32.6 Z"
+              fill="#7c3aed" stroke="#7c3aed" strokeWidth="2.4" strokeLinejoin="round"
+            />
+            <path
+              d="M37.5 17.5 L25 24.4 V39.5 L37.5 32.6 Z"
+              fill="#22d3ee" stroke="#22d3ee" strokeWidth="2.4" strokeLinejoin="round"
+            />
+            <path
+              d="M24 6.5 L36.8 13.6 L24 20.7 L11.2 13.6 Z"
+              fill="#e879f9" stroke="#e879f9" strokeWidth="2.4" strokeLinejoin="round"
+            />
+          </svg>
+          <div style={{ fontSize: 38, fontWeight: 800, color: "#f4f3f8", letterSpacing: -1 }}>
             Elementa
           </div>
         </div>
@@ -109,25 +106,25 @@ export default async function Image({ params }: { params: Promise<{ slug: string
 
         {/* Fuß: Autor · Framework · Likes */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 30, color: "#a6a29a" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 30, color: "#a8a6b8" }}>
             <div style={{ display: "flex" }}>@{author}</div>
-            <div style={{ display: "flex", color: "#6d6a62" }}>·</div>
+            <div style={{ display: "flex", color: "#8785a0" }}>·</div>
             <div
               style={{
                 display: "flex",
                 padding: "6px 18px",
                 borderRadius: 999,
                 border: "1px solid #2a2730",
-                color: "#f3f1ea",
+                color: "#f4f3f8",
                 fontSize: 26,
               }}
             >
               {framework}
             </div>
-            <div style={{ display: "flex", color: "#6d6a62" }}>·</div>
+            <div style={{ display: "flex", color: "#8785a0" }}>·</div>
             <div style={{ display: "flex", color: "#ff8ba0" }}>♥ {likes}</div>
           </div>
-          <div style={{ display: "flex", fontSize: 26, color: "#6d6a62" }}>
+          <div style={{ display: "flex", fontSize: 26, color: "#8785a0" }}>
             it-handwerk-stuttgart.de
           </div>
         </div>

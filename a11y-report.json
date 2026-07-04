@@ -1,0 +1,590 @@
+[
+  {
+    "slug": "aurora-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glow-card",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "orbit-loader",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "magnetic-button",
+    "framework": "react",
+    "prev": "warn",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "gradient-toggle",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-background",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-orbit-loader",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-pulse-button",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "quantum-glass-button",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-glow-button",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glossy-shine-sweep-button",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-pulse-outline-button",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "three-d-press-button",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "liquid-flow-ripple-button",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "spotlight-glass-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "animated-gradient-border-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "3d-tilt-product-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glow-pricing-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "bento-feature-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "conic-aurora-spinner",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "triple-orbit-loader",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "morphing-gradient-blob",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-bar-equalizer",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glow-ring-progress",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "floating-label-glow-input",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "gradient-ring-focus-input",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "animated-search-bar",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "underline-draw-input",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "otp-pin-input",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "password-show-hide-input",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "ios-aurora-switch",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "day-night-morph-toggle",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "draw-check-checkbox",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "segmented-slider-control",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "heart-like-pop-toggle",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-mesh-bg",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "liquid-gradient-flow-bg",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "grid-radial-glow-bg",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "floating-particles-bg",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "spotlight-follow-bg",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "gradient-frame-button",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glow-pulse-button",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "shine-sweep-button",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "ripple-wave-button",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "arrow-slide-button",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glass-frost-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "spotlight-hover-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "animated-gradient-border-card-2",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "tilt-3d-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "glow-stat-card",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "orbit-spinner-elementa",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "bouncing-dots-elementa",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "gradient-ring-elementa",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "bar-equalizer-elementa",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "pulse-comet-elementa",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "input-floating-label-violet",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "input-glow-focus-fuchsia",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "input-gradient-underline",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "input-search-cyan-icon",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "input-password-reveal-toggle",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "gradient-brand-toggle",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "ios-style-toggle",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "day-night-toggle",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-glow-toggle",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "pill-text-toggle",
+    "framework": "css",
+    "prev": "pass",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-flow-background",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "mesh-gradient-morph",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-grid-pulse",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "starfield-drift",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "floating-blobs-glow",
+    "framework": "css",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "minimal-glow-button",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "obsidian-ember-button",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "aurora-liquid-cta",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "kinetic-3d-push",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "3d-liquid-glass",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "liquid-aurora-spatial",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "animated-cyber-glow-button",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "modern-accessible-toggle-switch",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "text-label-on-off-toggle",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "neon-cyberpunk-toggle",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "premium-elastic-tactile-toggle-3d-dark-mode",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "parallax-scenery-day-night-toggle",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "morphing-scenery-toggle",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  },
+  {
+    "slug": "interactive-3d-holographic-tilt-card",
+    "framework": "html",
+    "prev": "unchecked",
+    "status": "pass",
+    "violations": []
+  }
+]

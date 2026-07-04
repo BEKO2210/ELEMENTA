@@ -119,7 +119,7 @@ export const COMPONENTS: UIComponent[] = [
     framework: "html",
     category: "toggles",
     tags: ["switch", "gradient", "a11y"],
-    html: `<label class="tg"><input type="checkbox" checked /><span class="tr"></span></label>`,
+    html: `<label class="tg"><input type="checkbox" checked aria-label="Umschalten" /><span class="tr"></span></label>`,
     css: `.tg{display:inline-block;cursor:pointer}
 .tg input{position:absolute;opacity:0}
 .tr{display:block;width:58px;height:32px;border-radius:99px;background:#26263a;position:relative;transition:.3s}

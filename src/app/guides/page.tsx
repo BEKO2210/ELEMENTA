@@ -35,19 +35,20 @@ export default function GuidesIndex() {
         }}
       />
       <header className="max-w-2xl">
-        <h1 className="text-4xl font-bold tracking-tight">Guides</h1>
+        <p className="eyebrow">Wissen</p>
+        <h1 className="mt-2 text-4xl font-bold tracking-tight">Guides</h1>
         <p className="mt-3 text-lg text-fg-muted">
           Praktische Anleitungen rund um moderne UI-Komponenten — verständlich erklärt und mit
           Code, den du direkt kopieren kannst.
         </p>
       </header>
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2">
+      <div className="mt-12 grid gap-5 sm:grid-cols-2">
         {GUIDES.map((g) => (
           <Link
             key={g.slug}
             href={`/guides/${g.slug}`}
-            className="card group relative flex flex-col overflow-hidden"
+            className="card spotlight group relative flex flex-col overflow-hidden"
           >
             <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-white/5">
               <Image
