@@ -119,8 +119,6 @@ for (const [category, list, a11y] of GROUPS) {
       tags: c.tags,
       authorId: AUTHOR_ID,
       authorUsername: AUTHOR_NAME,
-      likesCount: 0,
-      views: 0,
       a11y,
       createdAt: new Date(now - idx * 60000).toISOString(),
     };

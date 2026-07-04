@@ -29,7 +29,9 @@ function mapDoc(d: any): UIComponent {
     js: d.js ?? "",
     author: d.authorUsername ?? d.authorId ?? "anon",
     authorId: d.authorId,
-    likes: d.likesCount ?? 0,
+    // Nie das rohe likesCount-Feld anzeigen (T7) — die echte Zahl liefert
+    // attachLikeCounts() aus der likes-Collection. Default 0.
+    likes: 0,
     a11y: d.a11y ?? "unchecked",
     createdAt: d.createdAt ?? d.$createdAt,
   };

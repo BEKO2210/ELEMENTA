@@ -199,17 +199,20 @@ Umsetzung: newsletter-Collection um `confirmedAt` + `token` erweitert (`scripts/
 `src/lib/data.ts`: Wenn Appwrite nicht erreichbar → Fehlerzustand („Live-Daten derzeit nicht verfügbar") statt Mock-Daten mit fiktiven Autoren/Likes (Wahrheitsregel). Akzeptanz: Appwrite gestoppt → Seite zeigt ehrlichen Zustand, keine erfundenen Zahlen.
 Umsetzung: `data.ts` wirft bei DB-Ausfall eine typisierte `DataUnavailableError` statt Mock-Daten zurückzugeben (leere DB → leere Liste, echt). Neue Komponente `DataUnavailable.tsx` (ehrlicher Hinweis). Seiten `/` (Home: TrustBar-Statistik ausgeblendet, Featured → Hinweis, Hero-Text ohne erfundene Zahl), `/explore`, `/c/[slug]`, `/u/[slug]` fangen den Fehler und zeigen den ehrlichen Zustand; `sitemap.ts` liefert bei Ausfall nur statische Routen, OG-Image das generische Bild, `fetchSlugs` leere Params (build-sicher). **Die Fake-Daten (`COMPONENTS`-Array + `getComponent`, inkl. fiktiver Autoren wie „aylin") wurden ganz aus `mock-data.ts` entfernt** — dort bleiben nur die echten Konstanten `CATEGORIES`/`FRAMEWORKS`. E2E-nachgewiesen: Appwrite-Host per `/etc/hosts` ins Leere geleitet → Home/Explore/Detail zeigen „Live-Daten derzeit nicht verfügbar", 0 Mock-Titel im HTML, TrustBar weg; nach Rückbau sofort wieder 9 echte Karten + Statistik. 6/6 Playwright weiter grün.
 
-**T7 — `likesCount`/`views` deprecaten (P3)**
+**T7 — `likesCount`/`views` deprecaten (P3)** ✅ **ERLEDIGT (2026-07-04)**
 Feld aus Create-Pfaden entfernen (Form + Seeds), UI nutzt ausschließlich `attachLikeCounts`. Akzeptanz: grep zeigt keine schreibende Nutzung mehr.
+Umsetzung: `likesCount`/`views` aus dem Create-Pfad in `ComponentForm.tsx` entfernt; aus allen Seed-Skripten (`seed-new/svelte/vue/seed/seed-premium`) entfernt — inkl. der Fake-Likes-Funktion `seedLikes` in seed-premium. `data.ts` `mapDoc` setzt `likes: 0` statt das rohe `likesCount`-Feld zu lesen (echte Zahl kommt aus `attachLikeCounts`). Verbleibende Schreiber sind nur noch der Integritäts-Guard (T1, erzwingt echte Werte serverseitig), `test-integrity` und `reset-truthful` — also keine Create-Pfade mehr.
 
-**T8 — CountUp-Fallback (P3)**
+**T8 — CountUp-Fallback (P3)** ✅ **ERLEDIGT (2026-07-04)**
 `CountUp` initial mit Endwert rendern, Animation nur additiv (kein „0" bei übersprungenem InView). Akzeptanz: Direktaufruf mit Anker unterhalb → TrustBar zeigt sofort echte Zahlen.
+Umsetzung: `CountUp.tsx` startet mit `useState(value)` (Endwert) → SSR + erster Paint zeigen die echte Zahl. Beim Mount wird die Position geprüft: liegt das Element schon (teilweise) im Viewport oder darüber → Endwert bleibt stehen (keine 0); nur wenn es UNTERHALB liegt → auf 0 setzen und beim Reinscrollen hochzählen. Verifiziert: SSR-HTML der Startseite enthält jetzt die echte Komponentenzahl (100) statt „0".
 
 **T9 — Impressum-Kontakt überdenken (P3, Entscheidung Belkis)**
 Private Anschrift/Telefon vs. Impressums-Service/co-working-Adresse. Keine Code-Änderung.
 
-**T10 — Content-Richtlinien sichtbarer (P3)**
+**T10 — Content-Richtlinien sichtbarer (P3)** ✅ **ERLEDIGT (2026-07-04)**
 Im Upload-Formular unter der Checkbox 1-Zeilen-Hinweis auf Moderation/Meldung (nach T4).
+Umsetzung: `ComponentForm.tsx` zeigt im Create-Modus unter der MIT-Checkbox einen Hinweis (ShieldCheck-Icon): „Veröffentlichte Komponenten sind für alle sichtbar und können von der Community gemeldet werden; wir prüfen Meldungen und entfernen Inhalte, die gegen die Richtlinien verstoßen." E2E-verifiziert (Submit-Flow prüft Sichtbarkeit).
 
 **Reihenfolge:** T1 → T2 → T3 → T4/T5 parallel → T6 → T7/T8 → T10.
 

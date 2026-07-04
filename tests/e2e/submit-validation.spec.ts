@@ -12,6 +12,9 @@ test("Submit-Formular: MIT-Pflicht, Leer-Validierung, Sonderzeichen", async ({ p
   const submitBtn = page.getByRole("button", { name: "Unter MIT-Lizenz veröffentlichen" });
   await expect(submitBtn).toBeVisible();
 
+  // T10: Hinweis auf Moderation/Meldung ist im Formular sichtbar
+  await expect(page.getByText(/gemeldet werden/)).toBeVisible();
+
   // 1) Ohne MIT-Zustimmung ist Veröffentlichen gesperrt
   await expect(submitBtn).toBeDisabled();
 

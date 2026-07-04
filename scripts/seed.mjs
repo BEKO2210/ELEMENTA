@@ -48,8 +48,6 @@ for (const c of COMPONENTS) {
     tags: c.tags,
     authorId: c.author,
     authorUsername: c.author,
-    likesCount: c.likes,
-    views: 0,
     a11y: c.a11y,
     createdAt: new Date(c.createdAt + "T12:00:00.000Z").toISOString(),
   };

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ID, Permission, Role } from "appwrite";
-import { Loader2, Upload, Save } from "lucide-react";
+import { Loader2, Upload, Save, ShieldCheck } from "lucide-react";
 import { databases, DB_ID, COL_COMPONENTS } from "@/lib/appwrite";
 import { CATEGORIES, FRAMEWORKS } from "@/lib/mock-data";
 import type { Framework, Category, UIComponent } from "@/lib/types";
@@ -160,8 +160,9 @@ export default function ComponentForm({
       ...data,
       authorId: user.$id,
       authorUsername: user.name || "anon",
-      likesCount: 0,
-      views: 0,
+      // likesCount/views werden NICHT geschrieben (T7): echte Likes kommen aus der
+      // likes-Collection (attachLikeCounts), views aus den Analytics. Der
+      // Integritäts-Guard (T1) erzwingt beide Felder ohnehin serverseitig.
       a11y: "unchecked",
       createdAt: new Date().toISOString(),
     };
@@ -282,6 +283,15 @@ export default function ComponentForm({
               einhalte.
             </span>
           </label>
+        )}
+
+        {mode === "create" && (
+          <p className="flex items-start gap-2 px-1 text-xs text-fg-dim">
+            <ShieldCheck size={14} className="mt-0.5 shrink-0 text-accent" />
+            Veröffentlichte Komponenten sind für alle sichtbar und können von der Community
+            gemeldet werden; wir prüfen Meldungen und entfernen Inhalte, die gegen die Richtlinien
+            verstoßen.
+          </p>
         )}
 
         <button

@@ -74,13 +74,6 @@ function parseFile(text, category) {
   return out;
 }
 
-// deterministischer „Beliebtheits"-Seed (kein Math.random → reproduzierbar)
-function seedLikes(slug) {
-  let h = 0;
-  for (const ch of slug) h = (h * 31 + ch.charCodeAt(0)) & 0xffff;
-  return 40 + (h % 380);
-}
-
 const perms = [
   Permission.read(Role.any()),
   Permission.update(Role.user(AUTHOR_ID)),
@@ -102,7 +95,7 @@ for (const [file, category] of Object.entries(CATEGORIES)) {
       title: c.title, description: c.description, html: c.html, css: c.css, js: c.js,
       framework: c.framework, category: c.category, tags: c.tags,
       authorId: AUTHOR_ID, authorUsername: AUTHOR_NAME,
-      likesCount: seedLikes(c.slug), views: 0, a11y: c.a11y,
+      a11y: c.a11y,
       createdAt: new Date(now - idx * 60000).toISOString(),
     };
     let done = false;

@@ -147,8 +147,6 @@ for (const c of COMPONENTS) {
     ...c,
     authorId: BELKIS_ID,
     authorUsername: "Belkis",
-    likesCount: 0,
-    views: 0,
     a11y: "unchecked",
     createdAt: new Date().toISOString().slice(0, 10),
   });
