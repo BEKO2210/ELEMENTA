@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Heart, Boxes, ShieldCheck } from "lucide-react";
-import { fetchByAuthor, attachLikeCounts } from "@/lib/data";
+import { fetchByAuthor, attachLikeCounts, DataUnavailableError } from "@/lib/data";
 import { getProfileById } from "@/lib/profile";
 import ComponentCard from "@/components/ComponentCard";
+import DataUnavailable from "@/components/DataUnavailable";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,15 @@ export default async function ProfilePage({
 }) {
   const { slug } = await params;
   const username = decodeURIComponent(slug);
-  const comps = await attachLikeCounts(await fetchByAuthor(username));
+  let comps;
+  try {
+    comps = await attachLikeCounts(await fetchByAuthor(username));
+  } catch (e) {
+    if (e instanceof DataUnavailableError) {
+      return <div className="mx-auto max-w-6xl px-5 py-20"><DataUnavailable /></div>;
+    }
+    throw e;
+  }
   const totalLikes = comps.reduce((s, c) => s + c.likes, 0);
   const verified = comps.filter((c) => c.a11y === "pass").length;
 

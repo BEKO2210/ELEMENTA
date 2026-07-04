@@ -2,8 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronRight, ShieldCheck, AlertTriangle, Eye } from "lucide-react";
-import { fetchComponent, fetchComponents, fetchSlugs, attachLikeCounts } from "@/lib/data";
+import { fetchComponent, fetchComponents, fetchSlugs, attachLikeCounts, DataUnavailableError } from "@/lib/data";
 import { CATEGORIES } from "@/lib/mock-data";
+import DataUnavailable from "@/components/DataUnavailable";
 import PreviewStage from "@/components/PreviewStage";
 import CodeSection from "@/components/CodeSection";
 import InstallGuide from "@/components/InstallGuide";
@@ -15,7 +16,7 @@ import AuthorCard from "@/components/AuthorCard";
 import ReportButton from "@/components/ReportButton";
 import JsonLd from "@/components/JsonLd";
 import { CategoryIcon } from "@/components/CategoryIcon";
-import type { Category } from "@/lib/types";
+import type { Category, UIComponent } from "@/lib/types";
 
 const BASE = "https://ui.it-handwerk-stuttgart.de";
 
@@ -37,7 +38,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const c = await fetchComponent(slug);
+  let c;
+  try {
+    c = await fetchComponent(slug);
+  } catch {
+    return { title: "Komponente" }; // DB nicht erreichbar → neutraler Titel
+  }
   if (!c) return { title: "Nicht gefunden" };
   return {
     // Längerer, beschreibender SERP-Titel (Ziel 50–60 Zeichen); Template hängt „· Elementa" an.
@@ -60,7 +66,15 @@ export default async function ComponentPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const raw = await fetchComponent(slug);
+  let raw;
+  try {
+    raw = await fetchComponent(slug);
+  } catch (e) {
+    if (e instanceof DataUnavailableError) {
+      return <div className="mx-auto max-w-5xl px-5 py-20"><DataUnavailable /></div>;
+    }
+    throw e;
+  }
   if (!raw) notFound();
   // Echte Like-Anzahl anhängen (gleiche Quelle wie Karten/Profile), damit die
   // Anzeige überall übereinstimmt — nicht das rohe likesCount-Feld verwenden.
@@ -69,7 +83,13 @@ export default async function ComponentPage({
   const catLabel = CATEGORIES.find((x) => x.slug === c.category)?.label ?? c.category;
   const initial = c.author.charAt(0).toUpperCase();
 
-  const related = relatedTo(c, await attachLikeCounts(await fetchComponents()));
+  // „Ähnliche" sind Beiwerk — bei DB-Ausfall einfach weglassen, nie Mock zeigen.
+  let related: UIComponent[] = [];
+  try {
+    related = relatedTo(c, await attachLikeCounts(await fetchComponents()));
+  } catch {
+    related = [];
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-8">

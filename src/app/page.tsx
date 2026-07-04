@@ -2,9 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, MousePointerClick, Copy, Rocket, CircleCheck, ShieldCheck, Zap, Scale } from "lucide-react";
 import { CATEGORIES } from "@/lib/mock-data";
-import { fetchComponents, attachLikeCounts, computeStats } from "@/lib/data";
-import type { Category } from "@/lib/types";
+import { fetchComponents, attachLikeCounts, computeStats, DataUnavailableError } from "@/lib/data";
+import type { Category, UIComponent } from "@/lib/types";
 import ComponentCard from "@/components/ComponentCard";
+import DataUnavailable from "@/components/DataUnavailable";
 import HeroSearch from "@/components/HeroSearch";
 import HeroShowcase, { type ShowcaseItem } from "@/components/HeroShowcase";
 import HeroVideo from "@/components/HeroVideo";
@@ -75,7 +76,16 @@ function pickForShowcase(
 }
 
 export default async function Home() {
-  const all = await attachLikeCounts(await fetchComponents());
+  // Bei DB-Ausfall ehrlicher Zustand statt Fake-Daten (T6): die
+  // datenabhängigen Abschnitte zeigen dann einen Hinweis, keine Zahlen.
+  let all: UIComponent[] = [];
+  let unavailable = false;
+  try {
+    all = await attachLikeCounts(await fetchComponents());
+  } catch (e) {
+    if (e instanceof DataUnavailableError) unavailable = true;
+    else throw e;
+  }
   const featured = [...all].sort((a, b) => b.likes - a.likes).slice(0, 6);
   const stats = computeStats(all);
 
@@ -136,7 +146,7 @@ export default async function Home() {
               className="rise mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-fg-muted lg:mx-0"
               style={{ animationDelay: "90ms" }}
             >
-              {stats.components}+ geprüfte UI-Komponenten — live editierbar, framework-übergreifend,
+              {unavailable ? "Geprüfte" : `${stats.components}+ geprüfte`} UI-Komponenten — live editierbar, framework-übergreifend,
               MIT-lizenziert. Kein npm. Kein Build-Step. Einfach kopieren und einfügen.
             </p>
 
@@ -184,12 +194,14 @@ export default async function Home() {
         <TechMarquee />
       </section>
 
-      {/* ---------- Trust Bar ---------- */}
-      <section className="mx-auto max-w-6xl px-5 pt-8">
-        <Reveal>
-          <TrustBar stats={stats} />
-        </Reveal>
-      </section>
+      {/* ---------- Trust Bar (nur mit echten Live-Daten) ---------- */}
+      {!unavailable && (
+        <section className="mx-auto max-w-6xl px-5 pt-8">
+          <Reveal>
+            <TrustBar stats={stats} />
+          </Reveal>
+        </section>
+      )}
 
       {/* ---------- Categories (mit Anzahl) ---------- */}
       <section className="mx-auto max-w-6xl px-5 pt-14">
@@ -229,13 +241,17 @@ export default async function Home() {
             Alle ansehen <ArrowRight size={15} />
           </Link>
         </div>
-        <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((c, i) => (
-            <StaggerItem key={c.id}>
-              <ComponentCard c={c} popular={i < 3 && c.likes > 0} />
-            </StaggerItem>
-          ))}
-        </Stagger>
+        {unavailable ? (
+          <DataUnavailable />
+        ) : (
+          <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((c, i) => (
+              <StaggerItem key={c.id}>
+                <ComponentCard c={c} popular={i < 3 && c.likes > 0} />
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </section>
 
       {/* ---------- So funktioniert's ---------- */}

@@ -1,7 +1,18 @@
 import { Query } from "appwrite";
 import { databases, DB_ID, COL_COMPONENTS, COL_LIKES } from "./appwrite";
 import type { UIComponent } from "./types";
-import { COMPONENTS as MOCK } from "./mock-data";
+
+/**
+ * Signalisiert, dass die Live-Datenbank nicht erreichbar ist. Aufrufer zeigen
+ * daraufhin einen EHRLICHEN Zustand („Live-Daten derzeit nicht verfügbar") statt
+ * erfundener Mock-Daten mit fiktiven Autoren/Likes (Wahrheitsregel, T6).
+ */
+export class DataUnavailableError extends Error {
+  constructor() {
+    super("data-unavailable");
+    this.name = "DataUnavailableError";
+  }
+}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function mapDoc(d: any): UIComponent {
@@ -44,29 +55,29 @@ async function listAllComponents(filters: string[]): Promise<any[]> {
   return out;
 }
 
-/** Alle Komponenten (neueste zuerst). Fällt bei Fehler/leerer DB auf Mock zurück. */
+/** Alle Komponenten (neueste zuerst). Leere DB → leere Liste; DB-Ausfall → wirft. */
 export async function fetchComponents(): Promise<UIComponent[]> {
   try {
     const docs = await listAllComponents([Query.orderDesc("createdAt")]);
-    return docs.length ? docs.map(mapDoc) : MOCK;
+    return docs.map(mapDoc); // leer bleibt leer — keine erfundenen Daten
   } catch (e) {
-    // Sichtbar machen: bei DB-Ausfall fallen wir auf Mock-Daten zurück (Betreiber-Signal).
-    console.error("[data] fetchComponents failed, using mock fallback:", e);
-    return MOCK;
+    console.error("[data] fetchComponents failed:", e);
+    throw new DataUnavailableError();
   }
 }
 
+/** Eine Komponente per Slug. Nicht gefunden → undefined; DB-Ausfall → wirft. */
 export async function fetchComponent(slug: string): Promise<UIComponent | undefined> {
   try {
     const r = await databases().listDocuments(DB_ID, COL_COMPONENTS, [
       Query.equal("slug", slug),
       Query.limit(1),
     ]);
-    if (r.documents.length) return mapDoc(r.documents[0]);
-  } catch {
-    /* fall through to mock */
+    return r.documents.length ? mapDoc(r.documents[0]) : undefined;
+  } catch (e) {
+    console.error("[data] fetchComponent failed:", e);
+    throw new DataUnavailableError();
   }
-  return MOCK.find((c) => c.slug === slug);
 }
 
 /** Komponenten eines Nutzers per stabiler authorId (für Dashboard/Verwaltung). Kein Mock-Fallback. */
@@ -86,7 +97,7 @@ export async function fetchByAuthor(username: string): Promise<UIComponent[]> {
     return docs.map(mapDoc);
   } catch (e) {
     console.error("[data] fetchByAuthor failed:", e);
-    return MOCK.filter((c) => c.author === username);
+    throw new DataUnavailableError();
   }
 }
 
@@ -155,12 +166,14 @@ export function computeStats(components: UIComponent[]): SiteStats {
   return { components: components.length, contributors, likes, frameworks, avgKb };
 }
 
+/** Slugs für generateStaticParams. Bei DB-Ausfall leere Liste (build-sicher,
+ *  Detailseiten rendern dann dynamisch) — nie Mock-Slugs. */
 export async function fetchSlugs(): Promise<string[]> {
   try {
     const docs = await listAllComponents([]);
-    if (docs.length) return docs.map((d) => d.slug);
-  } catch {
-    /* fall through */
+    return docs.map((d) => d.slug);
+  } catch (e) {
+    console.error("[data] fetchSlugs failed:", e);
+    return [];
   }
-  return MOCK.map((c) => c.slug);
 }

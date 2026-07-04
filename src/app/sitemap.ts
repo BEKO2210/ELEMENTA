@@ -8,7 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const comps = await fetchComponents();
+  // Bei DB-Ausfall nur die statischen Routen ausliefern (keine Mock-Slugs).
+  let comps: Awaited<ReturnType<typeof fetchComponents>> = [];
+  try {
+    comps = await fetchComponents();
+  } catch {
+    comps = [];
+  }
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1 },

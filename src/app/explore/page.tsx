@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import ExploreClient from "@/components/ExploreClient";
-import { fetchComponents, attachLikeCounts } from "@/lib/data";
+import DataUnavailable from "@/components/DataUnavailable";
+import { fetchComponents, attachLikeCounts, DataUnavailableError } from "@/lib/data";
 
 // Immer frisch aus der DB rendern, damit neue Uploads sofort erscheinen.
 export const dynamic = "force-dynamic";
@@ -22,7 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default async function ExplorePage() {
-  const components = await attachLikeCounts(await fetchComponents());
+  let components;
+  try {
+    components = await attachLikeCounts(await fetchComponents());
+  } catch (e) {
+    if (e instanceof DataUnavailableError) {
+      return <div className="mx-auto max-w-6xl px-5 py-20"><DataUnavailable /></div>;
+    }
+    throw e;
+  }
   return (
     <Suspense fallback={<div className="mx-auto max-w-6xl px-5 py-20 text-fg-muted">Lädt …</div>}>
       <ExploreClient components={components} />

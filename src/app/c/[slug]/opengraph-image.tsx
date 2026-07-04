@@ -13,7 +13,12 @@ const FW_LABEL: Record<string, string> = {
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const c = await fetchComponent(slug);
+  let c;
+  try {
+    c = await fetchComponent(slug);
+  } catch {
+    c = undefined; // DB nicht erreichbar → generisches OG-Bild
+  }
 
   const title = c?.title ?? "Komponente";
   const author = c?.author ?? "elementa";
