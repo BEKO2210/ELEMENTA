@@ -222,7 +222,8 @@ Im Upload-Formular unter der Checkbox 1-Zeilen-Hinweis auf Moderation/Meldung (n
 - [x] Anonyme Schreibzugriffe unmöglich; Doppel-Likes unmöglich; private Collections nicht lesbar
 - [x] XSS-Vektoren geschlossen (JSON-LD, React-Escaping, Sandbox-CSP)
 - [x] **T1:** WCAG-Badge serverseitig fälschungssicher (Hash-gebundener Integritäts-Guard, Cron alle 10 Min, E2E-nachgewiesen)
-- [ ] **T2:** Rate-Limits verifiziert ✅ (2026-07-04) — API-Key-Rotation ausstehend
+- [x] **T2a:** Rate-Limits aktiviert & verifiziert (2026-07-04: 11 Fehl-Logins → 429, lokal + öffentlich)
+- [ ] **T2b:** API-Key rotiert (wartet auf Belkis: neuen Key in Console anlegen + in `.env.local` eintragen)
 - [ ] **T3:** CI-Pipeline verhindert Regressionen automatisch
 - [ ] **T4:** Melde-/Moderations-Pfad für Community-Inhalte
 
