@@ -98,7 +98,10 @@ export default function HeroSearch({
   }
 
   return (
-    <div className="relative mx-auto mt-9 w-full max-w-xl">
+    <div className="mx-auto mt-9 w-full max-w-xl">
+      {/* Eigener Positionierungs-Anker NUR für Feld + Dropdown — sonst öffnet
+          sich die Vorschlagsliste unterhalb der Chips statt direkt am Feld. */}
+      <div className="relative">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -148,7 +151,7 @@ export default function HeroSearch({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.16 }}
-            className="glass absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl p-1.5 text-left shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)]"
+            className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl border border-white/10 bg-[#12121c] p-1.5 text-left shadow-[0_20px_60px_-20px_rgba(0,0,0,0.85)]"
           >
             {hasAllOption && (
               <li id="hero-opt-0" role="option" aria-selected={active === 0}>
@@ -189,6 +192,7 @@ export default function HeroSearch({
           </motion.ul>
         )}
       </AnimatePresence>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-fg-dim lg:justify-start">
         <span>Beliebt:</span>
@@ -207,7 +211,7 @@ export default function HeroSearch({
         <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-fg-dim lg:justify-start">
           <span>Zuletzt hinzugefügt:</span>
           {recent.slice(0, 3).map((r) => (
-            <Link key={r.slug} href={`/c/${r.slug}`} className="text-fg-muted underline-offset-2 hover:text-white hover:underline">
+            <Link key={r.slug} href={`/c/${r.slug}`} className="text-fg-muted underline decoration-white/20 underline-offset-2 transition hover:text-white hover:decoration-accent">
               {r.title}
             </Link>
           ))}

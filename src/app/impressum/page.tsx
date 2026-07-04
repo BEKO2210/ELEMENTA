@@ -33,14 +33,14 @@ export default function ImpressumPage() {
             <p className="inline-flex items-center gap-2">
               <Mail size={15} className="text-accent" aria-hidden="true" />
               E-Mail:{" "}
-              <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline-offset-4 hover:text-white hover:underline">
+              <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:text-white hover:decoration-accent">
                 belkis.aslani@gmail.com
               </a>
             </p>
             <p className="inline-flex items-center gap-2">
               <Phone size={15} className="text-accent" aria-hidden="true" />
               Telefon / WhatsApp:{" "}
-              <a href="tel:+4917681462526" className="text-fg underline-offset-4 hover:text-white hover:underline">
+              <a href="tel:+4917681462526" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:text-white hover:decoration-accent">
                 017681462526
               </a>
             </p>
@@ -71,7 +71,7 @@ export default function ImpressumPage() {
               href="https://ec.europa.eu/consumers/odr/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-fg underline-offset-4 hover:text-white hover:underline"
+              className="text-fg underline decoration-white/30 underline-offset-4 transition hover:text-white hover:decoration-accent"
             >
               ec.europa.eu/consumers/odr
             </a>
@@ -96,7 +96,7 @@ export default function ImpressumPage() {
           <p className="mt-3 text-fg-muted">
             Die von der Community geteilten Komponenten stehen unter der MIT-Lizenz. Details
             findest du auf der{" "}
-            <Link href="/lizenz" className="text-fg underline-offset-4 hover:text-white hover:underline">
+            <Link href="/lizenz" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:text-white hover:decoration-accent">
               Lizenz-Seite
             </Link>
             . Der Quellcode des Projekts ist auf{" "}
@@ -104,7 +104,7 @@ export default function ImpressumPage() {
               href="https://github.com/BEKO2210/ELEMENTA"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-fg underline-offset-4 hover:text-white hover:underline"
+              className="text-fg underline decoration-white/30 underline-offset-4 transition hover:text-white hover:decoration-accent"
             >
               GitHub
             </a>{" "}
@@ -115,7 +115,7 @@ export default function ImpressumPage() {
 
       <p className="mt-12 text-sm text-fg-muted">
         Siehe auch:{" "}
-        <Link href="/datenschutz" className="text-accent underline-offset-4 hover:underline">
+        <Link href="/datenschutz" className="text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Datenschutzerklärung
         </Link>
       </p>

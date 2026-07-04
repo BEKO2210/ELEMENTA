@@ -189,7 +189,7 @@ export default function Comments({ componentId }: { componentId: string }) {
         </form>
       ) : (
         <p className="mt-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-fg-muted">
-          <Link href="/login" className="text-accent hover:underline">Melde dich an</Link>, um zu kommentieren.
+          <Link href="/login" className="text-[#a78bfa] underline decoration-[#a78bfa]/40 underline-offset-2 transition hover:decoration-[#a78bfa]">Melde dich an</Link>, um zu kommentieren.
         </p>
       )}
 

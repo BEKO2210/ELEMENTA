@@ -61,6 +61,8 @@ const STEPS = [
 // Immer frisch rendern, damit neu hochgeladene Komponenten sofort auftauchen.
 export const dynamic = "force-dynamic";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 /** Erste Komponente einer Kategorie (bevorzugt viele Likes) für den Hero-Showcase. */
 function pickForShowcase(
   all: Awaited<ReturnType<typeof attachLikeCounts>>,

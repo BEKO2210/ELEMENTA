@@ -63,7 +63,7 @@ export default function ContributePage() {
         <Link href="/submit" className="btn-grad inline-flex items-center gap-2 rounded-xl px-5 py-3">
           Jetzt beitragen <ArrowRight size={18} />
         </Link>
-        <Link href="/docs/guidelines" className="text-sm text-accent underline-offset-4 hover:underline">
+        <Link href="/docs/guidelines" className="text-sm text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Community-Richtlinien lesen
         </Link>
       </div>

@@ -79,7 +79,7 @@ export default function ComponentCard({ c, popular }: { c: UIComponent; popular?
               <Link
                 key={t}
                 href={`/explore?q=${encodeURIComponent(t)}`}
-                className="rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-fg-muted transition hover:border-accent/40 hover:text-white"
+                className="inline-flex min-h-6 items-center rounded-full border border-white/10 px-2.5 py-0.5 text-[11px] text-fg-muted transition hover:border-accent/40 hover:text-white"
               >
                 #{t}
               </Link>

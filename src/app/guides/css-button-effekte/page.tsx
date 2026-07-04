@@ -239,7 +239,7 @@ export default function Page() {
         <InlineCode>:focus-visible</InlineCode>-Zustand für die Tastatur und{" "}
         <InlineCode>prefers-reduced-motion</InlineCode> für Animationen. Fertige, geprüfte Varianten
         findest du in der{" "}
-        <Link href="/explore?cat=buttons" className="text-accent underline-offset-4 hover:underline">
+        <Link href="/explore?cat=buttons" className="text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Button-Sammlung
         </Link>
         .

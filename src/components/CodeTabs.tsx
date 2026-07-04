@@ -73,7 +73,7 @@ export default function CodeTabs({ c }: { c: UIComponent }) {
                 const lineProps = getLineProps({ line });
                 return (
                   <div key={i} {...lineProps} className={`${lineProps.className ?? ""} flex`}>
-                    <span className="sticky left-0 w-12 shrink-0 select-none bg-[#0b0b12] pr-4 text-right text-fg-dim/60">
+                    <span className="sticky left-0 w-12 shrink-0 select-none bg-[#0b0b12] pr-4 text-right text-fg-dim">
                       {i + 1}
                     </span>
                     <span className="pr-5">

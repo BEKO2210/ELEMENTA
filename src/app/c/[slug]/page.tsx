@@ -145,7 +145,7 @@ export default async function ComponentPage({
                 <Link
                   key={t}
                   href={`/explore?q=${encodeURIComponent(t)}`}
-                  className="rounded-full border border-white/10 px-2.5 py-0.5 text-xs text-fg-muted transition hover:border-accent/40 hover:text-white"
+                  className="inline-flex min-h-6 items-center rounded-full border border-white/10 px-2.5 py-0.5 text-xs text-fg-muted transition hover:border-accent/40 hover:text-white"
                 >
                   #{t}
                 </Link>

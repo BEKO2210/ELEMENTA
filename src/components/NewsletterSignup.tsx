@@ -13,16 +13,34 @@ export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!consent) {
       setError("Bitte stimme dem Erhalt von Updates zu.");
       return;
     }
     setError(null);
-    setDone(true);
+    setBusy(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Anmeldung derzeit nicht möglich.");
+        return;
+      }
+      setDone(true);
+    } catch {
+      setError("Anmeldung derzeit nicht möglich.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   if (done) {
@@ -48,10 +66,11 @@ export default function NewsletterSignup() {
         />
         <button
           type="submit"
+          disabled={busy}
           aria-label="Newsletter abonnieren"
-          className="btn-grad inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm"
+          className="btn-grad inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm disabled:opacity-60"
         >
-          <Send size={15} />
+          <Send size={15} className={busy ? "animate-pulse" : undefined} />
         </button>
       </div>
       <label className="mt-2 flex items-start gap-2 text-xs text-fg-muted">

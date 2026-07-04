@@ -56,7 +56,7 @@ export default function CookieConsent() {
                 Wir nutzen technisch notwendige Cookies für den Betrieb. Optional hilft uns eine
                 anonyme, in der EU gehostete Reichweitenmessung (keine Dritt-Anbieter). Details in
                 der{" "}
-                <Link href="/datenschutz" className="text-fg underline-offset-4 hover:underline">
+                <Link href="/datenschutz" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
                   Datenschutzerklärung
                 </Link>
                 .

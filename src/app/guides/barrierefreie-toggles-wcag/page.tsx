@@ -129,7 +129,7 @@ export default function Page() {
         Barrierefreiheit beim Toggle ist kein Extra, sondern das Fundament. Baue auf nativem HTML,
         halte die Checkliste ein — dann funktioniert dein Switch für alle. Geprüfte Beispiele
         findest du in der{" "}
-        <Link href="/explore?cat=toggles" className="text-accent underline-offset-4 hover:underline">
+        <Link href="/explore?cat=toggles" className="text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Toggle-Sammlung
         </Link>
         .

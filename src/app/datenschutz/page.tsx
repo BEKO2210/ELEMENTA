@@ -35,25 +35,36 @@ export default function DatenschutzPage() {
           Belkis Aslani, Vogelsangstraße 32, 71691 Freiberg am Neckar, Deutschland
           <br />
           E-Mail:{" "}
-          <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline-offset-4 hover:underline">
+          <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
             belkis.aslani@gmail.com
           </a>{" "}
           · Telefon: 017681462526
         </p>
         <p>
           Weitere Angaben findest du im{" "}
-          <Link href="/impressum" className="text-fg underline-offset-4 hover:underline">
+          <Link href="/impressum" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
             Impressum
           </Link>
           .
         </p>
       </Section>
 
-      <Section title="2. Hosting in der EU">
+      <Section title="2. Hosting in der EU & Auslieferung über Cloudflare">
         <p>
           Diese Website und die zugehörige Datenbank (Appwrite) werden auf einem Server
           innerhalb der Europäischen Union betrieben (Domain <em>it-handwerk-stuttgart.de</em>).
-          Es findet keine Datenübermittlung in Drittländer außerhalb der EU/des EWR statt.
+          Alle Inhalte und Nutzerdaten sind ausschließlich dort gespeichert.
+        </p>
+        <p>
+          Für die öffentliche Erreichbarkeit und den Schutz vor Angriffen wird der
+          Datenverkehr über das Netzwerk von <strong>Cloudflare, Inc.</strong> (101 Townsend St.,
+          San Francisco, CA 94107, USA) geleitet (Reverse-Proxy/CDN). Cloudflare verarbeitet
+          dabei technisch notwendige Verbindungsdaten (z.&nbsp;B. IP-Adresse, angefragte URL)
+          als Auftragsverarbeiter. Rechtsgrundlage ist unser berechtigtes Interesse an einer
+          sicheren, performanten Auslieferung (Art. 6 Abs. 1 lit. f DSGVO). Cloudflare ist
+          unter dem EU-US Data Privacy Framework zertifiziert; zusätzlich bestehen
+          Standardvertragsklauseln. Eine dauerhafte Speicherung von Inhalten bei Cloudflare
+          findet nicht statt.
         </p>
       </Section>
 
@@ -108,6 +119,12 @@ export default function DatenschutzPage() {
           Die Konto- und Inhaltsdaten werden über <strong>Appwrite</strong> (self-hosted in der
           EU) verarbeitet. Es erfolgt keine Weitergabe an Dritte zu Werbezwecken.
         </p>
+        <p>
+          <strong>Newsletter:</strong> Meldest du dich für Updates an, speichern wir deine
+          E-Mail-Adresse und den Zeitpunkt deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
+          auf unserem EU-Server. Kein Versand über Dritt-Dienste, keine Weitergabe. Du kannst
+          dich jederzeit per E-Mail an uns wieder abmelden; die Adresse wird dann gelöscht.
+        </p>
       </Section>
 
       <Section title="7. Speicherdauer">
@@ -131,7 +148,7 @@ export default function DatenschutzPage() {
         </ul>
         <p>
           Zur Ausübung genügt eine formlose E-Mail an{" "}
-          <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline-offset-4 hover:underline">
+          <a href="mailto:belkis.aslani@gmail.com" className="text-fg underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
             belkis.aslani@gmail.com
           </a>
           .

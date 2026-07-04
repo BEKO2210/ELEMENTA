@@ -117,7 +117,7 @@ export default function Page() {
       <P>
         Transparenz + Blur + Kante = Glas. Achte auf einen farbigen Hintergrund, einen Fallback und
         ausreichenden Kontrast. Fertige Glass-Komponenten findest du in der{" "}
-        <Link href="/explore?cat=cards" className="text-accent underline-offset-4 hover:underline">
+        <Link href="/explore?cat=cards" className="text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Card-Sammlung
         </Link>
         .

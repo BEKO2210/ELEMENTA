@@ -84,7 +84,7 @@ SOFTWARE.`}
         </a>
         <Link
           href="/docs/contribute"
-          className="text-sm text-accent underline-offset-4 hover:underline"
+          className="text-sm text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent"
         >
           Contributor-Guidelines ansehen
         </Link>

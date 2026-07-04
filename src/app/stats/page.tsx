@@ -161,10 +161,10 @@ function Tile({
   return (
     <div className="glass flex flex-col items-center gap-1.5 rounded-2xl px-4 py-7 text-center">
       <Icon size={18} className="text-accent" aria-hidden="true" />
-      <p className="font-display text-3xl font-bold tabular-nums tracking-tight text-fg">
+      <dd className="font-display order-2 text-3xl font-bold tabular-nums tracking-tight text-fg">
         {value.toLocaleString("de-DE")}
-      </p>
-      <p className="text-xs tracking-wide text-fg-muted">{label}</p>
+      </dd>
+      <dt className="order-3 text-xs tracking-wide text-fg-muted">{label}</dt>
     </div>
   );
 }

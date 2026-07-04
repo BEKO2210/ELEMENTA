@@ -53,7 +53,7 @@ export function GuideShell({ guide, children }: { guide: GuideMeta; children: Re
       </nav>
 
       <header className="mt-5">
-        <span className="inline-flex rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+        <span className="inline-flex rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-[#c4b5fd]">
           {guide.category}
         </span>
         <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">{guide.title}</h1>
@@ -142,7 +142,11 @@ export function CodeBlock({ code, label = "CSS" }: { code: string; label?: strin
         <span className="text-xs font-medium text-fg-muted">{label}</span>
         <CopyButton text={code} />
       </div>
-      <pre className="max-h-[460px] overflow-auto p-4 font-mono text-[13px] leading-relaxed text-fg">
+      <pre
+        tabIndex={0}
+        aria-label={`Code-Beispiel (${label})`}
+        className="max-h-[460px] overflow-auto p-4 font-mono text-[13px] leading-relaxed text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent/70"
+      >
         <code>{code}</code>
       </pre>
     </div>

@@ -60,7 +60,7 @@ export default function UploadPreview() {
         <Link href="/login" className="btn-grad inline-flex items-center gap-2 rounded-xl px-6 py-3">
           <LogIn size={18} /> Anmelden / Registrieren
         </Link>
-        <Link href="/docs/contribute" className="text-sm text-accent underline-offset-4 hover:underline">
+        <Link href="/docs/contribute" className="text-sm text-accent underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent">
           Contributor-Guidelines ansehen
         </Link>
       </div>

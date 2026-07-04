@@ -44,8 +44,8 @@ export default function CodeSection({ c }: { c: UIComponent }) {
             >
               {t.label}
               {!available && (
-                <span className="inline-flex items-center gap-0.5 rounded bg-white/10 px-1 py-px text-[9px] text-fg-dim">
-                  <Clock size={9} /> Bald
+                <span className="inline-flex items-center gap-0.5 rounded bg-white/10 px-1 py-px text-[10px] text-fg-muted">
+                  <Clock size={9} aria-hidden="true" /> Bald
                 </span>
               )}
             </button>

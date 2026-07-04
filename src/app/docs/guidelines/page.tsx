@@ -64,7 +64,7 @@ export default function GuidelinesPage() {
 
       <p className="mt-10 text-sm text-fg-muted">
         Bereit?{" "}
-        <Link href="/docs/contribute" className="text-accent underline-offset-4 hover:underline">
+        <Link href="/docs/contribute" className="text-accent underline decoration-white/30 underline-offset-4 transition hover:decoration-accent">
           Zu den Contributor-Guidelines
         </Link>
       </p>
