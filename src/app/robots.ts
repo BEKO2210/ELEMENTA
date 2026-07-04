@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // Private / nicht indexierbare Bereiche
-        disallow: ["/profil", "/login"],
+        disallow: ["/profil", "/login", "/c/*/edit"],
       },
     ],
     sitemap: `${BASE}/sitemap.xml`,

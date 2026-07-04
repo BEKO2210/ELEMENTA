@@ -23,8 +23,8 @@ was du regelmäßig tun musst, und die Discover-Sonderregeln.
 
 | Baustein | Datei | Nutzen |
 |----------|-------|--------|
-| Dynamische Sitemap | `src/app/sitemap.ts` | Alle Komponenten/Autoren/Seiten für Google |
-| robots.txt | `src/app/robots.ts` | Steuert Crawling, verweist auf Sitemap |
+| Dynamische Sitemap | `src/app/sitemap.ts` | Alle Komponenten/Autoren/Seiten/Guides + `/stats` für Google |
+| robots.txt | `src/app/robots.ts` | Steuert Crawling, verweist auf Sitemap; sperrt `/profil`, `/login`, `/c/*/edit` |
 | `max-image-preview:large` | `src/app/layout.tsx` | **Discover-Voraussetzung** (große Bildvorschau) |
 | Canonical-URLs | in jeder `generateMetadata` | Verhindert Duplicate Content |
 | OpenGraph + Twitter Cards | `layout.tsx`, Detailseiten | Klickstarke Social-/Discover-Vorschauen |
@@ -156,9 +156,41 @@ Rankings hängen stark von **externen Signalen** ab:
 
 ---
 
+## 8b. Google Ads — das 400-€-Startguthaben sinnvoll einsetzen
+
+Stand 2026-07: 400 € Werbeguthaben verfügbar. Wichtig: Guthaben-Aktionen verlangen meist,
+dass du **selbst erst einen Betrag ausgibst** (Bedingungen im Angebot prüfen!) und das
+Guthaben innerhalb ~60 Tagen nach Freischaltung verbraucht wird.
+
+**Setup (einmalig, vor der ersten Kampagne):**
+1. Google-Ads-Konto mit demselben Google-Konto wie die Search Console anlegen und beide verknüpfen.
+2. **Conversion-Tracking definieren**, sonst optimiert Google ins Blaue. Für Elementa sinnvolle
+   Conversions: Copy-Klick auf einer Komponente, Registrierung, Newsletter-Anmeldung.
+   Achtung DSGVO: Google-Tag nur mit Consent-Banner laden — oder zunächst auf
+   „Klicks/engagierte Sitzungen" optimieren und Conversions über `/stats` (First-Party) beobachten.
+3. **Expertenmodus** verwenden (nicht „Smart-Kampagne") — sonst verbrennt das Budget.
+
+**Kampagnen-Empfehlung (Suche, kein Display):**
+- 1 Suchkampagne, Sprache Deutsch, Region DACH, Budget ~10 €/Tag.
+- Anzeigengruppen nach Intention: „ui komponenten kostenlos", „tailwind komponenten deutsch",
+  „css button effekte", „glassmorphism css", „barrierefreie ui komponenten".
+- **Wortgruppen-/exakte Übereinstimmung** statt weitgehend; auszuschließende Keywords pflegen
+  (z. B. „job", „kurs", „agentur").
+- Landingpages: passgenau verlinken — Kategorie-/Guide-Seiten (`/explore?cat=…`, `/guides/…`),
+  nicht immer nur die Startseite.
+- USPs in den Anzeigentexten: kostenlos, MIT-Lizenz, barrierefrei geprüft (echte axe-Audits!),
+  DSGVO-konform in der EU gehostet, offene Statistiken.
+
+**Nach 2 Wochen auswerten:** Suchbegriffe-Bericht prüfen, teure Keywords ohne Engagement
+pausieren, CTR < 2 % → Anzeigentexte überarbeiten. Ads bringt Besucher zum Testen der
+Seite — Rankings bringt es **nicht** direkt (Ads hat keinen Einfluss auf organische Ergebnisse).
+
+---
+
 ## 9. Konkrete nächste To-dos (priorisiert)
 
 1. **Google Search Console** einrichten + Sitemap einreichen. *(sofort)*
+1b. **Google-Ads-Kampagne** mit dem 400-€-Guthaben starten (siehe § 8b). *(sofort danach)*
 2. Pro Komponente **aussagekräftige Beschreibung** (≥ 2 Sätze) sicherstellen. *(laufend)*
 3. **About-Seite** (`/about`) mit echter Story für E-E-A-T ergänzen. *(bald)*
 4. **`/guides`-Bereich** mit 3–5 How-to-Artikeln starten (Discover-Treiber). *(Wachstum)*
