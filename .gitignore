@@ -43,3 +43,8 @@ next-env.d.ts
 # local logs
 /*.log
 /logs/
+
+# Test-Artefakte
+/test-results/
+/playwright-report/
+/.lighthouseci/

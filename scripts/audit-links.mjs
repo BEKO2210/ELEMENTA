@@ -34,21 +34,33 @@ for (const p of [...found].sort()) {
   }
 }
 console.log(bad.length ? "PROBLEME:\n" + bad.join("\n") : "✓ alle Links OK");
+let failures = bad.length;
 
 // 404-Verhalten
 const r404 = await fetch(base + "/gibt-es-nicht-xyz");
 console.log(`404-Seite: Status ${r404.status}`);
+if (r404.status !== 404) failures++;
 
 // Security-Header der Hauptseite
 const h = await fetch(base + "/");
 const want = ["content-security-policy", "x-content-type-options", "referrer-policy",
   "x-frame-options", "permissions-policy", "strict-transport-security"];
-for (const k of want) console.log(`${h.headers.get(k) ? "✓" : "✗ FEHLT"} ${k}`);
+for (const k of want) {
+  const ok = Boolean(h.headers.get(k));
+  console.log(`${ok ? "✓" : "✗ FEHLT"} ${k}`);
+  if (!ok) failures++;
+}
 
-// externe Links (aus Footer/Impressum)
+// externe Links (aus Footer/Impressum) — informativ, kein Gate (externe Ausfälle
+// sollen die eigene Pipeline nicht rot färben)
 for (const ext of ["https://github.com/BEKO2210/ELEMENTA"]) {
   try {
     const r = await fetch(ext, { method: "HEAD" });
     console.log(`extern ${r.status}  ${ext}`);
   } catch (e) { console.log(`extern FEHLER ${ext}`); }
+}
+
+if (failures > 0) {
+  console.log(`\n=== ${failures} Probleme ===`);
+  process.exit(1); // CI-Gate
 }

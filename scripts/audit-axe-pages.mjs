@@ -7,7 +7,8 @@ const PAGES = ["/", "/explore", "/c/magnetic-button", "/guides",
   "/guides/glassmorphism-css", "/stats", "/login", "/about", "/impressum", "/datenschutz"];
 
 const browser = await puppeteer.launch({
-  executablePath: "/usr/bin/chromium-browser",
+  // CI (GitHub Actions) hat Chrome unter /usr/bin/google-chrome — via env übersteuerbar
+  executablePath: process.env.CHROME_PATH || "/usr/bin/chromium-browser",
   headless: "new",
   args: ["--no-sandbox", "--disable-dev-shm-usage"],
 });
@@ -39,3 +40,4 @@ for (const p of PAGES) {
 }
 console.log(`\n=== ${total} Seiten-Verstöße gesamt ===`);
 await browser.close();
+if (total > 0) process.exit(1); // CI-Gate

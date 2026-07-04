@@ -159,11 +159,15 @@ export default function ExploreClient({ components }: { components: UIComponent[
           </button>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((c) => (
-            <ComponentCard key={c.id} c={c} popular={c.likes >= popularThreshold} />
-          ))}
-        </div>
+        <>
+          {/* Heading-Ebene h2 zwischen Seiten-h1 und den Karten-h3 (WCAG heading-order) */}
+          <h2 className="sr-only">Ergebnisse</h2>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {results.map((c) => (
+              <ComponentCard key={c.id} c={c} popular={c.likes >= popularThreshold} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
