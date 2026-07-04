@@ -78,6 +78,16 @@ const nextConfig: NextConfig = {
           { key: "Access-Control-Allow-Origin", value: "*" },
         ],
       },
+      // Brand-/Guide-Assets (Bilder, Videos) ändern sich selten → lange cachen.
+      // Bei Änderung Dateinamen wechseln (Cache-Busting), da nicht content-gehasht.
+      {
+        source: "/brand/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000" }],
+      },
+      {
+        source: "/guides/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000" }],
+      },
     ];
   },
 };
