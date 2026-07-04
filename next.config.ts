@@ -18,6 +18,23 @@ const csp = [
   "frame-ancestors 'none'",
 ].join("; ");
 
+// Eigene, bewusst andere CSP für das Sandbox-Dokument (/sandbox.html):
+// srcdoc-iframes erben die Haupt-CSP (und die blockierte React/Babel/Tailwind),
+// deshalb läuft die Vorschau als eigenes Dokument mit dieser Pfad-CSP.
+// 'unsafe-eval' ist nötig für Babel-Standalone & Tailwind-Play; Skripte kommen
+// ausschließlich von 'self' (/vendor/*). connect-src 'none' verhindert Exfiltration.
+const sandboxCsp = [
+  "default-src 'none'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "style-src 'unsafe-inline'",
+  "img-src data:",
+  "font-src data:",
+  "connect-src 'none'",
+  "base-uri 'none'",
+  "form-action 'none'",
+  "frame-ancestors 'self'",
+].join("; ");
+
 const nextConfig: NextConfig = {
   // Performance: kein Verrat des Frameworks + moderne Bildformate (AVIF/WebP).
   poweredByHeader: false,
@@ -38,6 +55,23 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
           },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+        ],
+      },
+      // Muss NACH dem Catch-all stehen: gleicher Header-Key → letzter gewinnt.
+      {
+        source: "/sandbox.html",
+        headers: [
+          { key: "Content-Security-Policy", value: sandboxCsp },
+          // Catch-all setzt DENY — hier überschreiben, sonst darf die eigene
+          // Seite die Sandbox nicht einbetten.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      },
+      // Vendor-Bundles (React/Babel/Tailwind/Vue) sind versionsfest → lange cachen.
+      {
+        source: "/vendor/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
     ];

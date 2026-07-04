@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Defense-in-depth: Die maßgebliche CSP kommt als Header aus next.config.ts.
+     Diese Meta-CSP spiegelt sie, falls Header unterwegs verloren gehen. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html,body{margin:0;height:100%}
+  body{display:grid;place-items:center;box-sizing:border-box;color:#fff;font-family:system-ui,sans-serif;padding:24px}
+  #__stage{display:contents}
+  body.fit{overflow:hidden;padding:8px}
+  body.fit #__stage{display:grid;place-items:center;transform-origin:center center}
+  .__err{max-width:90%;font:12px/1.5 ui-monospace,monospace;color:#ff8a7a;white-space:pre-wrap;word-break:break-word}
+  .__ph{text-align:center;font-family:system-ui,sans-serif}
+  .__ph b{display:block;font-size:15px;font-weight:600;color:#a78bfa;margin-bottom:8px}
+  .__ph span{font-size:13px;line-height:1.5;color:#a6a29a}
+</style>
+<style id="__user-css"></style>
+</head>
+<body>
+<div id="__stage"></div>
+<script>
+(function () {
+  "use strict";
+
+  var stage = document.getElementById("__stage");
+  var userCss = document.getElementById("__user-css");
+  var reactRoot = null;   // aktive React-Root zum sauberen Unmounten
+  var vueApp = null;      // aktive Vue-App
+  var fitObserver = null;
+  var seq = 0;            // schützt gegen Races bei schnellen Re-Renders
+
+  /* ---------- Helfer ---------- */
+
+  var loaded = {};
+  function ensure(src) {
+    if (!loaded[src]) {
+      loaded[src] = new Promise(function (res, rej) {
+        var s = document.createElement("script");
+        s.src = src;
+        s.onload = res;
+        s.onerror = function () { rej(new Error("Skript konnte nicht geladen werden: " + src)); };
+        document.head.appendChild(s);
+      });
+    }
+    return loaded[src];
+  }
+
+  function detectComponentName(code) {
+    var def = code.match(/export\s+default\s+function\s+([A-Z][A-Za-z0-9_]*)/);
+    if (def) return def[1];
+    var fns = code.match(/function\s+[A-Z][A-Za-z0-9_]*/g);
+    if (fns && fns.length) return fns[fns.length - 1].replace(/^function\s+/, "");
+    var cns = code.match(/const\s+[A-Z][A-Za-z0-9_]*\s*=/g);
+    if (cns && cns.length) return cns[cns.length - 1].replace(/^const\s+/, "").replace(/\s*=$/, "");
+    return "App";
+  }
+
+  // import/export entfernen — der Code läuft als klassisches Skript, nicht als Modul.
+  function stripModuleSyntax(code) {
+    return code
+      .replace(/^\s*import[^\n]*$/gm, "")
+      .replace(/export\s+default\s+/g, "")
+      .replace(/^\s*export\s+/gm, "");
+  }
+
+  function showError(e) {
+    var div = document.createElement("div");
+    div.className = "__err";
+    div.textContent = String(e && e.message ? e.message : e);
+    stage.appendChild(div);
+  }
+
+  function showPlaceholder(title, text) {
+    stage.innerHTML = "";
+    var wrap = document.createElement("div");
+    wrap.className = "__ph";
+    var b = document.createElement("b");
+    b.textContent = title;
+    var s = document.createElement("span");
+    s.innerHTML = text;
+    wrap.appendChild(b);
+    wrap.appendChild(s);
+    stage.appendChild(wrap);
+  }
+
+  // Skaliert zu große Inhalte herunter (Karten-Thumbnails), damit nichts abgeschnitten wird.
+  function applyFit() {
+    function f() {
+      stage.style.transform = "none";
+      var r = stage.getBoundingClientRect(), pad = 8;
+      var s = Math.min(1, (window.innerWidth - pad) / r.width, (window.innerHeight - pad) / r.height);
+      if (s > 0 && s < 1) stage.style.transform = "scale(" + s + ")";
+    }
+    requestAnimationFrame(f);
+    setTimeout(f, 120);
+    setTimeout(f, 450);
+    if (window.ResizeObserver) {
+      try {
+        fitObserver = new ResizeObserver(f);
+        fitObserver.observe(stage);
+      } catch (e) {}
+    }
+  }
+
+  // innerHTML führt <script>-Tags nicht aus — für HTML-Snippets mit Inline-JS nachziehen.
+  function activateScripts(root) {
+    var scripts = root.querySelectorAll("script");
+    for (var i = 0; i < scripts.length; i++) {
+      var old = scripts[i];
+      var s = document.createElement("script");
+      for (var j = 0; j < old.attributes.length; j++) {
+        s.setAttribute(old.attributes[j].name, old.attributes[j].value);
+      }
+      s.textContent = old.textContent;
+      old.parentNode.replaceChild(s, old);
+    }
+  }
+
+  function resetStage() {
+    if (reactRoot) { try { reactRoot.unmount(); } catch (e) {} reactRoot = null; }
+    if (vueApp) { try { vueApp.unmount(); } catch (e) {} vueApp = null; }
+    if (fitObserver) { try { fitObserver.disconnect(); } catch (e) {} fitObserver = null; }
+    stage.style.transform = "none";
+    stage.innerHTML = "";
+  }
+
+  /* ---------- Renderer pro Framework ---------- */
+
+  function renderPlain(data) {
+    userCss.textContent = data.css || "";
+    stage.innerHTML = data.html || "";
+    activateScripts(stage);
+    if (data.js) {
+      try { new Function(data.js)(); } catch (e) { showError(e); }
+    }
+  }
+
+  function renderTailwind(data) {
+    return ensure("/vendor/tailwind-play.js").then(function () {
+      userCss.textContent = data.css || "";
+      stage.innerHTML = data.html || "";
+      activateScripts(stage);
+      if (data.js) {
+        try { new Function(data.js)(); } catch (e) { showError(e); }
+      }
+    });
+  }
+
+  function renderReact(data) {
+    return Promise.all([
+      ensure("/vendor/react.production.min.js"),
+      ensure("/vendor/react-dom.production.min.js"),
+    ])
+      .then(function () { return ensure("/vendor/babel.min.js"); })
+      .then(function () {
+        userCss.textContent = data.css || "";
+        var mount = document.createElement("div");
+        stage.appendChild(mount);
+        var code = stripModuleSyntax(data.html || "");
+        var name = detectComponentName(code);
+        var out = window.Babel.transform(code, { presets: ["react"] }).code;
+        new Function("React", "__mount__", out + "\n;window.__lastComponent__=" + name + ";")(window.React, mount);
+        reactRoot = window.ReactDOM.createRoot(mount);
+        reactRoot.render(window.React.createElement(window.__lastComponent__));
+      });
+  }
+
+  function renderVue(data) {
+    return ensure("/vendor/vue.global.prod.js").then(function () {
+      userCss.textContent = data.css || "";
+      var mount = document.createElement("div");
+      stage.appendChild(mount);
+
+      var raw = data.html || "";
+      var template = raw;
+      var optionsSrc = data.js || "";
+
+      // SFC-ähnliches Format: <template> / <script> / <style> aus einem Feld ziehen
+      var tpl = raw.match(/<template[^>]*>([\s\S]*?)<\/template>/i);
+      if (tpl) {
+        template = tpl[1];
+        var scr = raw.match(/<script[^>]*>([\s\S]*?)<\/script>/i);
+        if (scr && !optionsSrc) optionsSrc = scr[1];
+        var sty = raw.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        if (sty) userCss.textContent += "\n" + sty[1];
+      }
+
+      var options = {};
+      if (optionsSrc && optionsSrc.trim()) {
+        var src = stripModuleSyntax(optionsSrc).trim();
+        // "export default {…}" wurde zu "{…}" — als Objekt evaluieren
+        options = new Function("Vue", "return (" + src + ")")(window.Vue) || {};
+      }
+      options.template = template;
+      vueApp = window.Vue.createApp(options);
+      vueApp.config.errorHandler = function (e) { showError(e); };
+      vueApp.mount(mount);
+    });
+  }
+
+  /* ---------- Nachrichten-Protokoll ---------- */
+
+  function render(data) {
+    var mySeq = ++seq;
+    resetStage();
+
+    document.body.style.background =
+      data.bg && data.bg !== "transparent" ? data.bg : "transparent";
+    document.body.classList.toggle("fit", !!data.fit);
+
+    var p;
+    if (data.framework === "react") p = renderReact(data);
+    else if (data.framework === "tailwind") p = renderTailwind(data);
+    else if (data.framework === "vue") p = renderVue(data);
+    else if (data.framework === "svelte") {
+      showPlaceholder("Svelte", "Live-Vorschau für Svelte folgt in Kürze.<br>Der Code unten ist voll nutzbar &amp; kopierbar.");
+      p = Promise.resolve();
+    } else p = Promise.resolve(renderPlain(data));
+
+    Promise.resolve(p)
+      .then(function () {
+        if (mySeq !== seq) return; // veralteter Render
+        if (data.fit) applyFit();
+      })
+      .catch(function (e) {
+        if (mySeq !== seq) return;
+        showError(e);
+      });
+  }
+
+  var gotPayload = false;
+
+  window.addEventListener("message", function (e) {
+    // Nur das direkte Elterndokument darf rendern lassen.
+    if (e.source !== window.parent) return;
+    var d = e.data;
+    if (!d || d.type !== "elementa:render") return;
+    gotPayload = true;
+    try { render(d); } catch (err) { resetStage(); showError(err); }
+  });
+
+  // Handshake: "ready" wiederholt senden, bis Code ankommt — die Eltern-Seite
+  // hydratisiert evtl. erst NACH dem iframe-Load (lazy iframes über dem Fold),
+  // dann ginge eine einmalige Nachricht verloren.
+  var tries = 0;
+  (function announce() {
+    if (gotPayload || tries++ > 80) return;
+    window.parent.postMessage({ type: "elementa:ready" }, "*");
+    setTimeout(announce, tries < 10 ? 120 : 500);
+  })();
+})();
+</script>
+</body>
+</html>
