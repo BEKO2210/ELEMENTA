@@ -125,7 +125,10 @@
     }
     function f() {
       stage.style.transform = "none";
-      var r = contentRect(), pad = 8;
+      // Rand um den Inhalt: breite Fixed-Width-Komponenten (z. B. Cards) werden so
+      // leicht herunterskaliert und sitzen mit gleichmäßigem Abstand mittig,
+      // statt die Vorschau randlos zu füllen (wirkt sonst „nach rechts versetzt").
+      var r = contentRect(), pad = 36;
       if (!(r.width > 0 && r.height > 0)) return;
       var s = Math.min(1, (window.innerWidth - pad) / r.width, (window.innerHeight - pad) / r.height);
       // Sichtbaren Inhalt exakt zentrieren: eigene Transforms der Komponente
