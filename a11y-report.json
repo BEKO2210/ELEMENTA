@@ -706,7 +706,7 @@
   {
     "slug": "nebula-core-3d-loader",
     "framework": "svelte",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "7aae4c547905dfc6a94edf38e8deda40e64759758c547ae784d56f21eeb45d9f"
@@ -714,7 +714,7 @@
   {
     "slug": "chrono-rift-3d-loader",
     "framework": "svelte",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "48d9d89207f6fe1b24e49ec79af4a4e4311a95aadbfd3cfb3f6702438c7fb19f"
@@ -722,7 +722,7 @@
   {
     "slug": "signal-tunnel-loader",
     "framework": "svelte",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "923a9aab64ee6671e773ea5dd98174f094068cd7b699ccb57bec48c9e241ab46"
@@ -730,7 +730,7 @@
   {
     "slug": "eon-infinity-loader",
     "framework": "svelte",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "00a45afd2140493b46662bf899ff1fd79270b90e857375574c256ff718adf629"
@@ -738,7 +738,7 @@
   {
     "slug": "aurora-command-card",
     "framework": "svelte",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "d58478f5354e38eabd04393e56863caf08ff66a3f12f81dd3568bf9af207e631"
@@ -746,7 +746,7 @@
   {
     "slug": "aurora-focus-input",
     "framework": "vue",
-    "prev": "unchecked",
+    "prev": "pass",
     "status": "pass",
     "violations": [],
     "hash": "4586b9956d4a1400589fd03af44b3dcdbb7b82efa3df705d961d00fb7a3c5a37"
@@ -754,7 +754,7 @@
   {
     "slug": "nebula-command-input",
     "framework": "vue",
-    "prev": "unchecked",
+    "prev": "warn",
     "status": "warn",
     "violations": [
       {
@@ -771,5 +771,645 @@
       }
     ],
     "hash": "665051e18cf64e8db0622ae15dd2d666d60d62c832d867b36057d00be46113f9"
+  },
+  {
+    "slug": "graphite-signal-input",
+    "framework": "vue",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 1
+      }
+    ],
+    "hash": "2b5621e58b14f9b0a739db98a96f8c789d650fb04ce5f9eb9bd4bd6b98dd8a5d"
+  },
+  {
+    "slug": "velvet-heart-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "370511391133a7292c9c89d969a0e1372f3201eb85e045180f1e381ecd9e7b33"
+  },
+  {
+    "slug": "midnight-cat-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "9db5b1cc8445cb780c8707ba4da7708600eecdf0e9c6954d93ca5c32cae23e5e"
+  },
+  {
+    "slug": "aurum-pulse-loader",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "790b35f253c1b40c114c6710dade83b22c772dd2def6e24adebdc4eba8e0fa4a"
+  },
+  {
+    "slug": "obsidian-eclipse-loader",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "276da4e09898fb94ecfe3972eaff4ad8f739837e4eeded80c7ab9af3cb66e5fd"
+  },
+  {
+    "slug": "ghost-arrow-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "3506c1a10018334cf9025a17580e16a2565fb390037401098c9d3d12b46f35bd"
+  },
+  {
+    "slug": "gradient-pill-button",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "f0c283002ef210e7c6b85660a75d472a06bf03b881f038728deb5ada624b5741"
+  },
+  {
+    "slug": "ripple-button",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "285c09f08ca5811af29beeded96248c0360ce11318fdd7d9d826a3c5a4af0a8e"
+  },
+  {
+    "slug": "async-loading-button",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "1ba12740cb8a88b7ce030485b00df5661131c5ea1853d48494ed04eba6ccbca8"
+  },
+  {
+    "slug": "magnetic-fill-button",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "4eff2cd794d0ae7205f4ea5dc956e48ed7a8e10f91eeecdb7f4c4f33f662fcad"
+  },
+  {
+    "slug": "like-pulse-button",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "860bd3affcf80a8c494f8da7cfa91b4d3cf7d4736abc83c7f1db364eb75d73a3"
+  },
+  {
+    "slug": "gradient-border-button",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "68a085f6092c17e86448f27dac81803f79041931f3e5b775a57cb646c6e06746"
+  },
+  {
+    "slug": "check-success-button",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "6d66ef1ec8f8a49b7e34ecafafe06025f07dc8c384959893fa6d98c3cbca9584"
+  },
+  {
+    "slug": "glass-feature-card",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "f76f25111d60bbccbc21841a8912b69639f7075a315222eb85ffe69924d5c77d"
+  },
+  {
+    "slug": "gradient-border-stat-card",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "0b94d022473514a83f7ad92ec5214f22d457b2ce49724d0104d98a0bcf056800"
+  },
+  {
+    "slug": "pricing-card-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "63e36590ccc2cd153c86981778d6b1b82fa78f76e4c07ba5c5b4bcb92eef9eed"
+  },
+  {
+    "slug": "profile-card-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "660833ffcac93ef7fb2e553948bca2d42829123bf1eb652b86537befc8b4a85a"
+  },
+  {
+    "slug": "flip-card-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "4f84bf5ea3e2273dd64d8d444db8f1e01db6d7642b004e807689539eed471dd4"
+  },
+  {
+    "slug": "expandable-faq-card",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "207a11c2099de047a2d4000ca2f4bb1dc9060692b68585dd3b3fa0fb5bdd17e0"
+  },
+  {
+    "slug": "hover-lift-card-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "55a33c7d0c06d199f407999334ae70c23ef4cd6272295000b8b31f63fba97263"
+  },
+  {
+    "slug": "notification-card-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "7f19233bd1afae72fdfd1aad59c6f7a94ea7ce6e5cc1b804c5ab18ac2019253b"
+  },
+  {
+    "slug": "progress-card-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "a7031ebe346670d22164a3a3e9ef24902f9eb4ed3c421f3269e4130a08f14231"
+  },
+  {
+    "slug": "reveal-quote-card-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "ae339037c95a2eaf6ba209ca6accf19215ce64c12d60889f64fd1052ba6d64f4"
+  },
+  {
+    "slug": "dual-ring-spinner",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "51e58f9bc876030fe0000afb2ca7a7086ce393507d28507e768375a341b047d2"
+  },
+  {
+    "slug": "bouncing-dots",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "caa2ebe928f641603330009b5927d1ce65b789209a28c0d877c71ef74afd76a0"
+  },
+  {
+    "slug": "skeleton-loader-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "a2c737101f49b66f2429f97c0cfc7dd4a6d9ed621e7f3be5c93e1550f98f6ffc"
+  },
+  {
+    "slug": "gradient-spinner-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "b79b016f792a96c0afdf96b8780c722522795eefcca42ca203f00f4c4f9cd726"
+  },
+  {
+    "slug": "circular-progress-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "8ad473a00fddcd412a9c1739b93c43d703ea510997ed355d629ee46a848d43c8"
+  },
+  {
+    "slug": "wave-bars-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "6d9905cde7b0126d1faa4ed326e93a8d26e466ca5bba86012d1c55bad11a1114"
+  },
+  {
+    "slug": "orbit-loader-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "28aa9efbbdc2d561fd40109a8c3ee44543cd7f0ed9c59a643e17912972567719"
+  },
+  {
+    "slug": "gradient-bar-loader-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "43def76cec971ba16e064e54c2398e18d1844a181040f7d880046b35f605b6a3"
+  },
+  {
+    "slug": "pulse-ring-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "478037b9a753493a39b0838f8fb430facc7dcecca794ab7a2b5740a18d808222"
+  },
+  {
+    "slug": "typing-dots-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "e6dc5805d2c3365649ed093db5ef789defdac9e6b932cc2f85672fa0de3af383"
+  },
+  {
+    "slug": "floating-label-input",
+    "framework": "html",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 1
+      }
+    ],
+    "hash": "6fae6f5844ac637856fcec6029ba24a1efe97e63efb6f12b9322b0dca101ff82"
+  },
+  {
+    "slug": "search-input-icon",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "954a94425fa0e490a5088a7d978ac3c6574b698a393318197412ec6c5dfe5dc2"
+  },
+  {
+    "slug": "focus-ring-input-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "db599cb4e85cac245decfada1912e934d7f6b62a43096aea5c6691c0b63c552d"
+  },
+  {
+    "slug": "textarea-count-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "b9b4c2d94765df3552b55dcc682450cec021929b0bb107a556012346e7f5dcd2"
+  },
+  {
+    "slug": "password-toggle-react",
+    "framework": "react",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 1
+      }
+    ],
+    "hash": "cf47f56ff7faf0007dd9458b1542a34f02682013d273b1abcdcc5e97121c3d0f"
+  },
+  {
+    "slug": "char-counter-input-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "a331e4a5973673625fcc38d6ea30a95805b3eb2dab87f874dbf77511e5693f23"
+  },
+  {
+    "slug": "underline-input-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "627a006635e914f502a97b197946be1711fc2a406266d68515179974158e6b9d"
+  },
+  {
+    "slug": "pin-input-vue",
+    "framework": "vue",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 4
+      }
+    ],
+    "hash": "f46bfdabcd64bbc95e7d58930ccc5f9fe07a5b5c38ca62e1cdc21542d99052f0"
+  },
+  {
+    "slug": "reveal-input-svelte",
+    "framework": "svelte",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 1
+      },
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 1
+      }
+    ],
+    "hash": "bc24dfc632c4cc6be0a8fb48cf6bc1f9383298397599fa7c8b562283f9ce6fb2"
+  },
+  {
+    "slug": "toggle-search-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "8a52114622464adec11f39a6a9faa7b3615530886bb61c5b58b05a2c9cf6883e"
+  },
+  {
+    "slug": "gradient-switch",
+    "framework": "html",
+    "prev": "warn",
+    "status": "warn",
+    "violations": [
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 1
+      }
+    ],
+    "hash": "763701bf7a0ab5f310aad4cd9e8d9e5ff93906c0d8640ed18c79dda8dd5529ff"
+  },
+  {
+    "slug": "checkbox-pop",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "5e13c46749eec44da165b5299de942b446f4fa2d0058604ae9af670599a14ae7"
+  },
+  {
+    "slug": "segmented-toggle-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "cf9ade2913d9385160412fec44e7c215c0c5c0e74743b8011c2fa2c5d6514593"
+  },
+  {
+    "slug": "icon-switch-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "f3d9486966540454bce5a3790d0b1572863f073401ecfe0701fe7ee6eaf7d660"
+  },
+  {
+    "slug": "theme-toggle-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "964496ee9fcab4512b7e671f6b6755c18773b653c1950e6cb4db1efe114309dd"
+  },
+  {
+    "slug": "star-rating-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "bd5e733bf6800a3c653ae4a31b6f46fb6dc19071f58a8d2a4643f1ad3e934de7"
+  },
+  {
+    "slug": "labeled-switch-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "fcca67b0d79f45ccb906f732fa19ee18c5513a881f05f6c6961fbd5d06ddc365"
+  },
+  {
+    "slug": "chip-multi-toggle-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "ec7a21f5c671eda0bf5e8633a3f0a5de2b408d4374828b5da98e9bbad6b6da5b"
+  },
+  {
+    "slug": "day-night-toggle-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "4c1e038f56110ee5d6438431f81837bf0ec88849350962df65b7dfe52fa921db"
+  },
+  {
+    "slug": "heart-fav-toggle-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "759295e4464278636f6839530456c462c09d2e65c496533320d8f8d325ddcc73"
+  },
+  {
+    "slug": "aurora-gradient-bg",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "497784cf200001c49c0983dabfeda00f138767d90a91d0f9f5989c688aa096e3"
+  },
+  {
+    "slug": "grid-glow-bg",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "28ea9600e58801cb794f1b90715f07fd227a06e5c5ac4ced28313e1494b8a45b"
+  },
+  {
+    "slug": "mesh-gradient-bg-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "9a790eaf6031034f8d0bf4d098289e53f71c3f2f73e2dd0cba7b119bdd4e2578"
+  },
+  {
+    "slug": "dot-pattern-bg-tw",
+    "framework": "tailwind",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "aeaf6240e80bdda9181b211513ba45e547bff9fbe6e8f4bfaf2702dbb0b6ae6f"
+  },
+  {
+    "slug": "floating-particles-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "cbe9ff91e7f2cf6380062c2c2a8ad215e73ac016bd5b4f9a4ea36a69813b5687"
+  },
+  {
+    "slug": "gradient-shift-react",
+    "framework": "react",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "2874f19d796ffa978c2e13876aca1dfdb64b27f38ca3d2fe1388aee8d4533466"
+  },
+  {
+    "slug": "morphing-blobs-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "13c27ff2a097f40d3d6947dcf09671b5bf37e70ea5c8b78f437c3d1131beac81"
+  },
+  {
+    "slug": "conic-rays-vue",
+    "framework": "vue",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "1024b00eeb100e02ff6d5369f02c9c58b546c60b32f47c6a01779ee517df033b"
+  },
+  {
+    "slug": "animated-aurora-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "0ed347f4d1aff9d365cfe63bf94b8e2a5c4ba9ef48f1469c93464986895103f0"
+  },
+  {
+    "slug": "starfield-svelte",
+    "framework": "svelte",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "be73b4359a0e38ae8fa3a49e567cb002bf54b8f134f33dbd00a18ff28ea986eb"
+  },
+  {
+    "slug": "quiet-line-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "c847506a76e85bab78cfe6aaef3c8c8e5d0b74e3e1a915c534e0fb5ad6ae1cf8"
+  },
+  {
+    "slug": "needle-shift-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "89240c1440f87a036cd557a9b123b970765b5c444ace063929a273cb489d77f8"
+  },
+  {
+    "slug": "silent-press-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "46d6bd82ccb43764de3be6892eba0926dc8dd73d126dfcbf40384d27628e346a"
+  },
+  {
+    "slug": "crafted-press-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "8be4625b4b11134eac2512974b0c3311752fbd796549acecc8e76f76713f726a"
+  },
+  {
+    "slug": "tactile-flow-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "ad2a5e2645f2cb3f99016d90ab6535be941971c5654547cd5f1161663362bb0d"
+  },
+  {
+    "slug": "elastic-fill-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "fc3a7477c89efd081c61d5f90001e740055ec61443c1b4ff7d94f47ab86e9c4e"
+  },
+  {
+    "slug": "edge-trace-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "23410436f24b2f83ab370f7566cd95dcc309afb8067ab1ed6c48d5363513c939"
+  },
+  {
+    "slug": "typing-bubble",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "2a02712d49a63fdb248c9c9c5c401414273cd2494be1fc09269cdfcb5be12fd8"
+  },
+  {
+    "slug": "thinking-path-loader",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "2a53636de75b87618b5d2cc3568386e2a39643cf48cd0dd22e41f5c61b5e0ce6"
+  },
+  {
+    "slug": "cell-division-loader",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "b47993f5f1e3513f6bf49137a86f7c43925323fc846002ed93a6d1dec1697912"
+  },
+  {
+    "slug": "liquid-orbit-button",
+    "framework": "html",
+    "prev": "pass",
+    "status": "pass",
+    "violations": [],
+    "hash": "25023e38eddc019407caec9d81694bb692e0460038ddc551ac7f42be646a0786"
   }
 ]

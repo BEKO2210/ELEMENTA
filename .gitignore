@@ -51,3 +51,4 @@ next-env.d.ts
 
 # Komponenten-Generierung (Arbeitsdateien)
 /scratchpad-gen/
+graphify-out/
